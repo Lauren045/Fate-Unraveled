@@ -22,7 +22,7 @@ function dialogueProgression() {
     }
 }
 
-function handleInput(event) {
+function userInput(event) {
     if (event.key === " " || event.type === "click") {
         dialogueProgression();
     }
