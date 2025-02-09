@@ -11,7 +11,7 @@ async function loadDialogue() {
 
 function showDialogue() {
     const dialogueTextElement = document.getElementById("dialogueText");
-    dialogueTextElement.innerText = dialogue[dialogueIndex];
+    dialogueTextElement.innerText = dialogues[dialogueIndex];
 }
 
 function dialogueProgression() {
