@@ -1,0 +1,21 @@
+#dialogueBox {
+    position: fixed;
+    bottom: 5%;
+    top: 70%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 900px;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-family: Arial, sans-serif;
+    text-align: left;
+}
+
+#dialogueText {
+    margin: 0;
+    line-height: 1.5;
+}

@@ -53,3 +53,7 @@ function showSettingsMenu() {
     // this is where you append EVERYTHING for settingsMenu to work, u feel?
     document.body.appendChild(settingsMenu);
 }
+
+document.getElementById("newGame").addEventListener("click", () => {
+    window.location.href = "game.html";
+})
