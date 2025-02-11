@@ -28,7 +28,26 @@ function userInput(event) {
     }
 }
 
+function autoplay() {
+    let ifOn = false;
+    let setAutoplayOn = null;
+
+    document.getElementById("autoplay").addEventListener("click", function() {
+         if (ifOn == false) {
+             setAutoplayOn = setInterval(dialogueProgression, 3000);
+             ifOn = true;
+             document.getElementById("autoplay").innerText = "Autoplay On";
+         }
+         else {
+             clearInterval(setAutoplayOn);
+             ifOn = false;  
+             document.getElementById("autoplay").innerText = "Autoplay Off";
+         }        
+    })
+}
+
 document.addEventListener("keydown", userInput);
 document.addEventListener("click", userInput);
 
 loadDialogue();
+autoplay();
