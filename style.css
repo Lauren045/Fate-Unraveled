@@ -19,3 +19,22 @@
     margin: 0;
     line-height: 1.5;
 }
+
+#characterImages {
+    width: 200 px;
+    height: 100 px;
+    position: absolute;
+    bottom: 15%;
+    left:50%;
+    transform: translateX(-50%);
+    overflow: hidden;
+    justify-content: center;
+    display: flex;
+    align-items: flex-end;
+}
+
+#characters {
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+}
