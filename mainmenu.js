@@ -12,7 +12,7 @@ function showSettingsMenu() {
     // this checks if the settings menu already existed
     if (document.getElementById("settingsMenu")) return;
 
-    // bring the settings menu up like a good boy
+    // bring the settings menu up, pretty simple
     const settingsMenu = document.createElement("div");
     settingsMenu.id = "settingsMenu";
     settingsMenu.style.position = "fixed";
@@ -50,7 +50,7 @@ function showSettingsMenu() {
     };
     settingsMenu.appendChild(closeButton);
 
-    // this is where you append EVERYTHING for settingsMenu to work, u feel?
+    // this is where you append EVERYTHING for settingsMenu to work
     document.body.appendChild(settingsMenu);
 }
 

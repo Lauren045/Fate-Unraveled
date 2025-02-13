@@ -46,8 +46,17 @@ function autoplay() {
     })
 }
 
+function skipforward() {
+    // You skip all the way to the last dialogue
+    document.getElementById("skipforward").addEventListener("click", function() {
+    dialogueIndex = dialogues.length - 1;
+    showDialogue();
+    })
+}
+
 document.addEventListener("keydown", userInput);
 document.addEventListener("click", userInput);
 
 loadDialogue();
+skipforward();
 autoplay();
