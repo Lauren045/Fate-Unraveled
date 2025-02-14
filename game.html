@@ -9,18 +9,21 @@
 </head>
 <body>
     <div id="gameScene">
+        <img id="backgroundImage">
+        <img id="characterImages">
+
         <div id="choiceBox"></div>
         <div id="dialogueBox">
 	    <p id="characterName"></p>
             <p id="dialogueText"></p>
         </div>
     </div>
-    <button id="history">History</button>
-    <button id="autoplay">Autoplay Off</button>
-    <button id="skipForward">Skip Forward</button>
 
-    <img id="backgroundImage"></img>
-    <img id="characterImages"></img>
+    <div id="buttonContainer">
+        <button id="history">History</button>
+        <button id="autoplay">Autoplay Off</button>
+        <button id="skipForward">Skip Forward</button>
+    </div>
 
     <script src="dialogue.js"></script>
     <script src="game.js"></script>

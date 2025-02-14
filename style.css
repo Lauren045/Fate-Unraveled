@@ -1,3 +1,27 @@
+#backgroundImage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+}
+
+#characterImages {
+    position: fixed;
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 30%;
+    max-height: 60%;
+    z-index: 1;
+}
+
+body {
+    overflow: hidden;
+}
+
 #dialogueBox {
     position: fixed;
     bottom: 5%;
@@ -13,6 +37,7 @@
     font-size: 1.2rem;
     font-family: Arial, sans-serif;
     text-align: left;
+    z-index: 10;
 }
 
 #dialogueText {
@@ -20,21 +45,23 @@
     line-height: 1.5;
 }
 
-#characterImages {
-    width: 200 px;
-    height: 100 px;
-    position: absolute;
-    bottom: 15%;
-    left:50%;
+#buttonContainer {
+    position: fixed;
+    bottom: 0%;
+    left: 50%;
     transform: translateX(-50%);
-    overflow: hidden;
-    justify-content: center;
-    display: flex;
-    align-items: flex-end;
+    diaplay: flex;
+    gap: 10px;
+    z-index: 11;
 }
 
-#characters {
-    width: 100%;
-    height: auto;
-    max-height: 100%;
+button {
+    background-color: white;
+    border: 1px solid black;
+    padding: 10 px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ddd;
 }

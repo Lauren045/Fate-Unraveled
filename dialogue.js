@@ -9,11 +9,13 @@ async function loadDialogue() {
     showDialogue();
 }
 
+//Present the dialogue onto the designated dialogue box
 function showDialogue() {
     const dialogueTextElement = document.getElementById("dialogueText");
     dialogueTextElement.innerText = dialogues[dialogueIndex];
 }
 
+//Move on to the next line of dialogue
 function dialogueProgression() {
     dialogueIndex ++;
 
@@ -22,11 +24,15 @@ function dialogueProgression() {
     }
 }
 
-function userInput(event) {
-    if (event.key === " " || event.type === "click") {
+//Event listeners so that when user clicks dialogue box/presses space, dialogue progresses
+document.getElementById("dialogueBox").addEventListener("click", function() {
+    dialogueProgression();
+});
+document.addEventListener("keydown", function(event) {
+    if (event.key === " ") {
         dialogueProgression();
     }
-}
+});
 
 function autoplay() {
     let ifOn = false;
@@ -81,9 +87,6 @@ function history() {
 	 document.body.appendChild(historyMenu);
     })
 }
-
-document.addEventListener("keydown", userInput);
-document.addEventListener("click", userInput);
 
 loadDialogue();
 autoplay();
