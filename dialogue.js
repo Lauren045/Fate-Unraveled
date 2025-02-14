@@ -34,8 +34,10 @@ function autoplay() {
 
     document.getElementById("autoplay").addEventListener("click", function() {
          if (ifOn == false) {
+	     // progresses dialogue every 3 seconds but will change later
              setAutoplayOn = setInterval(dialogueProgression, 3000);
              ifOn = true;
+	     // text changing is a placeholder
              document.getElementById("autoplay").innerText = "Autoplay On";
          }
          else {
@@ -46,11 +48,37 @@ function autoplay() {
     })
 }
 
-function skipforward() {
+function skipForward() {
     // You skip all the way to the last dialogue
-    document.getElementById("skipforward").addEventListener("click", function() {
+    document.getElementById("skipForward").addEventListener("click", function() {
     dialogueIndex = dialogues.length - 1;
     showDialogue();
+    })
+}
+
+function history() {
+    document.getElementById("history").addEventListener("click", function() {
+	 if (document.getElementById("historyMenu")) return;
+
+         const historyMenu = document.createElement("div");
+	 historyMenu.id = "historyMenu";
+         historyMenu.style.position = "fixed";
+         historyMenu.style.width = "100%";
+	 historyMenu.style.height = "100%";
+	 historyMenu.style.top = "0";
+	 historyMenu.style.left = "0";
+	 historyMenu.style.background = "black";
+	 historyMenu.style.zIndex = "1000";
+	 
+	 const closeButton = document.createElement("button");
+	 closeButton.innerText = "Close";
+	 closeButton.style.display = "block";
+	 closeButton.onclick = function() {
+	      document.body.removeChild(historyMenu);
+	 }
+	 historyMenu.appendChild(closeButton);
+
+	 document.body.appendChild(historyMenu);
     })
 }
 
@@ -58,5 +86,7 @@ document.addEventListener("keydown", userInput);
 document.addEventListener("click", userInput);
 
 loadDialogue();
-skipforward();
 autoplay();
+skipForward();
+history();
+
