@@ -1,4 +1,5 @@
 let dialogues = [];
+let dialogueHistory = [];
 let dialogueIndex = 0;
 
 //Load the dialogue from dialogue.json
@@ -13,6 +14,9 @@ async function loadDialogue() {
 function showDialogue() {
     const dialogueTextElement = document.getElementById("dialogueText");
     dialogueTextElement.innerText = dialogues[dialogueIndex];
+
+    //store the dialogue into the history
+    dialogueHistory.push(dialogueTextElement);
 }
 
 //Move on to the next line of dialogue
@@ -57,15 +61,13 @@ function autoplay() {
 function skipForward() {
     // You skip all the way to the last dialogue
     document.getElementById("skipForward").addEventListener("click", function() {
-    dialogueIndex = dialogues.length - 1;
-    showDialogue();
+         dialogueIndex = dialogues.length - 1;
+         showDialogue();
     })
 }
 
 function history() {
     document.getElementById("history").addEventListener("click", function() {
-	 if (document.getElementById("historyMenu")) return;
-
          const historyMenu = document.createElement("div");
 	 historyMenu.id = "historyMenu";
          historyMenu.style.position = "fixed";
@@ -73,12 +75,23 @@ function history() {
 	 historyMenu.style.height = "100%";
 	 historyMenu.style.top = "0";
 	 historyMenu.style.left = "0";
+	 historyMenu.style.color = "white";
 	 historyMenu.style.background = "black";
 	 historyMenu.style.zIndex = "1000";
+
+	 const historyContent = document.createElement("div");
+	 historyContent.id = "historyContent";
+	 historyContent.innerHTML = "";
+	 for (let i = 0; i < dialogueHistory.length; i++) {
+	      const entry = document.createElement("p");
+	      entry.innerText = dialogueHistory[i];
+	      historyContent.appendChild(entry);
+	 }
+	 historyMenu.appendChild(historyContent);
+	 
 	 
 	 const closeButton = document.createElement("button");
 	 closeButton.innerText = "Close";
-	 closeButton.style.display = "block";
 	 closeButton.onclick = function() {
 	      document.body.removeChild(historyMenu);
 	 }
