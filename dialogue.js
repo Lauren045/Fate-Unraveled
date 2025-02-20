@@ -16,7 +16,7 @@ function showDialogue() {
     dialogueTextElement.innerText = dialogues[dialogueIndex];
 
     //store the dialogue into the history
-    dialogueHistory.push(dialogueTextElement);
+    dialogueHistory.push(dialogues[dialogueIndex]);
 }
 
 //Move on to the next line of dialogue
@@ -73,23 +73,21 @@ function history() {
          historyMenu.style.position = "fixed";
          historyMenu.style.width = "100%";
 	 historyMenu.style.height = "100%";
-	 historyMenu.style.top = "0";
-	 historyMenu.style.left = "0";
+	 historyMenu.style.margin = "0";
+	 historyMenu.style.padding = "0";
 	 historyMenu.style.color = "white";
 	 historyMenu.style.background = "black";
 	 historyMenu.style.zIndex = "1000";
 
 	 const historyContent = document.createElement("div");
 	 historyContent.id = "historyContent";
-	 historyContent.innerHTML = "";
 	 for (let i = 0; i < dialogueHistory.length; i++) {
 	      const entry = document.createElement("p");
 	      entry.innerText = dialogueHistory[i];
 	      historyContent.appendChild(entry);
 	 }
 	 historyMenu.appendChild(historyContent);
-	 
-	 
+	 	 
 	 const closeButton = document.createElement("button");
 	 closeButton.innerText = "Close";
 	 closeButton.onclick = function() {
