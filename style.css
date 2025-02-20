@@ -45,12 +45,40 @@ body {
     line-height: 1.5;
 }
 
+#choiceBox {
+    position: fixed;
+    bottom: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    z-index: 12;
+}
+
+#choiceBox button {
+    background: #FFFFFF;
+    color: #000000;
+    border: 1px solid #000000;
+    padding: 5px;
+    cursor: pointer;
+    width: 100px;
+    text-align: center;
+}
+
+#choiceBox button:hover {
+    color: #DDD;
+}
+
 #buttonContainer {
     position: fixed;
     bottom: 0%;
     left: 50%;
     transform: translateX(-50%);
-    diaplay: flex;
+    display: flex;
     gap: 10px;
     z-index: 11;
 }

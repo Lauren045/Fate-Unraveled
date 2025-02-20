@@ -1,8 +1,9 @@
 let dialogues = [];
 let dialogueHistory = [];
 let dialogueIndex = 0;
+let selectedChoice = null;
 
-//Load the dialogue from dialogue.json
+//load the dialogue from dialogue.json
 async function loadDialogue() {
     const response = await fetch("JSON/dialogue.json");
     const data = await response.json();
@@ -10,28 +11,68 @@ async function loadDialogue() {
     showDialogue();
 }
 
-//Present the dialogue onto the designated dialogue box
+//present the dialogue onto the designated dialogue box
+//updated to also show choice options when it occurs
 function showDialogue() {
     const dialogueTextElement = document.getElementById("dialogueText");
-    dialogueTextElement.innerText = dialogues[dialogueIndex];
+    const choiceBox = document.getElementById("choiceBox");
 
-    //store the dialogue into the history
-    dialogueHistory.push(dialogues[dialogueIndex]);
+    choiceBox.innerHTML = "";
+    let currentDialogue = dialogues[dialogueIndex];
+
+    if (!currentDialogue) return;
+
+    dialogueTextElement.innerText = currentDialogue.text;
+    dialogueHistory.push(currentDialogue.text);
+
+    if (currentDialogue.choices) {
+        showChoices(currentDialogue.choices);
+    }
 }
 
-//Move on to the next line of dialogue
-function dialogueProgression() {
-    dialogueIndex ++;
+//present choices in choice box
+function showChoices(choices) {
+    const choiceBox = document.getElementById("choiceBox");
 
-    if (dialogueIndex < dialogues.length) {
+    choices.forEach((choiceObj, index) => {
+        let choiceButton = document.createElement("button");
+        choiceButton.innerText = choiceObj.text;
+        choiceButton.onclick = function () {
+            selectChoice(choiceObj);
+        };
+        choiceBox.appendChild(choiceButton);
+    });
+}
+
+//logic for when user has to make a choice
+function selectChoice(choiceObj) {
+    if (!choiceObj || !choiceObj.next) {
+        console.error("Invalid choice object or missing 'next' property");
+        return;
+    }
+
+    const nextId = choiceObj.next;
+    const nextDialogueIndex = dialogues.findIndex(dialogue => dialogue.id === nextId);
+
+    if (nextDialogueIndex >= 0) {
+        dialogueIndex = nextDialogueIndex;
+        showDialogue();
+    }
+    else {
+        console.error("dialogue with the specified 'id' not found.");
+    }
+}
+
+//move on to the next line of dialogue
+function dialogueProgression() {
+    if (dialogueIndex < dialogues.length - 1) {
+        dialogueIndex++;
         showDialogue();
     }
 }
 
-//Event listeners so that when user clicks dialogue box/presses space, dialogue progresses
-document.getElementById("dialogueBox").addEventListener("click", function() {
-    dialogueProgression();
-});
+//event listeners so that when user clicks dialogue box/presses space, dialogue progresses
+document.getElementById("dialogueBox").addEventListener("click", dialogueProgression);
 document.addEventListener("keydown", function(event) {
     if (event.key === " ") {
         dialogueProgression();
