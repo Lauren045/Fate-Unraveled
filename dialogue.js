@@ -55,12 +55,17 @@ function selectChoice(choiceObj) {
 function dialogueProgression() {
     let currentDialogue = dialogues[dialogueIndex];
 
-    if (currentDialogue.next) {
-        //jump to the dialogue id if "next" is used
+    //if there are choices, stop the function to prevent progression
+    if (currentDialogue.choices) {
+        return;
+    }
+    //jump to the dialogue id if "next" is used
+    else if (currentDialogue.next !== undefined) {
         dialogueIndex = dialogues.findIndex(d => d.id === currentDialogue.next);
         showDialogue(dialogues[dialogueIndex].id);
     }
-    else if (!currentDialogue.choices && dialogueIndex < dialogues.length - 1) {
+    //progress dialogue linearly
+    else if (dialogueIndex < dialogues.length - 1) {
         dialogueIndex++;
         showDialogue(dialogues[dialogueIndex].id);
     }
@@ -79,7 +84,7 @@ function autoplay() {
     let setAutoplayOn = null;
 
     document.getElementById("autoplay").addEventListener("click", function() {
-         if (ifOn == false) {
+         if (!ifOn) {
 	     // progresses dialogue every 3 seconds but will change later
              setAutoplayOn = setInterval(dialogueProgression, 3000);
              ifOn = true;
