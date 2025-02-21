@@ -1,24 +1,22 @@
 let dialogues = [];
 let dialogueHistory = [];
 let dialogueIndex = 0;
-let selectedChoice = null;
 
 //load the dialogue from dialogue.json
 async function loadDialogue() {
     const response = await fetch("JSON/dialogue.json");
-    const data = await response.json();
-    dialogues = data.dialogues;
-    showDialogue();
+    dialogues = await response.json();
+    showDialogue(dialogueIndex);
 }
 
 //present the dialogue onto the designated dialogue box
 //updated to also show choice options when it occurs
-function showDialogue() {
+function showDialogue(id) {
     const dialogueTextElement = document.getElementById("dialogueText");
     const choiceBox = document.getElementById("choiceBox");
 
     choiceBox.innerHTML = "";
-    let currentDialogue = dialogues[dialogueIndex];
+    let currentDialogue = dialogues.find(d => d.id === id);
 
     if (!currentDialogue) return;
 
@@ -33,41 +31,38 @@ function showDialogue() {
 //present choices in choice box
 function showChoices(choices) {
     const choiceBox = document.getElementById("choiceBox");
+    choiceBox.inerHTML = "";
 
-    choices.forEach((choiceObj, index) => {
+    choices.forEach(choiceObj => {
         let choiceButton = document.createElement("button");
         choiceButton.innerText = choiceObj.text;
-        choiceButton.onclick = function () {
-            selectChoice(choiceObj);
-        };
+        choiceButton.onclick = () => selectChoice(choiceObj);
         choiceBox.appendChild(choiceButton);
     });
 }
 
 //logic for when user has to make a choice
 function selectChoice(choiceObj) {
-    if (!choiceObj || !choiceObj.next) {
-        console.error("Invalid choice object or missing 'next' property");
-        return;
-    }
+    const nextDialogue = dialogues.find(d => d.id === choiceObj.next);
 
-    const nextId = choiceObj.next;
-    const nextDialogueIndex = dialogues.findIndex(dialogue => dialogue.id === nextId);
-
-    if (nextDialogueIndex >= 0) {
-        dialogueIndex = nextDialogueIndex;
-        showDialogue();
-    }
-    else {
-        console.error("dialogue with the specified 'id' not found.");
+    if (nextDialogue) {
+        dialogueIndex = dialogues.indexOf(nextDialogue);
+        showDialogue(nextDialogue.id);
     }
 }
 
 //move on to the next line of dialogue
 function dialogueProgression() {
-    if (dialogueIndex < dialogues.length - 1) {
+    let currentDialogue = dialogues[dialogueIndex];
+
+    if (currentDialogue.next) {
+        //jump to the dialogue id if "next" is used
+        dialogueIndex = dialogues.findIndex(d => d.id === currentDialogue.next);
+        showDialogue(dialogues[dialogueIndex].id);
+    }
+    else if (!currentDialogue.choices && dialogueIndex < dialogues.length - 1) {
         dialogueIndex++;
-        showDialogue();
+        showDialogue(dialogues[dialogueIndex].id);
     }
 }
 
@@ -93,9 +88,9 @@ function autoplay() {
          }
          else {
              clearInterval(setAutoplayOn);
-             ifOn = false;  
+             ifOn = false;
              document.getElementById("autoplay").innerText = "Autoplay Off";
-         }        
+         }
     })
 }
 
@@ -128,7 +123,7 @@ function history() {
 	      historyContent.appendChild(entry);
 	 }
 	 historyMenu.appendChild(historyContent);
-	 	 
+
 	 const closeButton = document.createElement("button");
 	 closeButton.innerText = "Close";
 	 closeButton.onclick = function() {
@@ -140,7 +135,7 @@ function history() {
     })
 }
 
-loadDialogue();
+window.onload = loadDialogue();
 autoplay();
 skipForward();
 history();

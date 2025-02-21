@@ -1,23 +1,22 @@
-{
-  "dialogues": [
-    { "id": 1, "text": "This is my chance." },
-    { "id": 2, "text": "It's unguarded right now." },
-    { "id": 3, "text": "Finally, something to eat." },
-    { "id": 4, "text": "Alright, it's go time!" },
+[
+    { "id": 1, "text": "This is my chance.", "next": 2 },
+    { "id": 2, "text": "It's unguarded right now.", "next": 3 },
+    { "id": 3, "text": "Finally, something to eat.", "next": 4 },
+    { "id": 4, "text": "Alright, it's go time!", "next": 5 },
     {
-      "id": 5, "text": "Testing options",
-      "choices": [
-        { "text": "Yes", "next": 6 },
-        { "text": "No", "next": 7 }
-      ]
+        "id": 5,
+        "text": "Testing options",
+        "choices": [
+            { "text": "Yes", "next": 6 },
+            { "text": "No", "next": 7 }
+        ]
     },
-    { "id": 6, "text": "whatever happens when you choose yes", "next": 8 },
-    { "id": 7, "text": "whatever happens when you choose no", "next": 8 },
-    { "id": 8, "text": "both yes/no should lead back here" },
-    { "id": 9, "text": "blah" },
-    { "id": 10, "text": "blahblah" },
-    { "id": 11, "text": "blahBlah" },
-    { "id": 12, "text": "Blahblah" },
+    { "id": 6, "text": "Whatever happens when you choose yes", "next": 8 },
+    { "id": 7, "text": "Whatever happens when you choose no", "next": 8 },
+    { "id": 8, "text": "Both yes/no should lead back here", "next": 9 },
+    { "id": 9, "text": "Blah", "next": 10 },
+    { "id": 10, "text": "Blahblah", "next": 11 },
+    { "id": 11, "text": "BlahBlah", "next": 12 },
+    { "id": 12, "text": "Blahblah", "next": 13 },
     { "id": 13, "text": "BlahBlah" }
-  ]
-}
+]
