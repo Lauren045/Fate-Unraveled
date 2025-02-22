@@ -51,7 +51,7 @@ function selectChoice(choiceObj) {
     }
 }
 
-//move on to the next line of dialogue
+//function that progresses dialogue
 function dialogueProgression() {
     let currentDialogue = dialogues[dialogueIndex];
 
@@ -111,25 +111,19 @@ function history() {
     document.getElementById("history").addEventListener("click", function() {
          const historyMenu = document.createElement("div");
 	 historyMenu.id = "historyMenu";
-         historyMenu.style.position = "fixed";
-         historyMenu.style.width = "100%";
-	 historyMenu.style.height = "100%";
-	 historyMenu.style.margin = "0";
-	 historyMenu.style.padding = "0";
-	 historyMenu.style.color = "white";
-	 historyMenu.style.background = "black";
-	 historyMenu.style.zIndex = "1000";
 
 	 const historyContent = document.createElement("div");
 	 historyContent.id = "historyContent";
 	 for (let i = 0; i < dialogueHistory.length; i++) {
 	      const entry = document.createElement("p");
+	      entry.className = "entry";
 	      entry.innerText = dialogueHistory[i];
 	      historyContent.appendChild(entry);
 	 }
 	 historyMenu.appendChild(historyContent);
 
 	 const closeButton = document.createElement("button");
+	 closeButton.id = "closeButton";
 	 closeButton.innerText = "Close";
 	 closeButton.onclick = function() {
 	      document.body.removeChild(historyMenu);
