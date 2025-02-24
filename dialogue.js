@@ -6,7 +6,7 @@ let dialogueIndex = 0;
 async function loadDialogue() {
     const response = await fetch("JSON/dialogue.json");
     dialogues = await response.json();
-    showDialogue(dialogueIndex);
+    showDialogue(dialogues[dialogueIndex].id);
 }
 
 //present the dialogue onto the designated dialogue box
@@ -23,6 +23,8 @@ function showDialogue(id) {
     dialogueTextElement.innerText = currentDialogue.text;
     dialogueHistory.push(currentDialogue.text);
 
+    changeScene(id);
+
     if (currentDialogue.choices) {
         showChoices(currentDialogue.choices);
     }
@@ -31,7 +33,7 @@ function showDialogue(id) {
 //present choices in choice box
 function showChoices(choices) {
     const choiceBox = document.getElementById("choiceBox");
-    choiceBox.inerHTML = "";
+    choiceBox.innerHTML = "";
 
     choices.forEach(choiceObj => {
         let choiceButton = document.createElement("button");
@@ -134,7 +136,7 @@ function history() {
     })
 }
 
-window.onload = loadDialogue();
+loadDialogue();
 autoplay();
 skipForward();
 history();

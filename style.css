@@ -20,6 +20,11 @@
     z-index: 1;
 }
 
+img {
+    -webkit-user-select: none;
+    pointer-events: none;
+}
+
 body {
     overflow: hidden;
 }
@@ -42,9 +47,19 @@ body {
     z-index: 10;
 }
 
-#dialogueText {
+#characterName {
+    font-weight: bold;
+    font-size: 15 px;
     margin: 0;
-    line-height: 1.5;
+    padding: 5px 10px;
+    display: block;
+}
+
+#dialogueText {
+    font-size: 10 px;
+    margin: 0;
+    padding: 5px 10px;
+    display: block;
 }
 
 #choiceBox {
@@ -66,12 +81,12 @@ body {
     border: 1px solid #000000;
     padding: 5px;
     cursor: pointer;
-    width: 100px;
+    width: 200px;
     text-align: center;
 }
 
 #choiceBox button:hover {
-    color: #DDD;
+    color: #616161;
 }
 
 #buttonContainer {

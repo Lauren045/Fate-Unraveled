@@ -1,25 +1,29 @@
 [
-    { "id": 1, "text": "This is my chance."},
-    { "id": 2, "text": "It's unguarded right now."},
-    { "id": 3, "text": "Finally, something to eat."},
-    { "id": 4, "text": "Alright, it's go time!"},
+    { "id": 1, "text": "(This is it. The pantry's wide open)"},
+    { "id": 2, "text": "(No, be calm about this. How many times have you gotten into troule because you were too eager about it?)"},
+    { "id": 3, "text": "(The owner's at the front, so this is my chance!)"},
+    { "id": 4, "text": "(Alright, it's go time!)"},
+    { "id": 5, "text": "(Heh, too easy. Leaving the bread wide open)"},
+    { "id": 6, "text": "(Finally, something to ea—)"},
+    { "id": 7, "text": "(Huh?)"},
+    { "id": 8, "text": "'Hmph. I thought I heard a little rate come in here.'"},
+    { "id": 9, "text": "'Wh-what?!'"},
+    { "id": 10, "text": "(Drat! Where did he come from?!)"},
     {
-        "id": 5,
-        "text": "Testing options",
+        "id": 11,
+        "text": "(What should I do? The bread's right there, and I can make a run for it. But can this guy catch up to me? Or should I knock him out first?)",
         "choices": [
-            { "text": "Yes", "next": 6 },
-            { "text": "No", "next": 7 }
+            { "text": "Run away with the bread", "next": 12 },
+            { "text": "Fight him first, then take the bread", "next": 14 }
         ]
     },
-    { "id": 6, "text": "Whatever happens when you choose yes", "next": 8 },
-    { "id": 7, "text": "Whatever happens when you choose no", "next": 8 },
-    { "id": 8, "text": "Both yes/no should lead back here"},
-    { "id": 9, "text": "Blah"},
-    { "id": 10, "text": "Blahblah"},
-    { "id": 11, "text": "BlahBlah"},
-    { "id": 12, "text": "Blahblah"},
-    { "id": 13, "text": "BlahBlah"},
-    { "id": 14, "text": "hehe"},
-    { "id": 15, "text": "ahaha"},
-    { "id": 16, "text": "heuheu"}
+    { "id": 12, "text": "'Come back here!'", "next": 20 },
+    { "id": 13, "text": "'Hah! See ya later, sucker! And thanks for the meal!'"},
+    { "id": 14, "text": "(This guy is as jacked as can be. And he probably runs fast too. Can I even outrun him?0"},
+    { "id": 15, "text": "'Argh!'"},
+    { "id": 16, "text": "(Wh-what?! I didn't even see him throw a punch!)"},
+    { "id": 17, "text": "'Pathetic. I've had better rugrats steal from this place than you.'"},
+    { "id": 18, "text": "(Dammit! What was I thinking?! As if I could fight a guy as big as him.)"},
+    { "id": 19, "text": "(He might actually kill me at this rate!"},
+    { "id": 20, "text": "got lazy, finishing this later"}
 ]
