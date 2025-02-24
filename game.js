@@ -35,4 +35,3 @@ function changeCharacter(imageFile) {
 }
 
 changeBackground("bg.jpg")
-changeCharacter("fed.png")

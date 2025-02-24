@@ -10,7 +10,8 @@ async function loadDialogue() {
 }
 
 //present the dialogue onto the designated dialogue box
-//updated to also show choice options when it occurs
+//also present the name of the character at the top of the box
+//presents choice options when it occurs
 function showDialogue(id) {
     const dialogueTextElement = document.getElementById("dialogueText");
     const choiceBox = document.getElementById("choiceBox");
@@ -19,6 +20,11 @@ function showDialogue(id) {
     let currentDialogue = dialogues.find(d => d.id === id);
 
     if (!currentDialogue) return;
+
+    //if the index has a name property, change the name of the namebox
+    if (currentDialogue.name !== undefined) {
+        document.getElementById("characterName").innerText = currentDialogue.name;
+    }
 
     dialogueTextElement.innerText = currentDialogue.text;
     dialogueHistory.push(currentDialogue.text);
