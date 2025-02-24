@@ -1,29 +1,36 @@
 [
-    { "id": 1, "text": "(This is it. The pantry's wide open)"},
+    { "id": 1, "name": "MC", "text": "(This is it. The pantry's wide open)"},
     { "id": 2, "text": "(No, be calm about this. How many times have you gotten into troule because you were too eager about it?)"},
     { "id": 3, "text": "(The owner's at the front, so this is my chance!)"},
     { "id": 4, "text": "(Alright, it's go time!)"},
     { "id": 5, "text": "(Heh, too easy. Leaving the bread wide open)"},
     { "id": 6, "text": "(Finally, something to ea—)"},
     { "id": 7, "text": "(Huh?)"},
-    { "id": 8, "text": "'Hmph. I thought I heard a little rate come in here.'"},
-    { "id": 9, "text": "'Wh-what?!'"},
+    { "id": 8, "name": "Cafe Owner", "text": "'Hmph. I thought I heard a little rat come in here.'"},
+    { "id": 9, "name": "MC", "text": "'Wh-what?!'"},
     { "id": 10, "text": "(Drat! Where did he come from?!)"},
     {
         "id": 11,
-        "text": "(What should I do? The bread's right there, and I can make a run for it. But can this guy catch up to me? Or should I knock him out first?)",
+        "text": "(What should I do? The bread's right there, and I can make a run for it. But, can this guy catch up to me? Or should I knock him out first?)",
         "choices": [
             { "text": "Run away with the bread", "next": 12 },
-            { "text": "Fight him first, then take the bread", "next": 14 }
+            { "text": "Fight him first, then take the bread", "next": 21 }
         ]
     },
-    { "id": 12, "text": "'Come back here!'", "next": 20 },
-    { "id": 13, "text": "'Hah! See ya later, sucker! And thanks for the meal!'"},
-    { "id": 14, "text": "(This guy is as jacked as can be. And he probably runs fast too. Can I even outrun him?0"},
-    { "id": 15, "text": "'Argh!'"},
-    { "id": 16, "text": "(Wh-what?! I didn't even see him throw a punch!)"},
-    { "id": 17, "text": "'Pathetic. I've had better rugrats steal from this place than you.'"},
-    { "id": 18, "text": "(Dammit! What was I thinking?! As if I could fight a guy as big as him.)"},
-    { "id": 19, "text": "(He might actually kill me at this rate!"},
-    { "id": 20, "text": "got lazy, finishing this later"}
+    { "id": 12, "text": "(Just have to trust my legs here!)"},
+    { "id": 13, "name": "Cafe Owner", "text": "You! You're faster than I thought."},
+    { "id": 14, "text": "Come back here!"},
+    { "id": 15, "name": "MC", "text": "Hah! See ya later, sucker! And, thanks for the meal!"},
+    { "id": 16, "text": "Hah...hah...finally, a decent meal...!"},
+    { "id": 17, "text": "(I take a huge chomp of the freshly baked bread. It was soft, basically melting in my mouth. The best meal I've had in ages.)"},
+    { "id": 18, "text": "Hehe, maybe I should ransack the place again once things settle down there."},
+    { "id": 19, "text": "Hmm?"},
+    { "id": 20, "text": "Who goes there?!", "next": 27},
+    { "id": 21, "text": "(This guy is as jacked as can be. And he probably runs fast too. Can I even outrun him?0"},
+    { "id": 22, "text": "'Argh!'"},
+    { "id": 23, "text": "(Wh-what?! I didn't even see him throw a punch!)"},
+    { "id": 24, "name": "Cafe Owner", "text": "'Pathetic. I've had better rugrats steal from this place than you.'"},
+    { "id": 25, "name": "MC", "text": "(Dammit! What was I thinking?! As if I could fight a guy as big as him.)"},
+    { "id": 26, "text": "(He might actually kill me at this rate!"},
+    { "id": 27, "text": "got lazy, finishing this later"}
 ]

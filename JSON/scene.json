@@ -1,11 +1,9 @@
 {
   "scenes": [
-    { "ids": [1, 2, 3, 4, 5, 6, 7], "background": "bg.jpg", "name": "MC" },
-    { "ids": [8], "background": "bg.jpg", "character": "def.png", "name": "Cafe Owner" },
-    { "ids": [9, 10, 11], "background": "bg.jpg", "character": "def.png", "name": "MC" },
-    { "ids": [12], "background": "bg.jpg", "character": "def.png", "name": "Cafe Owner" },
-    { "ids": [13, 14, 15, 16], "background": "bg.jpg", "character": "def.png", "name": "MC" },
-    { "ids": [17], "background": "bg.jpg", "character": "def.png", "name": "Cafe Owner" },
-    { "ids": [18, 19, 20], "background": "bg.jpg", "character": "def.png", "name": "MC" }
+    { "ids": [1], "background": "bg.jpg"},
+    { "ids": [8], "character": "def.png"},
+    { "ids": [13, 14, 15, 16], "background": "bg.jpg", "character": "def.png"},
+    { "ids": [17], "background": "bg.jpg", "character": "def.png"},
+    { "ids": [18, 19, 20], "background": "bg.jpg", "character": "def.png"}
   ]
 }
