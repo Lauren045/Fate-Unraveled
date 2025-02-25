@@ -24,10 +24,11 @@ function showDialogue(id) {
     //if the index has a name property, change the name of the namebox
     if (currentDialogue.name !== undefined) {
         document.getElementById("characterName").innerText = currentDialogue.name;
+        dialogueHistory.push({ type: "name", text: currentDialogue.name});
     }
 
     dialogueTextElement.innerText = currentDialogue.text;
-    dialogueHistory.push(currentDialogue.text);
+    dialogueHistory.push({ type: "dialogue", text: currentDialogue.text});
 
     changeScene(id);
 
@@ -44,7 +45,10 @@ function showChoices(choices) {
     choices.forEach(choiceObj => {
         let choiceButton = document.createElement("button");
         choiceButton.innerText = choiceObj.text;
-        choiceButton.onclick = () => selectChoice(choiceObj);
+        choiceButton.onclick = () => {
+	    dialogueHistory.push({ type: "choice", text: choiceObj.text});
+	    selectChoice(choiceObj);
+	}
         choiceBox.appendChild(choiceButton);
     });
 }
@@ -124,9 +128,17 @@ function history() {
 	 historyContent.id = "historyContent";
 	 for (let i = 0; i < dialogueHistory.length; i++) {
 	      const entry = document.createElement("p");
-	      entry.className = "entry";
-	      entry.innerText = dialogueHistory[i];
+	      entry.style.marginTop = "4%";
+	      entry.innerText = dialogueHistory[i].text;
 	      historyContent.appendChild(entry);
+
+	      if (dialogueHistory[i].type === "name") {
+		  entry.style.fontWeight = "bold";
+		  entry.style.color = "green";
+	      }
+	      else if (dialogueHistory[i].type === "choice") {
+		  entry.style.color = "red";
+	      }
 	 }
 	 historyMenu.appendChild(historyContent);
 
@@ -146,4 +158,3 @@ loadDialogue();
 autoplay();
 skipForward();
 history();
-

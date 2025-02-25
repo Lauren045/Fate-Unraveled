@@ -17,7 +17,6 @@ async function changeScene(dialogueId) {
     if (scene) {
         if (scene.background) changeBackground(scene.background);
         if (scene.character) changeCharacter(scene.character);
-        if (scene.name) document.getElementById("characterName").innerText = scene.name;
     }
 }
 
