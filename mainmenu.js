@@ -72,12 +72,15 @@ function showSaveLoadWindow(isLoading = false) {
 // This loads the game from the selected slot
 function loadGameFromSlot(slotNumber) {
     const saveData = localStorage.getItem(`saveSlot${slotNumber}`);
-    
+
     if (saveData) {
-        localStorage.setItem("lastUsedSlot", slotNumber); // Store last slot
-        window.location.href = "game.html"; // Redirect to game page
+        localStorage.setItem("lastUsedSlot", slotNumber); // stores the last slot
+        let parsedData = JSON.parse(saveData);
+        localStorage.setItem("dialogueIndex", parsedData.dialogueIndex); // saves dialogue position
+
+        window.location.href = "game.html"; // Takes you to the game
     } else {
-        alert(`No save data found buddy in Slot ${slotNumber}`);
+        alert(`No save data found in Slot ${slotNumber}`);
     }
 }
 
