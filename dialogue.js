@@ -2,6 +2,14 @@ let dialogues = [];
 let dialogueHistory = [];
 let dialogueIndex = 0;
 
+document.addEventListener("DOMContentLoaded", function () {
+    const settingsButton = document.getElementById("settings");
+
+    if (settingsButton) {
+        settingsButton.addEventListener("click", showSettingsMenu);
+    }
+});
+
 //load the dialogue from dialogue.json
 async function loadDialogue() {
     const response = await fetch("JSON/dialogue.json");
@@ -15,10 +23,10 @@ async function loadDialogue() {
 function showDialogue(id) {
     const dialogueTextElement = document.getElementById("dialogueText");
     const choiceBox = document.getElementById("choiceBox");
+    const skipButton = document.getElementById("skipForward");
 
     choiceBox.innerHTML = "";
     let currentDialogue = dialogues.find(d => d.id === id);
-
     if (!currentDialogue) return;
 
     //if the index has a name property, change the name of the namebox
@@ -34,6 +42,9 @@ function showDialogue(id) {
 
     if (currentDialogue.choices) {
         showChoices(currentDialogue.choices);
+	skipButton.disabled = true;
+    } else {
+	skipButton.disabled = false;
     }
 }
 
@@ -60,6 +71,9 @@ function selectChoice(choiceObj) {
     if (nextDialogue) {
         dialogueIndex = dialogues.indexOf(nextDialogue);
         showDialogue(nextDialogue.id);
+
+	// Re-enables the skip button
+	document.getElementById("skipForward").disabled = false;
     }
 }
 
@@ -71,8 +85,9 @@ function dialogueProgression() {
     if (currentDialogue.choices) {
         return;
     }
+
     //jump to the dialogue id if "next" is used
-    else if (currentDialogue.next !== undefined) {
+    if (currentDialogue.next !== undefined) {
         dialogueIndex = dialogues.findIndex(d => d.id === currentDialogue.next);
         showDialogue(dialogues[dialogueIndex].id);
     }
@@ -112,11 +127,35 @@ function autoplay() {
 }
 
 function skipForward() {
-    // You skip all the way to the last dialogue
+    let isSkipping = false;
+    let skipInterval = null;
+
     document.getElementById("skipForward").addEventListener("click", function() {
-         dialogueIndex = dialogues.length - 1;
-         showDialogue();
-    })
+        if (!isSkipping) {
+            skipInterval = setInterval(function() {
+                let currentDialogue = dialogues[dialogueIndex];
+
+                // Stop skipping if choices appear
+                if (currentDialogue.choices) {
+                    clearInterval(skipInterval);
+                    isSkipping = false;
+                    document.getElementById("skipForward").innerText = "Skip Forward";
+                    return;
+                }
+
+                dialogueProgression();
+            }, 100);
+
+            isSkipping = true;
+            document.getElementById("skipForward").innerText = "Skipping...";
+        } 
+        else {
+            // Stop skipping when clicked again
+            clearInterval(skipInterval);
+            isSkipping = false;
+            document.getElementById("skipForward").innerText = "Skip Forward";
+        }
+    });
 }
 
 function history() {
