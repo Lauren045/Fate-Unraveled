@@ -1,9 +1,0 @@
-{
-  "scenes": [
-    { "ids": [1], "background": "bg.jpg"},
-    { "ids": [8], "character": "def.png"},
-    { "ids": [13, 14, 15, 16], "background": "bg.jpg", "character": "def.png"},
-    { "ids": [17], "background": "bg.jpg", "character": "def.png"},
-    { "ids": [18, 19, 20], "background": "bg.jpg", "character": "def.png"}
-  ]
-}

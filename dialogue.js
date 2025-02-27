@@ -14,19 +14,19 @@ document.addEventListener("DOMContentLoaded", function () {
 async function loadDialogue() {
     const response = await fetch("JSON/dialogue.json");
     dialogues = await response.json();
-    showDialogue(dialogues[dialogueIndex].id);
+    showDialogue(dialogueIndex);
 }
 
 //present the dialogue onto the designated dialogue box
 //also present the name of the character at the top of the box
 //presents choice options when it occurs
-function showDialogue(id) {
+function showDialogue(index) {
     const dialogueTextElement = document.getElementById("dialogueText");
     const choiceBox = document.getElementById("choiceBox");
     const skipButton = document.getElementById("skipForward");
 
     choiceBox.innerHTML = "";
-    let currentDialogue = dialogues.find(d => d.id === id);
+    let currentDialogue = dialogues[index];
     if (!currentDialogue) return;
 
     //if the index has a name property, change the name of the namebox
@@ -34,11 +34,13 @@ function showDialogue(id) {
         document.getElementById("characterName").innerText = currentDialogue.name;
         dialogueHistory.push({ type: "name", text: currentDialogue.name});
     }
+    //if the index has a background property, change the background
+    if (currentDialogue.background) changeBackground(currentDialogue.background);
+    //if the index has a char property, change the character sprite
+    if (currentDialogue.char) changeCharacter(currentDialogue.char);
 
     dialogueTextElement.innerText = currentDialogue.text;
     dialogueHistory.push({ type: "dialogue", text: currentDialogue.text});
-
-    changeScene(id);
 
     if (currentDialogue.choices) {
         showChoices(currentDialogue.choices);
@@ -66,11 +68,11 @@ function showChoices(choices) {
 
 //logic for when user has to make a choice
 function selectChoice(choiceObj) {
-    const nextDialogue = dialogues.find(d => d.id === choiceObj.next);
+    const nextDialogue = dialogues.find(d => d.next === choiceObj.jump);
 
     if (nextDialogue) {
         dialogueIndex = dialogues.indexOf(nextDialogue);
-        showDialogue(nextDialogue.id);
+        showDialogue(dialogueIndex);
 
 	// Re-enables the skip button
 	document.getElementById("skipForward").disabled = false;
@@ -86,15 +88,15 @@ function dialogueProgression() {
         return;
     }
 
-    //jump to the dialogue id if "next" is used
-    if (currentDialogue.next !== undefined) {
-        dialogueIndex = dialogues.findIndex(d => d.id === currentDialogue.next);
-        showDialogue(dialogues[dialogueIndex].id);
+    //jump to the dialogue id if the property "jump" is used
+    if (currentDialogue.jump !== undefined) {
+        dialogueIndex = dialogues.findIndex(d => d.next === currentDialogue.jump);
+        showDialogue(dialogueIndex);
     }
     //progress dialogue linearly
     else if (dialogueIndex < dialogues.length - 1) {
         dialogueIndex++;
-        showDialogue(dialogues[dialogueIndex].id);
+        showDialogue(dialogueIndex);
     }
 }
 
