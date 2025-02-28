@@ -19,9 +19,10 @@ async function loadDialogue() {
     showDialogue(dialogueIndex);
 }
 
-//present the dialogue onto the designated dialogue box
-//also present the name of the character at the top of the box
+//presents the dialogue onto the designated dialogue box
+//presents the name of the character at the top of the box
 //presents choice options when it occurs
+//changes the background and character sprites if currentDialogue has those properties
 function showDialogue(index) {
     const dialogueTextElement = document.getElementById("dialogueText");
     const choiceBox = document.getElementById("choiceBox");
@@ -37,9 +38,12 @@ function showDialogue(index) {
         dialogueHistory.push({ type: "name", text: currentDialogue.name});
     }
     //if the index has a background property, change the background
+    //call changeBackground() in game.js
     if (currentDialogue.background) changeBackground(currentDialogue.background);
     //if the index has a char property, change the character sprite
-    if (currentDialogue.char) changeCharacter(currentDialogue.char);
+    //if the char property is defined but empty, remove the character sprite
+    //call changeCharacter() in game.js
+    if (currentDialogue.char != undefined) changeCharacter(currentDialogue.char);
 
     dialogueTextElement.innerText = currentDialogue.text;
     dialogueHistory.push({ type: "dialogue", text: currentDialogue.text});
@@ -116,7 +120,7 @@ function autoplay() {
 
     document.getElementById("autoplay").addEventListener("click", function() {
          if (!ifOn) {
-	     // progresses dialogue every 3 seconds but will change later
+	     // progresses the dialogue every 3 seconds
              setAutoplayOn = setInterval(dialogueProgression, 3000);
              ifOn = true;
 	     // text changing is a placeholder
@@ -169,22 +173,26 @@ function history() {
 
 	 const historyContent = document.createElement("div");
 	 historyContent.id = "historyContent";
+	 // loops through each entry in dialogueHistory and prints it out
 	 for (let i = 0; i < dialogueHistory.length; i++) {
 	      const entry = document.createElement("p");
 	      entry.style.marginTop = "4%";
 	      entry.innerText = dialogueHistory[i].text;
 	      historyContent.appendChild(entry);
-
+	
+	      // if the type is "name", change the apperance
 	      if (dialogueHistory[i].type === "name") {
 		  entry.style.fontWeight = "bold";
 		  entry.style.color = "green";
 	      }
+	      // if the type is "choice", change the apperance
 	      else if (dialogueHistory[i].type === "choice") {
 		  entry.style.color = "red";
 	      }
 	 }
 	 historyMenu.appendChild(historyContent);
 
+	 // creates the close button
 	 const closeButton = document.createElement("button");
 	 closeButton.id = "closeButton";
 	 closeButton.innerText = "Close";
@@ -193,6 +201,7 @@ function history() {
 	 }
 	 historyMenu.appendChild(closeButton);
 
+	 // append everything to the body of the website
 	 document.body.appendChild(historyMenu);
     })
 }

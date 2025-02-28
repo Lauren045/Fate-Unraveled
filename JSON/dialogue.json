@@ -53,6 +53,42 @@
     { "text": "No, there are still places I can go to. I’ll scout the place first.", "jump": "unfairLife"},
 
     { "next": "unfairLife", "name": "Kieran", "text": "Life has always been unfair to me. Nothing ever seemed to be going well for me."},
-    { "text": "finish later"}
+    { "text": "It was always one roadblock after another with nothing good ever coming my way."},
+    { "text": "Huh? What do you mean everyone experiences hardship every once in a while?"},
+    { "text": "Of course, I know that. It’s just that it always felt like life had something against me."},
+    { "text": "Born in this poverty-stricken, good-for-nothing place with no one to support me, I guess you could say I grew up pretty quickly."},
+    { "text": "I had to do whatever it took to survive in this god-forsaken place, even if it meant stealing from others."},
+    { "text": "In the slums, you couldn’t trust anyone. If you did, they would stab you in the back the moment things start to turn sour."},
+    { "text": "So, I lived my whole life, wandering around the town, the back alleys, searching and scavenging for my next meal."},
+    { "text": "Can you even call it living though? Living this sorry excuse for a life?"},
+    { "text": "Can I really continue to live my life like this…?"},
+    { "name": "", "text": "*bump*"},
+    { "name": "Kiernan", "text": "Ouch!"},
+    { "text": "Who the hell…?!"},
+    { "name": "???", "text": "Ah, here you are. I was looking all over for you."},
+    { "name": "Kiernan", "text": "Huh? What are you on about?"},
+    { "text": "(Don’t tell me…is he one of the guys I stole from before? Is he planning to take his revenge on me?)"},
+    { "text": "Alright, you wanna fight, huh? Come at me, then!"},
+    { "text": "(Mislead the target, if there’s an opening, steal whatever I can, and run away!)"},
+    { "name": "", "text": "The stranger smiled mysteriously."},
+    { "name": "???", "text": "Settle down. I am not here to harm you nor pick a fight with you."},
+    { "name": "Kiernan", "text": "Hmm…is that so? (Yeah, right. Looks like he’s trying to let my guard down too."},
+    { "name": "???", "text": "That magic… I didn’t expect you would awaken it so early."},
+    { "name": "Kiernan", "text": "Magic? (What’s his plan? Why is he trying so hard to take advantage of me?)"},
+    {
+        "text": "C'mon, make a decision before it's too late!",
+        "choices": [
+            { "text": "Run away", "jump": "runFromStranger"},
+            { "text": "Continue the plan to steal", "jump": "stealFromStranger"},
+	    { "text": "Talk to the stranger", "jump": "talkToStranger"}
+        ]
+    },
+    { "next": "runFromStranger", "name": "???", "text": "No can do."},
+    { "name": "Kiernan", "text": "What?", "jump": "continueTalkingToStranger"},
 
+    { "next": "stealFromStranger", "name": "Kiernan", "text": "(He doesn’t have much from the looks of him, but he definitely has something. I can smell it!)"},
+    { "name": "Kiernan", "text": "Thought crimes.", "jump": "continueTalkingToStranger"},
+
+    { "next": "talkToStranger", "name": "Kiernan", "text": "(Maybe he has something worthwhile to say…)"},
+    { "next": "continueTalkingToStranger", "name": "Kiernan", "text": "What's this about magic?"}
 ]
