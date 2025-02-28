@@ -1,6 +1,6 @@
 [
-    { "name": "Kieran", "text": "(This is it. The pantry's wide open)", "background": "bg.jpg"},
-    { "text": "(No, be calm about this. How many times have you gotten into trouble because you were too eager about it?)"},
+    { "name": "Kieran", "text": "(This is it. The pantry's wide open)", "background": "bg.jpg", "effect": "fadeIn"},
+    { "text": "(No, be calm about this. How many times have you gotten into trouble because you were too eager about it?)", "effect": "flash"},
     { "text": "(The owner's at the front, so this is my chance!)"},
     { "text": "(Alright, it's go time!)"},
     { "text": "(Heh, too easy. Leaving the bread wide open)"},
@@ -38,12 +38,12 @@
 
     { "next": "fight", "name": "Kiernan", "text": "(This guy is as jacked as can be. And he probably runs fast too. Can I even outrun him?)"},
     { "text": "(I’ll just have to knock him unconscious. But, can I do it?)"},
-    { "text": "Argh!"},
+    { "text": "Argh!", "effect": "shake"},
     { "text": "(Wh-what?! I didn't even see him throw a punch!)"},
     { "name": "Cafe Owner", "text": "Pathetic. I've had better rugrats steal from this place than you."},
     { "name": "Kieran", "text": "(Dammit! What was I thinking?! As if I could fight a guy as big as him.)"},
     { "text": "(He might actually kill me at this rate! C’mon, something, anything! What can I use to stop him?!)"},
-    { "name": "", "text": "*BOOM*"},
+    { "name": "", "text": "*BOOM*", "effect": "shake"},
     { "name": "Cafe Owner", "text": "What was that?"},
     { "text": "Hmph, anyway- Wait, where did he go?"},
     { "name": "Kieran", "text": "Hah...hah..."},

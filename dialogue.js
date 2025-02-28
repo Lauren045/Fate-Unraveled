@@ -47,6 +47,21 @@ function showDialogue(index) {
     dialogueTextElement.innerText = currentDialogue.text;
     dialogueHistory.push({ type: "dialogue", text: currentDialogue.text});
 
+    if (currentDialogue.effect) {
+        if (currentDialogue.effect === "flash") {
+            triggerFX("flash");
+        }
+        else if (currentDialogue.effect === "fadeIn") {
+            triggerFX("fadeIn");
+        }
+        else if (currentDialogue.effect === "fadeOut") {
+            triggerFX("fadeOut");
+        }
+        else if (currentDialogue.effect === "shake") {
+            triggerShake();
+        }
+    }
+
     if (currentDialogue.choices) {
         showChoices(currentDialogue.choices);
 	skipButton.disabled = true;

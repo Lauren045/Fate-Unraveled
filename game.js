@@ -1,5 +1,6 @@
 const background = document.getElementById("backgroundImage");
 const characters = document.getElementById("characterImages");
+const sceneEffect = document.getElementById("sceneEffect");
 
 document.addEventListener("DOMContentLoaded", () => {
     const bgMusic = document.getElementById("bgMusic");
@@ -21,6 +22,29 @@ function changeCharacter(imageFile) {
     } else {
         characters.style.display = "none";
     }
+}
+
+function triggerFX(fxType) {
+    if (fxType === "flash") {
+        sceneEffect.style.animation = "flash 1s ease-in-out";
+    }
+    else if (fxType === "fadeIn") {
+        sceneEffect.style.animation = "fadeIn 3s ease-in-out";
+    }
+    else if (fxType === "fadeOut") {
+        sceneEffect.style.animation = "fadeOut 3s ease-in-out";
+    }
+
+    setTimeout(() => {
+        sceneEffect.style.animation = "";
+    }, duration);
+}
+
+function triggerShake() {
+    background.classList.add("shake");
+    setTimeout(() => {
+        background.classList.remove("shake");
+    }, 500);
 }
 
 changeBackground("bg.jpg")
