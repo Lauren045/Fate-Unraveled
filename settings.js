@@ -1,10 +1,16 @@
 // When page loads, the settings will be applied
 function applySavedSettings() {
-    const savedFontSize = localStorage.getItem("fontSize") || "16";
+    const savedFontSize = localStorage.getItem("fontSize") || "30";
+    const savedVolume = localStorage.getItem("soundVolume") || "100";
     const dialogueText = document.getElementById("dialogueText");
+    const bgMusic = document.getElementById("bgMusic");
 
     if (dialogueText) {
         dialogueText.style.fontSize = `${savedFontSize}px`;
+    }
+
+    if (bgMusic) {
+	bgMusic.volume = savedVolume / 200;
     }
 }
 
@@ -34,23 +40,43 @@ function showSettingsMenu() {
 
     // Load saved settings
     const savedFontSize = localStorage.getItem("fontSize") || "16";
-    const savedSoundSetting = localStorage.getItem("soundEnabled") === "true";
+    const savedVolume = localStorage.getItem("soundVolume") || "100";
 
     // florencia, this is how you make the title for settings
     const title = document.createElement("h2");
     title.innerText = "Settings";
     settingsMenu.appendChild(title);
 
-    // Sound Button
-    const soundToggle = document.createElement("button");
-    soundToggle.innerText = savedSoundSetting ? "Sound: ON" : "Sound: OFF";
-    soundToggle.style.display = "block";
-    soundToggle.style.margin = "10px auto";
-    soundToggle.onclick = function () {
-        const newSetting = soundToggle.innerText === "Sound: OFF";
-        soundToggle.innerText = newSetting ? "Sound: ON" : "Sound: OFF";
+    // Title for song slider
+    const volumeLabel = document.createElement("label");
+    volumeLabel.innerText = "Sound Volume:";
+    volumeLabel.style.display = "block";
+    volumeLabel.style.marginTop = "10px";
+    settingsMenu.appendChild(volumeLabel);
+
+    // The Sound slider
+    const volumeSlider = document.createElement("input");
+    volumeSlider.type = "range";
+    volumeSlider.min = "0";
+    volumeSlider.max = "200";
+    volumeSlider.value = savedVolume;
+    volumeSlider.style.display = "block";
+    volumeSlider.style.margin = "10px auto";
+    settingsMenu.appendChild(volumeSlider);
+
+    // Shows the current volume right now
+    const volumeDisplay = document.createElement("span");
+    volumeDisplay.innerText = `Current: ${volumeSlider.value}%`;
+    settingsMenu.appendChild(volumeDisplay);
+
+    // Updates the volume from the slider
+    volumeSlider.oninput = function () {
+        volumeDisplay.innerText = `Current: ${volumeSlider.value}%`;
+        const bgMusic = document.getElementById("bgMusic");
+        if (bgMusic) {
+            bgMusic.volume = volumeSlider.value / 200; // Converts the range
+        }
     };
-    settingsMenu.appendChild(soundToggle);
 
     // Title for font size
     const fontSizeLabel = document.createElement("label");
@@ -63,7 +89,7 @@ function showSettingsMenu() {
     const fontSizeSlider = document.createElement("input");
     fontSizeSlider.type = "range";
     fontSizeSlider.min = "12";
-    fontSizeSlider.max = "30";
+    fontSizeSlider.max = "60";
     fontSizeSlider.value = savedFontSize
     fontSizeSlider.style.display = "block";
     fontSizeSlider.style.margin = "10px auto";
@@ -89,7 +115,7 @@ function showSettingsMenu() {
     saveButton.style.margin = "10px auto";
     saveButton.onclick = function () {
         localStorage.setItem("fontSize", fontSizeSlider.value);
-        localStorage.setItem("soundEnabled", soundToggle.innerText === "Sound: ON");
+        localStorage.setItem("soundVolume", volumeSlider.value);
         alert("Settings saved!");
     };
     settingsMenu.appendChild(saveButton);
