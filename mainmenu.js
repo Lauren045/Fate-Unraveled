@@ -86,6 +86,7 @@ function loadGameFromSlot(slotNumber) {
 
 document.getElementById("newGame").addEventListener("click", () => {
     localStorage.removeItem("lastUsedSlot"); // This clears the old save slot
+    localStorage.setItem("dialogueIndex", 0);
     window.location.href = "game.html";
 });
 

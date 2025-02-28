@@ -3,7 +3,6 @@ let dialogueHistory = [];
 let dialogueIndex = localStorage.getItem("dialogueIndex")
     ? parseInt(localStorage.getItem("dialogueIndex")) 
     : 0; // 0 if no save data exists
-
 document.addEventListener("DOMContentLoaded", function () {
     const settingsButton = document.getElementById("settings");
 
