@@ -15,14 +15,12 @@ document.addEventListener("DOMContentLoaded", function () {
 async function loadDialogue() {
     const response = await fetch("JSON/dialogue.json");
     dialogues = await response.json();
-    showDialogue(dialogueIndex);
+    showScene(dialogueIndex);
 }
 
-//presents the dialogue onto the designated dialogue box
-//presents the name of the character at the top of the box
-//presents choice options when it occurs
-//changes the background and character sprites if currentDialogue has those properties
-function showDialogue(index) {
+//function that shows the dialogue, name, and choices and changes the backgrounds, characters,
+//and other visual elements based on the properties of the index in the array
+function showScene(index) {
     const dialogueTextElement = document.getElementById("dialogueText");
     const choiceBox = document.getElementById("choiceBox");
     const skipButton = document.getElementById("skipForward");
@@ -36,6 +34,7 @@ function showDialogue(index) {
         document.getElementById("characterName").innerText = currentDialogue.name;
         dialogueHistory.push({ type: "name", text: currentDialogue.name});
     }
+
     //if the index has a background property, change the background
     //call changeBackground() in game.js
     if (currentDialogue.background) changeBackground(currentDialogue.background);
@@ -44,6 +43,7 @@ function showDialogue(index) {
     //call changeCharacter() in game.js
     if (currentDialogue.char != undefined) changeCharacter(currentDialogue.char);
 
+    //change the dialogue and push it into the dialogueHistory array
     dialogueTextElement.innerText = currentDialogue.text;
     dialogueHistory.push({ type: "dialogue", text: currentDialogue.text});
 
@@ -62,6 +62,7 @@ function showDialogue(index) {
         }
     }
 
+    //if currentDialogue has choices, call showChoices and display them
     if (currentDialogue.choices) {
         showChoices(currentDialogue.choices);
 	skipButton.disabled = true;
@@ -92,7 +93,7 @@ function selectChoice(choiceObj) {
 
     if (nextDialogue) {
         dialogueIndex = dialogues.indexOf(nextDialogue);
-        showDialogue(dialogueIndex);
+        showScene(dialogueIndex);
 
 	// Re-enables the skip button
 	document.getElementById("skipForward").disabled = false;
@@ -111,12 +112,12 @@ function dialogueProgression() {
     //jump to the dialogue id if the property "jump" is used
     if (currentDialogue.jump !== undefined) {
         dialogueIndex = dialogues.findIndex(d => d.next === currentDialogue.jump);
-        showDialogue(dialogueIndex);
+        showScene(dialogueIndex);
     }
     //progress dialogue linearly
     else if (dialogueIndex < dialogues.length - 1) {
         dialogueIndex++;
-        showDialogue(dialogueIndex);
+        showScene(dialogueIndex);
     }
 }
 
