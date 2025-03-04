@@ -1,8 +1,11 @@
 let dialogues = [];
 let dialogueHistory = [];
+let isTyping = false; // Prevents skipping dialogue while typing
+let typingTimeouts = []; // Stores all active timeouts to clear them if needed
 let dialogueIndex = localStorage.getItem("dialogueIndex")
     ? parseInt(localStorage.getItem("dialogueIndex")) 
     : 0; // 0 if no save data exists
+
 document.addEventListener("DOMContentLoaded", function () {
     const settingsButton = document.getElementById("settings");
 
@@ -16,6 +19,30 @@ async function loadDialogue() {
     const response = await fetch("JSON/dialogue.json");
     dialogues = await response.json();
     showScene(dialogueIndex);
+}
+
+// This will display each text letter
+function typeText(element, text, speed = 50, callback = null) {
+    // Clear previous timeouts to prevent overlapping typing
+    typingTimeouts.forEach(clearTimeout);
+    typingTimeouts = []; // Reset timeout array
+
+    element.innerHTML = ""; // Clears existing text
+    let i = 0;
+    isTyping = true; // Prevents dialogue progression until done
+
+    function type() {
+        if (i < text.length) {
+            element.innerHTML += text[i] === " " ? "&nbsp;" : text[i];
+            i++;
+            let timeout = setTimeout(type, speed);
+            typingTimeouts.push(timeout);
+        } else {
+            isTyping = false;
+            if (callback) callback();
+        }
+    }
+    type();
 }
 
 //function that shows the dialogue, name, and choices and changes the backgrounds, characters,
@@ -44,7 +71,10 @@ function showScene(index) {
     if (currentDialogue.char != undefined) changeCharacter(currentDialogue.char);
 
     //change the dialogue and push it into the dialogueHistory array
-    dialogueTextElement.innerText = currentDialogue.text;
+    typeText(dialogueTextElement, currentDialogue.text, 50, () => {
+        isTyping = false; // Unlocks dialogue progression when typing is done
+    });
+
     dialogueHistory.push({ type: "dialogue", text: currentDialogue.text});
 
     if (currentDialogue.effect) {
@@ -102,7 +132,17 @@ function selectChoice(choiceObj) {
 
 //function that progresses dialogue
 function dialogueProgression() {
+    const dialogueTextElement = document.getElementById("dialogueText");
     let currentDialogue = dialogues[dialogueIndex];
+
+    if (isTyping) {
+        // If typing is ongoing, immediately finish the text
+        isTyping = false;
+        typingTimeouts.forEach(clearTimeout); // Stop further typing
+        typingTimeouts = []; // Reset timeout tracking
+        dialogueTextElement.innerHTML = currentDialogue.text.replace(/ /g, "&nbsp;");
+        return;
+    }
 
     //if there are choices, stop the function to prevent progression
     if (currentDialogue.choices) {

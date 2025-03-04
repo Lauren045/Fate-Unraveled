@@ -127,9 +127,10 @@ function showSettingsMenu() {
     mainMenuButton.style.margin = "10px auto";
     mainMenuButton.onclick = function () {
         localStorage.setItem("fontSize", fontSizeSlider.value);
-        localStorage.setItem("soundEnabled", soundToggle.innerText === "Sound: ON");
+        localStorage.setItem("soundVolume", volumeSlider.value); // Make sure to save volume correctly
         window.location.href = "index.html";
     };
+
     settingsMenu.appendChild(mainMenuButton);
 
     // close the button, pretty easy
@@ -151,3 +152,4 @@ function showSettingsMenu() {
         dialogueText.style.fontSize = `${savedFontSize}px`;
     }
 }
+mainMenuButton.onclick
