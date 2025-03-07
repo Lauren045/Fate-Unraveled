@@ -35,6 +35,10 @@ function triggerFX(fxType) {
         sceneEffect.style.animation = "fadeOut 3s ease-in-out";
     }
 
+    //else if (fxType === "speedLines") {
+        //sceneEffect.style.animation = "speedLines 3s ease-in-out";
+    //}
+
     setTimeout(() => {
         sceneEffect.style.animation = "";
     }, duration);

@@ -90,6 +90,8 @@ function showScene(index) {
         else if (currentDialogue.effect === "shake") {
             triggerShake();
         }
+        //else if (currentDialogue.effect === "speedLines") {
+        //}
     }
 
     //if currentDialogue has choices, call showChoices and display them
