@@ -150,6 +150,36 @@ function showSettingsMenu() {
     };
     settingsMenu.appendChild(saveButton);
 
+    // Fullscreen Button
+    const fullscreenButton = document.createElement("button");
+    fullscreenButton.innerText = "Fullscreen";
+    fullscreenButton.style.display = "block";
+    fullscreenButton.style.margin = "10px auto";
+    fullscreenButton.onclick = function () {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
+    };
+    settingsMenu.appendChild(fullscreenButton);
+
+    // Wipe Data Button
+    const wipeDataButton = document.createElement("button");
+    wipeDataButton.innerText = "Reset All Data";
+    wipeDataButton.style.display = "block";
+    wipeDataButton.style.margin = "10px auto";
+    wipeDataButton.style.background = "red";
+    wipeDataButton.style.color = "white";
+    wipeDataButton.onclick = function () {
+        if (confirm("You sure you want to reset all data? This action cannot be undone.")) {
+            localStorage.clear();
+            alert("All settings have been reset. The page will now reload.");
+            window.location.href = "index.html";
+        }
+    };
+    settingsMenu.appendChild(wipeDataButton);
+
     // Main menu button
     const mainMenuButton = document.createElement("button");
     mainMenuButton.innerText = "Main Menu";
