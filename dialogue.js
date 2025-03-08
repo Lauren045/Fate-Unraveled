@@ -107,6 +107,10 @@ function showScene(index) {
     } else {
 	skipButton.disabled = false;
     }
+
+    if (currentDialogue.minigame) {
+	triggerBattle();
+    }
 }
 
 //present choices in choice box

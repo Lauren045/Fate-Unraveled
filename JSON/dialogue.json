@@ -130,7 +130,7 @@
     { "name": "Goblin", "text": "Grarrgh!"},
     { "name": "Kiernan", "text": "Ahh!"},
 
-    { "name": "Kiernan", "text": "Hah...hah..."},
+    { "name": "Kiernan", "text": "Hah...hah...", "minigame": "battle"},
     { "text": "I...I really defeated one..."},
     { "name": "Kiernan", "text": "No way... I didn’t know I had it in me."},
     { "name": "???", "text": "Now, do you see?"},
@@ -230,7 +230,8 @@
     { "name": "Kiernan", "text": "That doesn’t prove I’m a hero or anything. It’s just opening a wall."},
     { "name": "Ulric", "text": "Go on, open it."},
     { "name": "Kiernan", "text": "(...He’s ignoring me...)"},
-    { "name": "Ulric", "text": "I knew you had it in you. You really are a hero of the prophecy."},
+
+    { "name": "Ulric", "text": "I knew you had it in you. You really are a hero of the prophecy.", "minigame": "battle"},
     { "name": "Kiernan", "text": "Like I said, this doesn’t prove anything!"},
     { "name": "Ulric", "text": "Shall we?"},
     { "name": "Kiernan", "text": "*cough* *cough* Ugh, why is it so dusty?!"},
