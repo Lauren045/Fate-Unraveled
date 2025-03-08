@@ -2,6 +2,7 @@
 function applySavedSettings() {
     const savedFontSize = localStorage.getItem("fontSize") || "30";
     const savedVolume = localStorage.getItem("soundVolume") || "100";
+    const savedSpeed = localStorage.getItem("typingSpeed") || "50";
     const dialogueText = document.getElementById("dialogueText");
     const bgMusic = document.getElementById("bgMusic");
 
@@ -12,6 +13,8 @@ function applySavedSettings() {
     if (bgMusic) {
 	bgMusic.volume = savedVolume / 200;
     }
+
+    localStorage.setItem("typingSpeed", savedSpeed);
 }
 
 // Call this function when the page loads
@@ -108,6 +111,32 @@ function showSettingsMenu() {
         }
     };
 
+    // Speed typing thing
+    const savedSpeed = localStorage.getItem("typingSpeed") || "50";
+
+    const speedLabel = document.createElement("label");
+    speedLabel.innerText = "Typing Speed:";
+    speedLabel.style.display = "block";
+    speedLabel.style.marginTop = "10px";
+    settingsMenu.appendChild(speedLabel);
+
+    const speedSlider = document.createElement("input");
+    speedSlider.type = "range";
+    speedSlider.min = "10"; // Faster
+    speedSlider.max = "100"; // Slower
+    speedSlider.value = savedSpeed;
+    speedSlider.style.display = "block";
+    speedSlider.style.margin = "10px auto";
+    settingsMenu.appendChild(speedSlider);
+
+    const speedDisplay = document.createElement("span");
+    speedDisplay.innerText = `Current: ${speedSlider.value}ms`;
+    settingsMenu.appendChild(speedDisplay);
+
+    speedSlider.oninput = function () {
+        speedDisplay.innerText = `Current: ${speedSlider.value}ms`;
+    };
+
     // Save Settings Button
     const saveButton = document.createElement("button");
     saveButton.innerText = "Save Settings";
@@ -116,6 +145,7 @@ function showSettingsMenu() {
     saveButton.onclick = function () {
         localStorage.setItem("fontSize", fontSizeSlider.value);
         localStorage.setItem("soundVolume", volumeSlider.value);
+	localStorage.setItem("typingSpeed", speedSlider.value);
         alert("Settings saved!");
     };
     settingsMenu.appendChild(saveButton);

@@ -22,14 +22,18 @@ async function loadDialogue() {
 }
 
 // This will display each text letter
-function typeText(element, text, speed = 50, callback = null) {
+function typeText(element, text, speed = null, callback = null) {
     // Clear previous timeouts to prevent overlapping typing
     typingTimeouts.forEach(clearTimeout);
-    typingTimeouts = []; // Reset timeout array
+    typingTimeouts = []; // resets it
 
     element.innerHTML = ""; // Clears existing text
     let i = 0;
     isTyping = true; // Prevents dialogue progression until done
+
+    // Default speed is 50ms
+    let savedSpeed = localStorage.getItem("typingSpeed");
+    speed = speed !== null ? speed: savedSpeed ? parseInt(savedSpeed) : 50;
 
     function type() {
         if (i < text.length) {
@@ -56,6 +60,8 @@ function showScene(index) {
     let currentDialogue = dialogues[index];
     if (!currentDialogue) return;
 
+    let savedSpeed = parseInt(localStorage.getItem("typingSpeed")) || 50;
+
     //if the index has a name property, change the name of the namebox
     if (currentDialogue.name !== undefined) {
         document.getElementById("characterName").innerText = currentDialogue.name;
@@ -71,7 +77,7 @@ function showScene(index) {
     if (currentDialogue.char != undefined) changeCharacter(currentDialogue.char);
 
     //change the dialogue and push it into the dialogueHistory array
-    typeText(dialogueTextElement, currentDialogue.text, 50, () => {
+    typeText(dialogueTextElement, currentDialogue.text, savedSpeed, () => {
         isTyping = false; // Unlocks dialogue progression when typing is done
     });
 
@@ -90,6 +96,8 @@ function showScene(index) {
         else if (currentDialogue.effect === "shake") {
             triggerShake();
         }
+        //else if (currentDialogue.effect === "speedLines") {
+        //}
     }
 
     //if currentDialogue has choices, call showChoices and display them
