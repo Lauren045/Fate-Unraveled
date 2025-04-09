@@ -35,8 +35,12 @@ function triggerFX(fxType) {
         sceneEffect.style.animation = "fadeOut 3s ease-in-out";
     }
 
-    //else if (fxType === "speedLines") {
-        //sceneEffect.style.animation = "speedLines 3s ease-in-out";
+    //else if (fxType === "speedBurst") {
+        //const burst = document.getElementById("speedBurst");
+        //burst.style.display = "block";
+        //setTimeout(() => {
+            //burst.style.display = "none";
+        //}, 1000);
     //}
 
     setTimeout(() => {
