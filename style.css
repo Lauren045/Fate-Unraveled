@@ -30,15 +30,6 @@
     100% { transform: translate(0, 0); }
 }
 
-/*@keyframes speedLines {
-    0% { transform: rotate(-20deg); }
-    25% { transform: rotate(10deg); }
-    50% { transform: rotate(-10deg); }
-    75% { transform: rotate(20deg); }
-    100% { transform: rotate(0deg); }
-}
-*/
-
 #sceneEffect {
     position: fixed;
     top: 0;
@@ -52,6 +43,12 @@
 
 .shake {
     animation: shake 2s ease-in-out;
+}
+
+#speedBurst {
+    display: none;
+    height: 100%;
+    width: 100%;
 }
 
 #backgroundImage {
