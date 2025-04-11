@@ -37,7 +37,7 @@ function typeText(element, text, speed = null, callback = null) {
 
     function type() {
         if (i < text.length) {
-            element.innerHTML += text[i] === " " ? "&nbsp;" : text[i];
+	    element.innerHTML += text[i];
             i++;
             let timeout = setTimeout(type, speed);
             typingTimeouts.push(timeout);
