@@ -174,7 +174,7 @@ function dialogueProgression() {
         isTyping = false;
         typingTimeouts.forEach(clearTimeout); // Stop further typing
         typingTimeouts = []; // Reset timeout tracking
-        dialogueTextElement.innerHTML = currentDialogue.text.replace(/ /g, "&nbsp;");
+        dialogueTextElement.textContent = currentDialogue.text;
         return;
     }
 

@@ -121,7 +121,8 @@ body {
     line-height: 1.4;
     white-space: normal;
     overflow-wrap: break-word;
-    word-break: break-word;
+    word-break: normal;
+    hyphens:auto;
 }
 
 #choiceBox {
