@@ -5,6 +5,8 @@ let typingTimeouts = []; // Stores all active timeouts to clear them if needed
 let dialogueIndex = localStorage.getItem("dialogueIndex")
     ? parseInt(localStorage.getItem("dialogueIndex")) 
     : 0; // 0 if no save data exists
+let alignment = {evil: 0, friendship: 0};
+let flags = [];
 
 document.addEventListener("DOMContentLoaded", function () {
     const settingsButton = document.getElementById("settings");
@@ -61,6 +63,10 @@ function showScene(index) {
     if (!currentDialogue) return;
 
     let savedSpeed = parseInt(localStorage.getItem("typingSpeed")) || 50;
+    //change the dialogue and push it into the dialogueHistory array
+    typeText(dialogueTextElement, currentDialogue.text, savedSpeed, () => {
+        isTyping = false; // Unlocks dialogue progression when typing is done
+    });
 
     //if the index has a name property, change the name of the namebox
     if (currentDialogue.name !== undefined) {
@@ -68,20 +74,22 @@ function showScene(index) {
         dialogueHistory.push({ type: "name", text: currentDialogue.name});
     }
 
-    //if the index has a background property, change the background
-    //call changeBackground() in game.js
+    // puts the current dialogue text into the history
+    dialogueHistory.push({ type: "dialogue", text: currentDialogue.text});
+
+    //if the index has a background or character property, change bg or character
+    //call changeBackground() and changeCharacter() in game.js
     if (currentDialogue.background) changeBackground(currentDialogue.background);
-    //if the index has a char property, change the character sprite
-    //if the char property is defined but empty, remove the character sprite
-    //call changeCharacter() in game.js
     if (currentDialogue.char != undefined) changeCharacter(currentDialogue.char);
 
-    //change the dialogue and push it into the dialogueHistory array
-    typeText(dialogueTextElement, currentDialogue.text, savedSpeed, () => {
-        isTyping = false; // Unlocks dialogue progression when typing is done
-    });
-
-    dialogueHistory.push({ type: "dialogue", text: currentDialogue.text});
+    //if currentDialogue has choices, call showChoices and display them
+    if (currentDialogue.choices) {
+        showChoices(currentDialogue.choices);
+        skipButton.disabled = true;
+    } 
+    else {
+        skipButton.disabled = false;
+    }
 
     if (currentDialogue.effect) {
         if (currentDialogue.effect === "flash") {
@@ -99,17 +107,21 @@ function showScene(index) {
         //else if (currentDialogue.effect === "speedLines") {
         //}
     }
-
-    //if currentDialogue has choices, call showChoices and display them
-    if (currentDialogue.choices) {
-        showChoices(currentDialogue.choices);
-	skipButton.disabled = true;
-    } else {
-	skipButton.disabled = false;
+    
+    // triggers minigames
+    if (currentDialogue.minigame) {
+        document.getElementById("characterImages").style.display = "none";
+        document.getElementById("dialogueBox").style.display = "none";
+        document.getElementById("buttonContainer").style.display = "none";
+        
+	if (currentDialogue.minigame === "battle") {
+            initializeBattle(1);
+        }
     }
 
-    if (currentDialogue.minigame) {
-	triggerBattle();
+    // triggers the ending the player receives depending on choices
+    if (currentDialogue.ending === "triggerEnding") {
+        determineEnding();
     }
 }
 
@@ -140,6 +152,16 @@ function selectChoice(choiceObj) {
 	// Re-enables the skip button
 	document.getElementById("skipForward").disabled = false;
     }
+
+    // increases a given alignment, giving the player a certain ending depending which alignment is highest
+    if (choiceObj.alignment) {
+        alignment[choiceObj.alignment]++;
+    }
+    
+    // sets a flag so that the game remembers player's choices and changes the story accordingly
+    if (choiceObj.setFlag) {
+        flags.push(choiceObj.setFlag);
+    }
 }
 
 //function that progresses dialogue
@@ -161,14 +183,39 @@ function dialogueProgression() {
         return;
     }
 
+    if (currentDialogue.checkFlag) {
+        if (flags.includes(currentDialogue.checkFlag)) {
+            dialogueIndex = dialogues.findIndex(d => d.goToFlag === currentDialogue.checkFlag);
+            showScene(dialogueIndex);
+        }
+    }
+
     //jump to the dialogue id if the property "jump" is used
-    if (currentDialogue.jump !== undefined) {
+    else if (currentDialogue.jump !== undefined) {
         dialogueIndex = dialogues.findIndex(d => d.next === currentDialogue.jump);
         showScene(dialogueIndex);
     }
     //progress dialogue linearly
     else if (dialogueIndex < dialogues.length - 1) {
         dialogueIndex++;
+        showScene(dialogueIndex);
+    }
+}
+
+function determineEnding() {
+    if (alignment.evil > alignment.friendship) {
+        triggerEnding("evil");
+    }
+    else {
+        triggerEnding("friendship");
+    }
+}
+
+function triggerEnding(type) {
+    const nextDialogue = dialogues.find(d => d.ending === type);
+
+    if (nextDialogue) {
+        dialogueIndex = dialogues.indexOf(nextDialogue);
         showScene(dialogueIndex);
     }
 }
