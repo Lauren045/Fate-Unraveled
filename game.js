@@ -38,9 +38,6 @@ function triggerFX(fxType) {
     else if (fxType === "speedBurst") {
         const burst = document.getElementById("speedBurst");
         burst.style.display = "block";
-        setTimeout(() => {
-            burst.style.display = "none";
-        }, 1000);
     }
 
     setTimeout(() => {

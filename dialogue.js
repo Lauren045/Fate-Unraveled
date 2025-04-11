@@ -62,6 +62,8 @@ function showScene(index) {
     let currentDialogue = dialogues[index];
     if (!currentDialogue) return;
 
+    document.getElementById("speedBurst").style.display = "none";
+
     let savedSpeed = parseInt(localStorage.getItem("typingSpeed")) || 50;
     //change the dialogue and push it into the dialogueHistory array
     typeText(dialogueTextElement, currentDialogue.text, savedSpeed, () => {
@@ -104,16 +106,17 @@ function showScene(index) {
         else if (currentDialogue.effect === "shake") {
             triggerShake();
         }
-        //else if (currentDialogue.effect === "speedLines") {
-        //}
+        else if (currentDialogue.effect === "speedBurst") {
+            triggerFX("speedBurst");
+        }
     }
-    
+
     // triggers minigames
     if (currentDialogue.minigame) {
         document.getElementById("characterImages").style.display = "none";
         document.getElementById("dialogueBox").style.display = "none";
         document.getElementById("buttonContainer").style.display = "none";
-        
+
 	if (currentDialogue.minigame === "battle") {
             initializeBattle(1);
         }
