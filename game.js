@@ -16,24 +16,11 @@ function changeBackground(imageFile) {
 }
 
 function changeCharacter(imageFile) {
-    const leftChar = document.getElementById('characterImageLeft');
-    const rightChar = document.getElementById('characterImageRight');
-
-    if (Array.isArray(imageFile)) {
-        // two people
-        leftChar.src = `assets/IMG/${imageFile[0]}`;
-        rightChar.src = `assets/IMG/${imageFile[1]}`;
-        leftChar.style.display = "block";
-        rightChar.style.display = "block";
-    } else if (imageFile) {
-        // single person
-        leftChar.src = `assets/IMG/${imageFile}`;
-        leftChar.style.display = "block";
-        rightChar.style.display = "none";
+    if (imageFile) {
+        characters.src = `assets/IMG/${imageFile}`;
+        characters.style.display = "block";
     } else {
-        // nobody
-        leftChar.style.display = "none";
-        rightChar.style.display = "none";
+        characters.style.display = "none";
     }
 }
 
