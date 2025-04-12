@@ -16,11 +16,24 @@ function changeBackground(imageFile) {
 }
 
 function changeCharacter(imageFile) {
-    if (imageFile) {
-        characters.src = `assets/IMG/${imageFile}`;
-        characters.style.display = "block";
+    const leftChar = document.getElementById('characterImageLeft');
+    const rightChar = document.getElementById('characterImageRight');
+
+    if (Array.isArray(imageFile)) {
+        // two people
+        leftChar.src = `assets/IMG/${imageFile[0]}`;
+        rightChar.src = `assets/IMG/${imageFile[1]}`;
+        leftChar.style.display = "block";
+        rightChar.style.display = "block";
+    } else if (imageFile) {
+        // single person
+        leftChar.src = `assets/IMG/${imageFile}`;
+        leftChar.style.display = "block";
+        rightChar.style.display = "none";
     } else {
-        characters.style.display = "none";
+        // nobody
+        leftChar.style.display = "none";
+        rightChar.style.display = "none";
     }
 }
 
@@ -38,9 +51,6 @@ function triggerFX(fxType) {
     else if (fxType === "speedBurst") {
         const burst = document.getElementById("speedBurst");
         burst.style.display = "block";
-        setTimeout(() => {
-            burst.style.display = "none";
-        }, 1000);
     }
 
     setTimeout(() => {
