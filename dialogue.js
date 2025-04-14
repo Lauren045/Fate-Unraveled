@@ -120,6 +120,10 @@ function showScene(index) {
 	if (currentDialogue.minigame === "battle") {
             initializeBattle(1);
         }
+	
+	if (currentDialogue.minigame === "memory") {
+	    startMemoryGame();
+	}
     }
 
     // triggers the ending the player receives depending on choices

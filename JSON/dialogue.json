@@ -231,7 +231,7 @@
     { "name": "Ulric", "text": "Go on, open it."},
     { "name": "Kiernan", "text": "(...He’s ignoring me...)"},
 
-    { "name": "Ulric", "text": "I knew you had it in you. You really are a hero of the prophecy.", "minigame": "battle"},
+    { "name": "Ulric", "text": "I knew you had it in you. You really are a hero of the prophecy.", "minigame": "memory"},
     { "name": "Kiernan", "text": "Like I said, this doesn’t prove anything!"},
     { "name": "Ulric", "text": "Shall we?"},
     { "name": "Kiernan", "text": "*cough* *cough* Ugh, why is it so dusty?!"},

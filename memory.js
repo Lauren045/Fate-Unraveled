@@ -1,8 +1,10 @@
-document.addEventListener("DOMContentLoaded", () => {
   const symbols = ['🍎', '🍌', '🍇', '🍓', '🍒', '🍉', '🍍', '🥝'];
   let cards = [...symbols, ...symbols]; // Duplicate for pairs
   cards = shuffle(cards);
-  const gameBoard = document.getElementById('gameBoard');
+  const gameBoard = document.createElement("div");
+  gameBoard.className = "game-board";
+  gameBoard.id = "gameBoard";
+  gameBoard.style.display = "none";
   let firstCard = null;
   let secondCard = null;
   let lockBoard = false;
@@ -52,12 +54,12 @@ document.addEventListener("DOMContentLoaded", () => {
     lockBoard = false;
   }
 
-  function startGame() {
+  function startMemoryGame() {
     gameBoard.innerHTML = '';
+    document.body.appendChild(gameBoard);
+    gameBoard.style.display = "grid";
     shuffle(cards).forEach(symbol => {
       const card = createCard(symbol);
       gameBoard.appendChild(card);
     });
   }
-  startGame();
-});
