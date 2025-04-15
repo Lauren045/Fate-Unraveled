@@ -82,7 +82,7 @@ function showScene(index) {
     //if the index has a background or character property, change bg or character
     //call changeBackground() and changeCharacter() in game.js
     if (currentDialogue.background) changeBackground(currentDialogue.background);
-    if (currentDialogue.char != undefined) changeCharacter(currentDialogue.char);
+    changeCharacter(currentDialogue);
 
     //if currentDialogue has choices, call showChoices and display them
     if (currentDialogue.choices) {

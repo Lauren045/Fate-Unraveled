@@ -1,5 +1,4 @@
 const background = document.getElementById("backgroundImage");
-const characters = document.getElementById("characterImages");
 const sceneEffect = document.getElementById("sceneEffect");
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -15,12 +14,36 @@ function changeBackground(imageFile) {
     background.src = `assets/IMG/${imageFile}`;
 }
 
-function changeCharacter(imageFile) {
-    if (imageFile) {
-        characters.src = `assets/IMG/${imageFile}`;
-        characters.style.display = "block";
+function changeCharacter(line) {
+    const leftCharacter = document.getElementById("leftCharacter");
+    const rightCharacter = document.getElementById("rightCharacter");
+    const container = document.getElementById("characterImagesContainer");
+
+    leftCharacter.classList.remove("centeredCharacter");
+    rightCharacter.classList.remove("centeredCharacter");
+    container.classList.remove("centerCharacters");
+
+    if (line.leftChar) {
+        leftCharacter.src = `assets/IMG/${line.leftChar}`;
+        leftCharacter.style.display = "block";
     } else {
-        characters.style.display = "none";
+        leftCharacter.style.display = "none";
+    }
+
+    if (line.rightChar) {
+	rightCharacter.src = `assets/IMG/${line.rightChar}`;
+	rightCharacter.style.display = "block";
+    } else {
+        rightCharacter.style.display = "none";
+    }
+
+    if (line.char) {
+	leftCharacter.src = `assets/IMG/${line.char}`;
+	leftCharacter.style.display = "block";
+	rightCharacter.style.display = "none";
+        
+        container.classList.add("centerCharacters");
+        leftCharacter.classList.add("centeredCharacter");
     }
 }
 

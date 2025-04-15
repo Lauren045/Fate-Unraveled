@@ -25,7 +25,7 @@
     { "text": "Hehe, maybe I should ransack the place again once things settle down there."},
     { "text": "Hmm?"},
     { "text": "Who goes there?!"},
-    { "name": "Thug 1", "text": "Heh. How impressive. I’m surprised you managed to find us out."},
+    { "name": "Thug 1", "text": "Heh. How impressive. I’m surprised you managed to find us out.", "leftChar": "hachiware.png", "rightChar": "usagi.png"},
     { "name": "Kieran", "text": "(Of course. I’ve lived in these parts my whole life. If I hadn’t honed my senses, I would have died long ago.)"},
     { "text": "So, I’m assuming you’re here to steal from me, huh? Can’t say I’m surprised. After all, I got myself a huge haul."},
     { "name": "Thug 1", "text": "Enough talking! Get him!"},

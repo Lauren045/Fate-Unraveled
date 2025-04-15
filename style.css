@@ -300,17 +300,34 @@ button:hover {
     position: fixed;
     bottom: 15%;
     left: 0;
-    width: 100%
+    width: 100%;
     height: auto;
     display: flex;
-    justify-content: space-between;
-    z-index: 1;
+    justify-content: space-between; /* space characters left & right */
+    align-items: flex-end;
     padding: 0 5%;
     pointer-events: none;
-    align-items: flex-end;
+    z-index: 1;
 }
 
 .characterImage {
     max-height: 60vh;
     object-fit: contain;
+}
+
+#leftCharacter {
+    margin-left: 5%;
+}
+
+#rightCharacter {
+    margin-right: 20%;
+}
+
+.centerCharacters {
+    justify-content: center !important;
+}
+
+.centeredCharacter {
+    margin: 0;
+    transform: translateX(-25%);
 }
