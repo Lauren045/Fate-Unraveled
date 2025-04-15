@@ -1,21 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fate Unraveled</title>
-    <link rel="icon" type="image/png" href="assets/IMG/icon.png">
+    <link rel="icon" type="image/png" href="assets/IMG/icon.png" />
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('assets/IMG/placeholdermainmenu.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Cinzel', serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .menu-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.9);
+        }
+
+        .menu-container h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 0 0 15px #ffffffaa;
+        }
+
+        .menu-button {
+            font-size: 1.3em;
+            padding: 14px 28px;
+            background: linear-gradient(to right, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            border: 2px solid #ffffff88;
+            color: white;
+            cursor: pointer;
+            width: 240px;
+            text-align: left;
+            letter-spacing: 1.2px;
+            font-weight: bold;
+            text-shadow: 0 0 5px #ffffff88;
+            border-radius: 8px;
+            transition: all 0.4s ease;
+            box-shadow: inset 0 0 0 transparent, 0 0 10px transparent;
+        }
+
+        .menu-button:hover {
+            backgorund: rgba(255, 255, 255, 0.1);
+            transform: translateX(14px) scale(1.03);
+            box-shadow: inset 0 0 12px rgba(255,255,255,0.2), 0 0 18px rgba(255,255,255,0.3);
+            border-color: #fff;
+        }
+
+        #fadeOverlay {
+            position: fixed;
+            top: 0;
+	    left: 0;
+	    width: 100%;
+	    height: 100%;
+	    background-color: black;
+	    opacity: 0;
+	    pointer-events: none;
+	    z-index: 999;
+	    transition: opacity 1s ease-in-out;
+        }
+
+        .fade-out {
+	    opacity: 1;
+	    pointer-events: all;
+        }
+
+        .fade-in {
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
 </head>
 <body>
-    <h1>Fate Unraveled</h1>
-    <p>YO MAMAMAMA?!</p>
-    <button id="newGame">New Game</button><br>
-    <br><button id="loadGame">Load Game</button><br>
-    <br><button id="settings">Settings</button><br>
-    <br><button id="quit">Quit</button><br>
-
-    <!-- make sure you put scripts down here so it works, you feel? -->
+    <div class="menu-container">
+        <h1>Fate Unraveled</h1>
+        <button class="menu-button" id="newGame">New Game</button>
+        <button class="menu-button" id="loadGame">Load Game</button>
+        <button class="menu-button" id="settings">Options</button>
+        <button class="menu-button" id="extras">Extras</button>
+        <button class="menu-button" id="htp">Help</button>
+    </div>
+    <div id="fadeOverlay"></div>
     <script src="mainmenu.js"></script>
     <script src="settings.js"></script>
 </body>

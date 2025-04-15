@@ -1,3 +1,7 @@
+window.addEventListener("load", () => {
+    triggerFX("fadeIn");
+});
+
 document.addEventListener("DOMContentLoaded", function () {
     const settingsButton = document.getElementById("settings");
     const loadGameButton = document.getElementById("loadGame");
@@ -72,21 +76,46 @@ function showSaveLoadWindow(isLoading = false) {
 // This loads the game from the selected slot
 function loadGameFromSlot(slotNumber) {
     const saveData = localStorage.getItem(`saveSlot${slotNumber}`);
+    
+    fadeAndRedirect(() => {
+        if (saveData) {
+           localStorage.setItem("lastUsedSlot", slotNumber); // stores the last slot
+           let parsedData = JSON.parse(saveData);
+           localStorage.setItem("dialogueIndex", parsedData.dialogueIndex); // saves dialogue position
 
-    if (saveData) {
-        localStorage.setItem("lastUsedSlot", slotNumber); // stores the last slot
-        let parsedData = JSON.parse(saveData);
-        localStorage.setItem("dialogueIndex", parsedData.dialogueIndex); // saves dialogue position
+           window.location.href = "game.html"; // Takes you to the game
+        } else {
+           alert(`No save data found in Slot ${slotNumber}`);
+        }
+    });
+}
 
-        window.location.href = "game.html"; // Takes you to the game
-    } else {
-        alert(`No save data found in Slot ${slotNumber}`);
-    }
+function fadeAndRedirect(callback) {
+    const overlay = document.getElementById("fadeOverlay");
+    overlay.classList.add("fade-out");
+    setTimeout(() => {
+        callback();
+    }, 1000);
 }
 
 document.getElementById("newGame").addEventListener("click", () => {
-    localStorage.removeItem("lastUsedSlot"); // This clears the old save slot
-    localStorage.setItem("dialogueIndex", 0);
-    window.location.href = "game.html";
+    fadeAndRedirect(() => {
+        localStorage.removeItem("lastUsedSlot"); // This clears the old save slot
+        localStorage.setItem("dialogueIndex", 0);
+        window.location.href = "game.html";
+    });
 });
 
+function triggerFX(type) {
+    const overlay = document.getElementById("fadeOverlay");
+
+    if (type === "fadeIn") {
+        overlay.classList.remove("fade-out");
+        overlay.classList.add("fade-in");
+    }
+
+    if (type === "fadeOut") {
+        overlay.classList.remove("fade-in");
+        overlay.classList.add("fade-out");
+    }
+}
