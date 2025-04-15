@@ -1,3 +1,6 @@
+// javascript file for the battle minigame
+// Author: Lauren Huynh
+
 let allies = [];
 let enemies = [];
 let allyIndex = 0;
@@ -71,10 +74,12 @@ function firstTurn() {
     battleScreen.appendChild(pressButton);
 
     pressButton.addEventListener("click", function() {
-	    battleScreen.remove();
+	battleScreen.remove();
         document.getElementById("characterImagesContainer").style.display = "flex";
         document.getElementById("dialogueBox").style.display = "block";
-	    document.getElementById("buttonContainer").style.display = "block";
+	document.getElementById("buttonContainer").style.display = "flex";
+	dialogueIndex++;
+        showScene(dialogueIndex);
     });
 
     const allyContainer = document.createElement("div");

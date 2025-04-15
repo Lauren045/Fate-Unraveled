@@ -71,13 +71,18 @@ function showScene(index) {
     });
 
     //if the index has a name property, change the name of the namebox
-    if (currentDialogue.name !== undefined) {
+    if (currentDialogue.name !== undefined && currentDialogue.name !== "narrator") {
         document.getElementById("characterName").innerText = currentDialogue.name;
         dialogueHistory.push({ type: "name", text: currentDialogue.name});
     }
 
-    // puts the current dialogue text into the history
-    dialogueHistory.push({ type: "dialogue", text: currentDialogue.text});
+    // puts the current dialogue into the history
+    if (currentDialogue.name === "narrator") {
+	dialogueHistory.push({ type: "narrator", text: currentDialogue.text});
+    }
+    else {
+        dialogueHistory.push({ type: "dialogue", text: currentDialogue.text});
+    }
 
     //if the index has a background or character property, change bg or character
     //call changeBackground() and changeCharacter() in game.js
@@ -191,8 +196,8 @@ function dialogueProgression() {
         return;
     }
 
-    //if there are choices, stop the function to prevent progression
-    if (currentDialogue.choices) {
+    //if there are choices or minigames, stop the function to prevent progression
+    if (currentDialogue.choices || currentDialogue.minigame) {
         return;
     }
 
@@ -215,6 +220,8 @@ function dialogueProgression() {
     }
 }
 
+// function that determines the ending depending on player choices
+// Author: Lauren Huynh
 function determineEnding() {
     if (alignment.evil > alignment.friendship) {
         triggerEnding("evil");
@@ -224,6 +231,8 @@ function determineEnding() {
     }
 }
 
+// function that triggers a specific ending
+// Author: Lauren Huynh
 function triggerEnding(type) {
     const nextDialogue = dialogues.find(d => d.ending === type);
 
@@ -241,6 +250,8 @@ document.addEventListener("keydown", function(event) {
     }
 });
 
+// code for the autoplay button that automatically progresses dialogue
+// Author: Lauren Huynh
 function autoplay() {
     let ifOn = false;
     let setAutoplayOn = null;
@@ -293,6 +304,8 @@ function skipForward() {
     });
 }
 
+// displays past dialogue in the history menu and changes text appereance based on type
+// Author: Lauren Huynh
 function history() {
     document.getElementById("history").addEventListener("click", function() {
          const historyMenu = document.createElement("div");
@@ -306,13 +319,15 @@ function history() {
 	      entry.style.marginTop = "4%";
 	      entry.innerText = dialogueHistory[i].text;
 	      historyContent.appendChild(entry);
-	
-	      // if the type is "name", change the apperance
+
+	      // change the apperance of the entry depending on their type	
 	      if (dialogueHistory[i].type === "name") {
 		  entry.style.fontWeight = "bold";
-		  entry.style.color = "green";
+		  entry.style.color = "blue";
 	      }
-	      // if the type is "choice", change the apperance
+	      else if (dialogueHistory[i].type === "narrator") {
+		  entry.style.fontStyle = "italic";
+	      }
 	      else if (dialogueHistory[i].type === "choice") {
 		  entry.style.color = "red";
 	      }
