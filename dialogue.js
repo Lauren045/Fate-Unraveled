@@ -121,7 +121,14 @@ function showScene(index) {
         }
 	
 	if (currentDialogue.minigame === "memory") {
-	    startMemoryGame();
+	    startMemoryGame(() => {
+                document.getElementById("characterImagesContainer").style.display = "flex";
+                document.getElementById("dialogueBox").style.display = "block";
+                document.getElementById("buttonContainer").style.display = "flex";
+                dialogueIndex++;
+                showScene(dialogueIndex);
+            });
+            return;
 	}
     }
 

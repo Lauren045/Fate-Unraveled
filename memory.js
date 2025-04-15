@@ -1,13 +1,16 @@
   const symbols = ['🍎', '🍌', '🍇', '🍓', '🍒', '🍉', '🍍', '🥝'];
   let cards = [...symbols, ...symbols]; // Duplicate for pairs
   cards = shuffle(cards);
+
   const gameBoard = document.createElement("div");
   gameBoard.className = "game-board";
   gameBoard.id = "gameBoard";
   gameBoard.style.display = "none";
+
   let firstCard = null;
   let secondCard = null;
   let lockBoard = false;
+  let onCompleteCallback = null;
 
   function shuffle(array) {
     return array.sort(() => 0.5 - Math.random());
@@ -24,6 +27,7 @@
 
       card.textContent = symbol;
       card.classList.add('flipped');
+
       if (!firstCard) {
         firstCard = card;
         return;
@@ -36,6 +40,14 @@
         firstCard.classList.add('matched');
         secondCard.classList.add('matched');
         resetTurn();
+
+        if (document.querySelectorAll('.matched').length === cards.length) {
+          setTimeout(() => {
+           gameBoard.style.display = "none";
+           if (onCompleteCallback) onCompleteCallback();
+          }, 1000);
+        }
+
       } else {
         setTimeout(() => {
           firstCard.textContent = '';
@@ -49,12 +61,14 @@
 
     return card;
   }
+
   function resetTurn() {
     [firstCard, secondCard] = [null, null];
     lockBoard = false;
   }
 
-  function startMemoryGame() {
+  function startMemoryGame(onComplete) {
+    onCompleteCallback = onComplete;
     gameBoard.innerHTML = '';
     document.body.appendChild(gameBoard);
     gameBoard.style.display = "grid";
