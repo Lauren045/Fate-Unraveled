@@ -113,10 +113,9 @@ function showScene(index) {
 
     // triggers minigames
     if (currentDialogue.minigame) {
-        document.getElementById("characterImages").style.display = "none";
+        document.getElementById("characterImagesContainer").style.display = "none";
         document.getElementById("dialogueBox").style.display = "none";
         document.getElementById("buttonContainer").style.display = "none";
-
 	if (currentDialogue.minigame === "battle") {
             initializeBattle(1);
         }

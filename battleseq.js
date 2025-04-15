@@ -72,7 +72,7 @@ function firstTurn() {
 
     pressButton.addEventListener("click", function() {
 	    battleScreen.remove();
-        document.getElementById("characterImages").style.display = "block";
+        document.getElementById("characterImagesContainer").style.display = "flex";
         document.getElementById("dialogueBox").style.display = "block";
 	    document.getElementById("buttonContainer").style.display = "block";
     });
