@@ -1,10 +1,12 @@
 let allies = [];
 let enemies = [];
-let kiernan = { "name": "Kiernan", "hp": 100, "mp": "50"};
-let guinevere = { "name": "Guinevere", "hp": 100, "mp": "50"};
-let zarek = { "name": "Zarek", "hp": 100, "mp": "50"};
-let thug1 = { "name": "Thug1", "hp": 100};
-let thug2 = { "name": "Thug2", "hp": 100};
+let allyIndex = 0;
+let battleMessage = document.createElement("div");
+let kiernan = { "name": "Kiernan", "maxHp": "100", "hp": 100, "maxMp": "50", "mp": "50"};
+let guinevere = { "name": "Guinevere", "maxHp": "100", "hp": 100, "maxMp": "50", "mp": "50"};
+let zarek = { "name": "Zarek", "maxHp": "100", "hp": 100, "maxMp": "50", "mp": "50"};
+let thug1 = { "name": "Thug 1", "maxHp": "100", "hp": 100};
+let thug2 = { "name": "Thug 2", "maxHp": "100", "hp": 100};
 
 function initializeBattle(battleIndex) {
     switch (battleIndex) {
@@ -14,58 +16,114 @@ function initializeBattle(battleIndex) {
             enemies.push(thug1);
             enemies.push(thug2);
             //temporary img file
-            changeBattleBg("cat.jpg");
+            createBattle("pom.jpg", "usagi.png");
+            battleMessage.innerText = "Thug 1 and Thug 2 appeared!";
             break;
 
         default:
             break;
     }
-    triggerBattle();
+    firstTurn();
 }
 
-function changeBattleBg(imageFile) {
-    let battleScreen = document.createElement("div");
+function createBattle(backgroundFile, enemyFile) {
+    const battleScreen = document.createElement("div");
     battleScreen.id = "battleScreen";
+    battleMessage.id = "battleMessage";
     document.body.appendChild(battleScreen);
+    battleScreen.appendChild(battleMessage);
 
-    let battleBg = document.createElement("img");
+    const battleBg = document.createElement("img");
     battleBg.id = "battleBg";
-    battleBg.src = `assets/IMG/${imageFile}`;
+    battleBg.src = `assets/IMG/${backgroundFile}`;
     battleScreen.appendChild(battleBg);
 
-    let allyContainer = document.createElement("div");
-    allyContainer.id = "allyContainer";
-    battleScreen.appendChild(allyContainer);
+    const enemyInformation = document.createElement("div");
+    enemyInformation.id = "enemyInformation";
+    battleScreen.appendChild(enemyInformation);
 
-    let enemyContainer = document.createElement("div");
+    const enemyContainer = document.createElement("div");
     enemyContainer.id = "enemyContainer";
     battleScreen.appendChild(enemyContainer);
-}
-
-function triggerBattle() {
-    allies.forEach(ally => {
-        let allyBox = document.createElement("div");
-        allyBox.className = "allyBox";
-        allyBox.innerHTML = ally.name;
-        allyContainer.appendChild(allyBox);
-    });
 
     enemies.forEach(enemy => {
         let enemyBox = document.createElement("div");
-        enemyBox.className = "enemyBox";
-        enemyBox.innerHTML = enemy.name;
-        enemyContainer.appendChild(enemyBox);
-    });
+        let enemyHealth = document.createElement("div");
+        let enemySprite = document.createElement("img");
 
+        enemyBox.className = "enemyBox";
+        enemySprite.className = "enemySprite";
+        enemyBox.innerText = enemy.name;
+        enemyHealth.innerText = enemy.maxHp + "/" + enemy.hp;
+        enemySprite.src = `assets/IMG/${enemyFile}`;
+
+        enemyInformation.appendChild(enemyBox);
+        enemyBox.appendChild(enemyHealth);
+        enemyContainer.appendChild(enemySprite);
+    });
+}
+
+function firstTurn() {
+    // temporary way to get out of battle
     const pressButton = document.createElement("button");
     pressButton.id = "pressButton";
     pressButton.innerText = "Battle";
     battleScreen.appendChild(pressButton);
 
     pressButton.addEventListener("click", function() {
-	battleScreen.remove();
+	    battleScreen.remove();
         document.getElementById("characterImages").style.display = "block";
         document.getElementById("dialogueBox").style.display = "block";
-	document.getElementById("buttonContainer").style.display = "block";
+	    document.getElementById("buttonContainer").style.display = "block";
     });
+
+    const allyContainer = document.createElement("div");
+    allyContainer.id = "allyContainer";
+    battleScreen.appendChild(allyContainer);
+
+    const allyInformation = document.createElement("div");
+    allyInformation.id = "allyInformation";
+    allyContainer.appendChild(allyInformation);
+
+    allies.forEach(ally => {
+        let allyBox = document.createElement("div");
+        let allyHealth = document.createElement("div");
+        let allyMana = document.createElement("div");
+    
+        allyBox.className = "allyBox";
+        allyBox.innerHTML = ally.name;
+        allyHealth.innerText = "HP: " + ally.maxHp + "/" + ally.hp;
+        allyHealth.style.marginLeft = "240px";
+        allyMana.innerText = "MP: " + ally.maxMp + "/" + ally.mp;
+        allyMana.style.marginLeft = "20px";
+        allyInformation.appendChild(allyBox);
+        allyBox.appendChild(allyHealth);
+        allyBox.appendChild(allyMana);
+    });
+
+    const actionContainer = document.createElement("div");
+    actionContainer.id = "actionContainer";
+    allyContainer.appendChild(actionContainer);
+
+    const attackButton = document.createElement("div");
+    attackButton.id = "attackButton";
+    attackButton.className = "battleButtons";
+    attackButton.innerText = "Attack";
+    actionContainer.appendChild(attackButton);
+
+    const skillsButton = document.createElement("div");
+    skillsButton.id = "skillsButton";
+    skillsButton.className = "battleButtons";
+    skillsButton.innerText = "Skills";
+    actionContainer.appendChild(skillsButton);
+
+    const guardButton = document.createElement("div");
+    guardButton.id = "guardButton";
+    guardButton.className = "battleButtons";
+    guardButton.innerText = "Guard";
+    actionContainer.appendChild(guardButton);
+
+    //document.getElementById("attackButton").addEventListener("click", regularAttack);
+    //document.getElementById("skillsButton").addEventListener("click", bringUpSkills());
+    //document.getElementById("guardButton").addEventListener("click", guard());
 }
