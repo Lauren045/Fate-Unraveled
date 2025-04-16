@@ -78,6 +78,7 @@ function showScene(index) {
 
     // puts the current dialogue into the history
     if (currentDialogue.name === "narrator") {
+	document.getElementById("characterName").innerText = "";
 	dialogueHistory.push({ type: "narrator", text: currentDialogue.text});
     }
     else {
