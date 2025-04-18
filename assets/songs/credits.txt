@@ -35,3 +35,13 @@ MIDI Arrangement: Lory Werths
 Game Adaptation: Florencia Djap
 License: Original and MIDI arrangement are Public Domain. MIDI sourced from [Lory Werths' website].
 Website: https://mandolingals.tripod.com/midi/midis.html
+
+---
+
+File: FU3.mp3
+Song: Funeral March of a Marionette
+Original Composer: Charles Gounod
+MIDI Arrangement: Lory Werths
+Game Adaptation: Florencia Djap
+License: Original and MIDI arrangement are Public Domain. MIDI sourced from [Lory Werths' website].
+Website: https://mandolingals.tripod.com/midi/midis.html
