@@ -1,3 +1,10 @@
+document.addEventListener("DOMContentLoaded", () => {
+    const bgMusic = document.getElementById("bgMusic");
+
+    bgMusic.volume = 0.5;
+    bgMusic.play().catch(err => console.warn("Autoplay blocked: User interaction needed."));
+});
+
 window.addEventListener("load", () => {
     triggerFX("fadeIn");
 });
