@@ -1,3 +1,6 @@
+let lastLeftChar = null;
+let lastRightChar = null;
+let lastCenterChar = null;
 const background = document.getElementById("backgroundImage");
 const sceneEffect = document.getElementById("sceneEffect");
 
@@ -23,25 +26,54 @@ function changeCharacter(line) {
     rightCharacter.classList.remove("centeredCharacter");
     container.classList.remove("centerCharacters");
 
-    if (line.leftChar) {
-        leftCharacter.src = `assets/IMG/${line.leftChar}`;
+    // Left character logic
+    if ("leftChar" in line) {
+        if (line.leftChar === "null") {
+            leftCharacter.style.display = "none";
+            lastLeftChar = null;
+        } else {
+            leftCharacter.src = `assets/IMG/${line.leftChar}`;
+            leftCharacter.style.display = "block";
+            lastLeftChar = line.leftChar;
+        }
+    } else if (lastLeftChar) {
+        leftCharacter.src = `assets/IMG/${lastLeftChar}`;
         leftCharacter.style.display = "block";
-    } else {
-        leftCharacter.style.display = "none";
     }
 
-    if (line.rightChar) {
-	rightCharacter.src = `assets/IMG/${line.rightChar}`;
-	rightCharacter.style.display = "block";
-    } else {
+    // Right character logic
+    if ("rightChar" in line) {
+        if (line.rightChar === "null") {
+            rightCharacter.style.display = "none";
+            lastRightChar = null;
+        } else {
+            rightCharacter.src = `assets/IMG/${line.rightChar}`;
+            rightCharacter.style.display = "block";
+            lastRightChar = line.rightChar;
+        }
+    } else if (lastRightChar) {
+        rightCharacter.src = `assets/IMG/${lastRightChar}`;
+        rightCharacter.style.display = "block";
+    }
+
+    // Centered character logic
+    if ("char" in line) {
+        if (line.char === "null") {
+            leftCharacter.style.display = "none";
+            rightCharacter.style.display = "none";
+            lastCenterChar = null;
+        } else {
+            leftCharacter.src = `assets/IMG/${line.char}`;
+            leftCharacter.style.display = "block";
+            rightCharacter.style.display = "none";
+            container.classList.add("centerCharacters");
+            leftCharacter.classList.add("centeredCharacter");
+            lastCenterChar = line.char;
+        }
+    } else if (lastCenterChar) {
+        leftCharacter.src = `assets/IMG/${lastCenterChar}`;
+        leftCharacter.style.display = "block";
         rightCharacter.style.display = "none";
-    }
-
-    if (line.char) {
-	leftCharacter.src = `assets/IMG/${line.char}`;
-	leftCharacter.style.display = "block";
-	rightCharacter.style.display = "none";
-        
         container.classList.add("centerCharacters");
         leftCharacter.classList.add("centeredCharacter");
     }

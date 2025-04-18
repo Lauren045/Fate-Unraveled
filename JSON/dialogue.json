@@ -45,7 +45,7 @@
     { "next": "afterCafeOwner", "name": "Kiernan", "text": "(Run!)", "effect": "speedBurst"},
     { "name": "Cafe Owner", "text": "Get back here!", "effect": "speedBurst"},
     { "name": "Kiernan", "text": "So long!", "effect": "speedBurst"},
-    { "text": "Hah...hah...I think I finally managed to lose him..."},
+    { "text": "Hah...hah...I think I finally managed to lose him...", "char": "null"},
     { "text": "Life had never been fair to me. Born in a poverty-stricken place with no one to support me, I guess you could say I grew up pretty quickly."},
     { "text": "From a young age, I had to steal and pickpocket from others in order to survive."},
     { "text": "Even though the people running the town say that they will help the people of the slums, they never do. It's all just lip service, serving to make themselves look better."},
