@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fate Unraveled</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="battle.css">
     <link rel="stylesheet" href="memory.css">
     <link rel="icon" type="image/png" href="assets/IMG/icon.png">
 </head>
@@ -19,6 +20,21 @@
 	    <img id="leftCharacter" class="characterImage">
 	    <img id="rightCharacter" class="characterImage">
         </div>
+	
+	<div id="battleContainer">
+            <div id="battleMessage"></div>
+            <div id="enemyInformation"></div>
+            <div id="enemyContainer"></div>
+            <div id="allyContainer">
+                <div id="allyInformation"></div>
+                <div id="actionContainer">
+                    <div id="attackButton" class="battleButtons">Attack</div>
+                    <div id="skillsButton" class="battleButtons">Skills</div>
+                    <div id="guardButton" class="battleButtons">Guard</div>
+                </div>
+            </div>
+        </div>
+
         <img id="speedBurst" src="assets/IMG/speedBurst.gif">
         <div id="choiceBox"></div>
         <div id="dialogueBox">

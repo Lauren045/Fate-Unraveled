@@ -4,14 +4,15 @@
 let allies = [];
 let enemies = [];
 let allyIndex = 0;
-let battleMessage = document.createElement("div");
 let kiernan = { "name": "Kiernan", "maxHp": "100", "hp": 100, "maxMp": "50", "mp": "50"};
 let guinevere = { "name": "Guinevere", "maxHp": "100", "hp": 100, "maxMp": "50", "mp": "50"};
 let zarek = { "name": "Zarek", "maxHp": "100", "hp": 100, "maxMp": "50", "mp": "50"};
-let thug1 = { "name": "Thug 1", "maxHp": "100", "hp": 100};
-let thug2 = { "name": "Thug 2", "maxHp": "100", "hp": 100};
+let thug1 = { "name": "Thug 1", "maxHp": "100", "hp": 100, "sprite": "hachiware.png"};
+let thug2 = { "name": "Thug 2", "maxHp": "100", "hp": 100, "sprite": "usagi.png"};
 
 function initializeBattle(battleIndex) {
+    document.getElementById("battleContainer").style.display = "block";
+
     switch (battleIndex) {
         case 1:
             allies.push(kiernan);
@@ -19,36 +20,47 @@ function initializeBattle(battleIndex) {
             enemies.push(thug1);
             enemies.push(thug2);
             //temporary img file
-            createBattle("pom.jpg", "usagi.png");
-            battleMessage.innerText = "Thug 1 and Thug 2 appeared!";
+            changeBattleBg("pom.jpg");
+            createEnemies();
+            document.getElementById("battleMessage").innerText = "Thug 1 and Thug 2 appeared!";
             break;
 
         default:
             break;
     }
+    // temporary way to get out of battle
+    const pressButton = document.createElement("button");
+    pressButton.id = "pressButton";
+    pressButton.innerText = "Battle";
+    //battleContainer.appendChild(pressButton);
+    document.getElementById("battleContainer").appendChild(pressButton);
+
+    pressButton.addEventListener("click", function() {
+	document.getElementById("battleContainer").style.display = "none";
+        document.getElementById("enemyInformation").innerHTML = "";
+        document.getElementById("enemyContainer").innerHTML = "";
+        document.getElementById("allyInformation").innerHTML = "";
+
+        document.getElementById("characterImagesContainer").style.display = "flex";
+        document.getElementById("dialogueBox").style.display = "block";
+	document.getElementById("buttonContainer").style.display = "flex";
+        allies = [];
+        enemies = [];
+	dialogueIndex++;
+        showScene(dialogueIndex);
+    });
+    
     firstTurn();
 }
 
-function createBattle(backgroundFile, enemyFile) {
-    const battleScreen = document.createElement("div");
-    battleScreen.id = "battleScreen";
-    battleMessage.id = "battleMessage";
-    document.body.appendChild(battleScreen);
-    battleScreen.appendChild(battleMessage);
-
+function changeBattleBg(backgroundFile) {
     const battleBg = document.createElement("img");
     battleBg.id = "battleBg";
     battleBg.src = `assets/IMG/${backgroundFile}`;
-    battleScreen.appendChild(battleBg);
+    document.getElementById("battleContainer").appendChild(battleBg);
+}
 
-    const enemyInformation = document.createElement("div");
-    enemyInformation.id = "enemyInformation";
-    battleScreen.appendChild(enemyInformation);
-
-    const enemyContainer = document.createElement("div");
-    enemyContainer.id = "enemyContainer";
-    battleScreen.appendChild(enemyContainer);
-
+function createEnemies() {
     enemies.forEach(enemy => {
         let enemyBox = document.createElement("div");
         let enemyHealth = document.createElement("div");
@@ -57,39 +69,19 @@ function createBattle(backgroundFile, enemyFile) {
         enemyBox.className = "enemyBox";
         enemySprite.className = "enemySprite";
         enemyBox.innerText = enemy.name;
-        enemyHealth.innerText = enemy.maxHp + "/" + enemy.hp;
-        enemySprite.src = `assets/IMG/${enemyFile}`;
+        enemyHealth.innerText = enemy.hp + "/" + enemy.maxHp;
+        enemySprite.src = `assets/IMG/${enemy.sprite}`;
 
-        enemyInformation.appendChild(enemyBox);
+        // stores a reference in enemy objects
+        enemy.enemyHealthElement = enemyHealth;
+
+        document.getElementById("enemyInformation").appendChild(enemyBox);
         enemyBox.appendChild(enemyHealth);
-        enemyContainer.appendChild(enemySprite);
+        document.getElementById("enemyContainer").appendChild(enemySprite);
     });
 }
 
 function firstTurn() {
-    // temporary way to get out of battle
-    const pressButton = document.createElement("button");
-    pressButton.id = "pressButton";
-    pressButton.innerText = "Battle";
-    battleScreen.appendChild(pressButton);
-
-    pressButton.addEventListener("click", function() {
-	battleScreen.remove();
-        document.getElementById("characterImagesContainer").style.display = "flex";
-        document.getElementById("dialogueBox").style.display = "block";
-	document.getElementById("buttonContainer").style.display = "flex";
-	dialogueIndex++;
-        showScene(dialogueIndex);
-    });
-
-    const allyContainer = document.createElement("div");
-    allyContainer.id = "allyContainer";
-    battleScreen.appendChild(allyContainer);
-
-    const allyInformation = document.createElement("div");
-    allyInformation.id = "allyInformation";
-    allyContainer.appendChild(allyInformation);
-
     allies.forEach(ally => {
         let allyBox = document.createElement("div");
         let allyHealth = document.createElement("div");
@@ -97,38 +89,80 @@ function firstTurn() {
     
         allyBox.className = "allyBox";
         allyBox.innerHTML = ally.name;
-        allyHealth.innerText = "HP: " + ally.maxHp + "/" + ally.hp;
+        allyHealth.innerText = `HP: ${ally.hp}/${ally.maxHp}`;
         allyHealth.style.marginLeft = "240px";
-        allyMana.innerText = "MP: " + ally.maxMp + "/" + ally.mp;
+        allyMana.innerText = `MP: ${ally.mp}/${ally.maxMp}`;
         allyMana.style.marginLeft = "20px";
-        allyInformation.appendChild(allyBox);
+
+        // stores references in ally objects
+        ally.allyHealthElement = allyHealth;
+        ally.allyManaElement = allyMana;
+        
+        document.getElementById("allyInformation").appendChild(allyBox);
         allyBox.appendChild(allyHealth);
         allyBox.appendChild(allyMana);
     });
 
-    const actionContainer = document.createElement("div");
-    actionContainer.id = "actionContainer";
-    allyContainer.appendChild(actionContainer);
-
-    const attackButton = document.createElement("div");
-    attackButton.id = "attackButton";
-    attackButton.className = "battleButtons";
-    attackButton.innerText = "Attack";
-    actionContainer.appendChild(attackButton);
-
-    const skillsButton = document.createElement("div");
-    skillsButton.id = "skillsButton";
-    skillsButton.className = "battleButtons";
-    skillsButton.innerText = "Skills";
-    actionContainer.appendChild(skillsButton);
-
-    const guardButton = document.createElement("div");
-    guardButton.id = "guardButton";
-    guardButton.className = "battleButtons";
-    guardButton.innerText = "Guard";
-    actionContainer.appendChild(guardButton);
-
-    //document.getElementById("attackButton").addEventListener("click", regularAttack);
-    //document.getElementById("skillsButton").addEventListener("click", bringUpSkills());
+    document.getElementById("attackButton").addEventListener("click", regularAttack);
+    document.getElementById("skillsButton").addEventListener("click", bringUpSkills);
     //document.getElementById("guardButton").addEventListener("click", guard());
+}
+
+function regularAttack() {
+    chooseTarget(0);
+    // code for going to the next turn
+}
+
+
+function bringUpSkills() {
+    //check for whose skills menu to bring up
+    const skillsMenu = document.createElement("div");
+    skillsMenu.id = "skillsMenu";
+    document.getElementById("battleContainer").appendChild(skillsMenu);
+
+    const fireball = document.createElement("div");
+    const darkwhip = document.createElement("div");
+    fireball.innerText = "Fireball";
+    darkwhip.innerText = "Dark Whip";
+    fireball.className = "skillsButtons";
+    darkwhip.className = "skillsButtons";
+    skillsMenu.appendChild(fireball);
+    skillsMenu.appendChild(darkwhip);
+
+    fireball.addEventListener("click", function() {
+        chooseTarget(5);
+        skillsMenu.remove();
+    });
+
+    darkwhip.addEventListener("click", function() {
+        chooseTarget(7);
+        skillsMenu.remove();
+    });
+    
+    //in future, check for whose skills menu to bring up
+}
+
+function chooseTarget(manaPoints) {
+    const targetEnemyMenu = document.createElement("div");
+    targetEnemyMenu.id = "targetEnemyMenu";
+    document.getElementById("battleContainer").appendChild(targetEnemyMenu);
+
+    enemies.forEach(enemy => {
+        if (enemy.hp > 0) {
+            let targetEnemy = document.createElement("div");
+            targetEnemy.className = "targetEnemies";
+            targetEnemy.innerText = enemy.name;
+            targetEnemyMenu.appendChild(targetEnemy);
+
+            targetEnemy.addEventListener("click", function() {
+                damage = Math.floor((Math.random() * 10) + 1);
+                enemy.hp -= damage;
+                enemy.enemyHealthElement.innerText = enemy.hp + "/" + enemy.maxHp;
+                document.getElementById("battleMessage").innerText = `Dealt ${damage} to ${enemy.name}`;
+                kiernan.mp -= manaPoints;
+                kiernan.allyManaElement.innerText = `MP: ${kiernan.mp}/${kiernan.maxMp}`;
+                targetEnemyMenu.remove();
+            });
+        }
+    })
 }
