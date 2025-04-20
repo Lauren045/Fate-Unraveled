@@ -162,7 +162,7 @@ body {
 button {
     background-color: white;
     border: 1px solid black;
-    padding: 10 px;
+    padding: 10px;
     cursor: pointer;
 }
 
@@ -239,4 +239,197 @@ button:hover {
 .centeredCharacter {
     margin: 0;
     transform: translateX(-25%);
+}
+
+#settingsMenu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(10, 5, 20, 0.95);
+    color: #f8f1e7;
+    font-family: 'Cinzel', serif;
+    padding: 40px;
+    box-sizing: border-box;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(6px);
+    border: 4px solid #d4af37;
+    box-shadow: 0 0 40px #d4af37;
+}
+
+#settingsMenu h2 {
+    font-size: 3rem;
+    margin-bottom: 30px;
+    color: #fff5cc;
+    text-shadow: 0 0 15px #ffd700, 0 0 30px #ffa500;
+}
+
+.settings-option {
+    margin-bottom: 20px;
+    width: 80%;
+    max-width: 500px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.settings-option label {
+    font-size: 1.3rem;
+    color: #fff8dc;
+    text-shadow: 0 0 5px #d4af37;
+}
+
+#settingsMenu input[type="range"] {
+    width: 60%;
+    accent-color: #ffd700;
+}
+
+#settingsMenu span {
+    display: block;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    color: #fbeec1;
+    text-shadow: 0 0 3px #caa969;
+}
+
+#settingsMenu button {
+    background: linear-gradient(to right, #4b0082, #8a2be2);
+    color: white;
+    border: 2px solid #fff;
+    padding: 10px 25px;
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    border-radius: 12px;
+    cursor: pointer;
+    margin: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px #9370db;
+}
+
+#settingsMenu button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 18px #b886fc;
+}
+
+#resetBtn {
+    background: crimson !important;
+    border: 2px solid #fff !important;
+    box-shadow: 0 0 15px #ff4d4d;
+}
+
+#resetBtn:hover {
+    box-shadow: 0 0 20px #ff6a6a;
+}
+
+@keyframes fadeInSettings {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeOutSettings {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(0.95); }
+}
+
+.settings-fade-in {
+    animation: fadeInSettings 0.4s ease forwards;
+}
+
+.settings-fade-out {
+    animation: fadeOutSettings 0.3s ease forwards;
+}
+
+#warningOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(10, 0, 20, 0.8);
+    backdrop-filter: blur(6px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+#warningBox {
+    background: rgba(30, 0, 50, 0.95);
+    border: 3px solid crimson;
+    color: #ffe4e4;
+    font-family: 'Cinzel', serif;
+    text-align: center;
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 0 30px crimson;
+    width: 400px;
+    max-width: 90%;
+    animation: fadeInSettings 0.3s ease forwards;
+}
+
+#warningBox h3 {
+    font-size: 1.8rem;
+    color: #ffaaaa;
+    text-shadow: 0 0 10px red;
+    margin-bottom: 20px;
+}
+
+#warningBox p {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    color: #ffeaea;
+}
+
+#warningBox .warning-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.warning-buttons button {
+    padding: 10px 20px;
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: 2px solid white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#confirmReset {
+    background-color: crimson;
+    color: white;
+}
+
+#cancelReset {
+    background-color: black;
+    color: white;
+}
+
+.warning-buttons button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 12px #fff;
+}
+
+#settingsOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(5, 0, 10, 0.9);
+    opacity: 0;
+    z-index: 999;
+    animation: overlayFadeIn 0.6s forwards ease-in;
+    backdrop-filter: blur(4px);
+}
+
+@keyframes overlayFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }

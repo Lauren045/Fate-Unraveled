@@ -1,3 +1,20 @@
+let wasMusicPlaying = false;
+let settingsMusic = new Audio("assets/songs/settingssong.mp3");
+settingsMusic.loop = true;
+settingsMusic.volume = 0.5;
+
+function playUISound() {
+    const sound = new Audio("assets/soundeffects/savedsettingsclick.mp3");
+    sound.volume = 0.3;
+    sound.play();
+}
+
+function playResetWarningSound() {
+    const sound = new Audio("assets/soundeffects/resetalldatawarning.mp3");
+    sound.volume = 0.5;
+    sound.play();
+}
+
 // When page loads, the settings will be applied
 function applySavedSettings() {
     const savedFontSize = localStorage.getItem("fontSize") || "30";
@@ -11,205 +28,178 @@ function applySavedSettings() {
     }
 
     if (bgMusic) {
-	bgMusic.volume = savedVolume / 200;
+        bgMusic.volume = savedVolume / 200;
     }
 
     localStorage.setItem("typingSpeed", savedSpeed);
 }
 
-// Call this function when the page loads
 window.onload = function () {
     applySavedSettings();
 };
 
 function showSettingsMenu() {
-    // this checks if the settings menu already existed
     if (document.getElementById("settingsMenu")) return;
 
-    // bring the settings menu up, pretty simple
+    // Create and fade in a dark overlay first
+    const overlay = document.createElement("div");
+    overlay.id = "settingsOverlay";
+    document.body.appendChild(overlay);
+
     const settingsMenu = document.createElement("div");
     settingsMenu.id = "settingsMenu";
-    settingsMenu.style.position = "fixed";
-    settingsMenu.style.top = "50%";
-    settingsMenu.style.left = "50%";
-    settingsMenu.style.transform = "translate(-50%, -50%)";
-    settingsMenu.style.width = "300px";
-    settingsMenu.style.padding = "20px";
-    settingsMenu.style.background = "white";
-    settingsMenu.style.border = "2px solid black";
-    settingsMenu.style.boxShadow = "0 4px 8px rgba(0,0,0,0.2)";
-    settingsMenu.style.textAlign = "center";
-    settingsMenu.style.zIndex = "1000";
+    settingsMenu.classList.add("settings-fade-in");
+    settingsMenu.innerHTML = `
+        <h2>Settings</h2>
+
+        <div class="settings-option">
+            <label for="volumeSlider">Music Volume</label>
+            <input type="range" id="volumeSlider" min="0" max="200">
+        </div>
+        <span id="volumeDisplay"></span>
+
+        <div class="settings-option">
+            <label for="fontSizeSlider">Font Size</label>
+            <input type="range" id="fontSizeSlider" min="12" max="60">
+        </div>
+        <span id="fontSizeDisplay"></span>
+
+        <div class="settings-option">
+            <label for="speedSlider">Typing Speed</label>
+            <input type="range" id="speedSlider" min="10" max="100">
+        </div>
+        <span id="speedDisplay"></span>
+
+        <button id="saveBtn">Save Settings</button>
+        <button id="fullscreenBtn">Fullscreen</button>
+        <button id="resetBtn">Reset All Data</button>
+        <button id="mainMenuBtn">Main Menu</button>
+        <button id="settingsCloseBtn">Close</button>
+    `;
+     
+     // Delay showing settings menu slightly for drama
+     setTimeout(() => {
+	 document.body.appendChild(settingsMenu);
+ 
+    // Handle background music swap
+    const bgMusic = document.getElementById("bgMusic");
+    if (bgMusic && !bgMusic.paused) {
+        wasMusicPlaying = true;
+        bgMusic.pause();
+    }
+    settingsMusic.currentTime = 0;
+    settingsMusic.play();
 
     // Load saved settings
-    const savedFontSize = localStorage.getItem("fontSize") || "16";
+    const savedFontSize = localStorage.getItem("fontSize") || "30";
     const savedVolume = localStorage.getItem("soundVolume") || "100";
-
-    // florencia, this is how you make the title for settings
-    const title = document.createElement("h2");
-    title.innerText = "Settings";
-    settingsMenu.appendChild(title);
-
-    // Title for song slider
-    const volumeLabel = document.createElement("label");
-    volumeLabel.innerText = "Sound Volume:";
-    volumeLabel.style.display = "block";
-    volumeLabel.style.marginTop = "10px";
-    settingsMenu.appendChild(volumeLabel);
-
-    // The Sound slider
-    const volumeSlider = document.createElement("input");
-    volumeSlider.type = "range";
-    volumeSlider.min = "0";
-    volumeSlider.max = "200";
-    volumeSlider.value = savedVolume;
-    volumeSlider.style.display = "block";
-    volumeSlider.style.margin = "10px auto";
-    settingsMenu.appendChild(volumeSlider);
-
-    // Shows the current volume right now
-    const volumeDisplay = document.createElement("span");
-    volumeDisplay.innerText = `Current: ${volumeSlider.value}%`;
-    settingsMenu.appendChild(volumeDisplay);
-
-    // Updates the volume from the slider
-    volumeSlider.oninput = function () {
-        volumeDisplay.innerText = `Current: ${volumeSlider.value}%`;
-        const bgMusic = document.getElementById("bgMusic");
-        if (bgMusic) {
-            bgMusic.volume = volumeSlider.value / 200; // Converts the range
-        }
-    };
-
-    // Title for font size
-    const fontSizeLabel = document.createElement("label");
-    fontSizeLabel.innerText = "Font Size:";
-    fontSizeLabel.style.display = "block";
-    fontSizeLabel.style.marginTop = "10px";
-    settingsMenu.appendChild(fontSizeLabel);
-
-    // The font size slider
-    const fontSizeSlider = document.createElement("input");
-    fontSizeSlider.type = "range";
-    fontSizeSlider.min = "12";
-    fontSizeSlider.max = "60";
-    fontSizeSlider.value = savedFontSize
-    fontSizeSlider.style.display = "block";
-    fontSizeSlider.style.margin = "10px auto";
-    settingsMenu.appendChild(fontSizeSlider);
-
-    // Shows the current size right now
-    const fontSizeDisplay = document.createElement("span");
-    fontSizeDisplay.innerText = `Current: ${fontSizeSlider.value}px`;
-    settingsMenu.appendChild(fontSizeDisplay);
-
-    fontSizeSlider.oninput = function () {
-        fontSizeDisplay.innerText = `Current: ${fontSizeSlider.value}px`;
-        const dialogueText = document.getElementById("dialogueText");
-        if (dialogueText) {
-            dialogueText.style.fontSize = `${fontSizeSlider.value}px`;
-        }
-    };
-
-    // Speed typing thing
     const savedSpeed = localStorage.getItem("typingSpeed") || "50";
 
-    const speedLabel = document.createElement("label");
-    speedLabel.innerText = "Typing Speed:";
-    speedLabel.style.display = "block";
-    speedLabel.style.marginTop = "10px";
-    settingsMenu.appendChild(speedLabel);
+    const volumeSlider = document.getElementById("volumeSlider");
+    const volumeDisplay = document.getElementById("volumeDisplay");
+    const fontSizeSlider = document.getElementById("fontSizeSlider");
+    const fontSizeDisplay = document.getElementById("fontSizeDisplay");
+    const speedSlider = document.getElementById("speedSlider");
+    const speedDisplay = document.getElementById("speedDisplay");
 
-    const speedSlider = document.createElement("input");
-    speedSlider.type = "range";
-    speedSlider.min = "10"; // Faster
-    speedSlider.max = "100"; // Slower
+    volumeSlider.value = savedVolume;
+    fontSizeSlider.value = savedFontSize;
     speedSlider.value = savedSpeed;
-    speedSlider.style.display = "block";
-    speedSlider.style.margin = "10px auto";
-    settingsMenu.appendChild(speedSlider);
 
-    const speedDisplay = document.createElement("span");
-    speedDisplay.innerText = `Current: ${speedSlider.value}ms`;
-    settingsMenu.appendChild(speedDisplay);
+    volumeDisplay.textContent = `Current: ${savedVolume}%`;
+    fontSizeDisplay.textContent = `Current: ${savedFontSize}px`;
+    speedDisplay.textContent = `Current: ${savedSpeed}ms`;
 
-    speedSlider.oninput = function () {
-        speedDisplay.innerText = `Current: ${speedSlider.value}ms`;
+    volumeSlider.oninput = () => {
+        volumeDisplay.textContent = `Current: ${volumeSlider.value}%`;
+        if (bgMusic) bgMusic.volume = volumeSlider.value / 200;
     };
 
-    // Save Settings Button
-    const saveButton = document.createElement("button");
-    saveButton.innerText = "Save Settings";
-    saveButton.style.display = "block";
-    saveButton.style.margin = "10px auto";
-    saveButton.onclick = function () {
+    const dialogueText = document.getElementById("dialogueText");
+    fontSizeSlider.oninput = () => {
+        fontSizeDisplay.textContent = `Current: ${fontSizeSlider.value}px`;
+        if (dialogueText) dialogueText.style.fontSize = `${fontSizeSlider.value}px`;
+    };
+
+    speedSlider.oninput = () => {
+        speedDisplay.textContent = `Current: ${speedSlider.value}ms`;
+    };
+
+    document.getElementById("saveBtn").onclick = () => {
+        playUISound();
         localStorage.setItem("fontSize", fontSizeSlider.value);
         localStorage.setItem("soundVolume", volumeSlider.value);
-	localStorage.setItem("typingSpeed", speedSlider.value);
+        localStorage.setItem("typingSpeed", speedSlider.value);
         alert("Settings saved!");
     };
-    settingsMenu.appendChild(saveButton);
 
-    // Fullscreen Button
-    const fullscreenButton = document.createElement("button");
-    fullscreenButton.innerText = "Fullscreen";
-    fullscreenButton.style.display = "block";
-    fullscreenButton.style.margin = "10px auto";
-    fullscreenButton.onclick = function () {
+    document.getElementById("fullscreenBtn").onclick = () => {
+        playUISound();
         if (!document.fullscreenElement) {
             document.documentElement.requestFullscreen();
         } else {
             document.exitFullscreen();
         }
     };
-    settingsMenu.appendChild(fullscreenButton);
 
-    // Wipe Data Button
-    const wipeDataButton = document.createElement("button");
-    wipeDataButton.innerText = "Reset All Data";
-    wipeDataButton.style.display = "block";
-    wipeDataButton.style.margin = "10px auto";
-    wipeDataButton.style.background = "red";
-    wipeDataButton.style.color = "white";
-    wipeDataButton.onclick = function () {
-        if (confirm("You sure you want to reset all data? This action cannot be undone.")) {
-            localStorage.clear();
-            alert("All settings have been reset. The page will now reload.");
-            window.location.href = "index.html";
-        }
+    document.getElementById("resetBtn").onclick = () => {
+        playResetWarningSound();
+	showResetWarning();
     };
-    settingsMenu.appendChild(wipeDataButton);
 
-    // Main menu button
-    const mainMenuButton = document.createElement("button");
-    mainMenuButton.innerText = "Main Menu";
-    mainMenuButton.style.display = "block";
-    mainMenuButton.style.margin = "10px auto";
-    mainMenuButton.onclick = function () {
+    function showResetWarning() {
+        if (document.getElementById("warningOverlay")) return;
+
+        const overlay = document.createElement("div");
+        overlay.id = "warningOverlay";
+
+        const box = document.createElement("div");
+        box.id = "warningBox";
+        box.innerHTML = `
+            <h3>⚠️ Reset All Data?</h3>
+            <p>This will erase your saved settings and progress. This action cannot be undone.</p>
+            <div class="warning-buttons">
+                <button id="confirmReset">Yes, Reset</button>
+                <button id="cancelReset">Cancel</button>
+            </div>
+        `;
+
+        overlay.appendChild(box);
+        document.body.appendChild(overlay);
+
+        document.getElementById("confirmReset").onclick = () => {
+            playUISound();
+            localStorage.clear();
+            window.location.href = "index.html";
+        };
+
+        document.getElementById("cancelReset").onclick = () => {
+            playUISound();
+            overlay.remove();
+        };
+    }
+
+    document.getElementById("mainMenuBtn").onclick = () => {
+        playUISound();
         localStorage.setItem("fontSize", fontSizeSlider.value);
-        localStorage.setItem("soundVolume", volumeSlider.value); // Make sure to save volume correctly
+        localStorage.setItem("soundVolume", volumeSlider.value);
         window.location.href = "index.html";
     };
 
-    settingsMenu.appendChild(mainMenuButton);
+    document.getElementById("settingsCloseBtn").onclick = () => {
+        playUISound();
+	settingsMenu.classList.remove("setting-fade-in");
+	settingsMenu.classList.add("settings-fade-out");
 
-    // close the button, pretty easy
-    const closeButton = document.createElement("button");
-    closeButton.innerText = "Close";
-    closeButton.style.display = "block";
-    closeButton.style.margin = "15px auto 0";
-    closeButton.onclick = function () {
-         document.body.removeChild(settingsMenu);
+	setTimeout(() => {
+            settingsMenu.remove();
+	    document.getElementById("settingsOverlay")?.remove();
+            settingsMusic.pause();
+            if (wasMusicPlaying) {
+		const bgMusic = document.getElementById("bgMusic");
+                if (bgMusic) bgMusic.play();
+            }
+        }, 300);
     };
-    settingsMenu.appendChild(closeButton);
-
-    // this is where you append EVERYTHING for settingsMenu to work
-    document.body.appendChild(settingsMenu);
-
-    // Get the saved font size to dialogue text immediately
-    const dialogueText = document.getElementById("dialogueText");
-    if (dialogueText) {
-        dialogueText.style.fontSize = `${savedFontSize}px`;
-    }
+ }, 400);
 }
-mainMenuButton.onclick
