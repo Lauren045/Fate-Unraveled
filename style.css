@@ -88,86 +88,118 @@ body {
     left: 50%;
     transform: translateX(-50%);
     width: 80%;
-    max-width: 900px;
+    max-width: 950px;
     max-height: 25vh;
     overflow-y: auto;
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-    font-size: 1.5rem;
-    font-family: "VT323", serif;
+    background: linear-gradient(to bottom right, rgba(30, 10, 40, 0.85), rgba(15, 5, 25, 0.85));
+    border: 3px solid gold;
+    box-shadow: 0 0 25px gold, 0 0 60px #000000aa;
+    backdrop-filter: blur(5px);
+    border-radius: 20px;
+    color: #fff5cc;
+    padding: 25px 30px;
+    font-size: 1.6rem;
+    font-family: 'Cinzel', serif;
     text-align: left;
     z-index: 10;
+    transition: all 0.3s ease;
 }
 
 #characterName {
     font-weight: bold;
-    font-size: 30px;
+    font-size: 1.9rem;
     margin: 0;
-    padding: 2px 10px;
-    display: block;
+    padding: 5px 0 10px 0;
+    color: #ffd700;
+    text-shadow: 0 0 10px #ffea8a;
 }
 
 #dialogueText {
-    font-size: 16px;
+    font-size: 1.3rem;
     margin: 0;
-    padding: 5px 10px;
-    display: block;
-    max-width: 100%;
-    line-height: 1.4;
+    padding: 0;
+    line-height: 1.6;
+    color: #fbeec1;
     white-space: normal;
     overflow-wrap: break-word;
-    word-break: normal;
-    hyphens:auto;
 }
 
 #choiceBox {
     position: fixed;
-    bottom: 30%;
+    bottom: 32%;
     left: 50%;
     transform: translateX(-50%);
-    padding: 10px;
-    border-radius: 5px;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 12px;
+    padding: 0;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
     z-index: 12;
 }
 
 #choiceBox button {
-    background: #FFFFFF;
-    color: #000000;
-    border: 1px solid #000000;
-    padding: 5px;
+    background: linear-gradient(to right, #6b1dcf, #9d3cff);
+    color: #fff8dc;
+    border: 2px solid white;
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    padding: 10px 25px;
     cursor: pointer;
-    width: 200px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    text-shadow: none;
+    box-shadow: none !important;
+    width: 320px;
     text-align: center;
+    align-self: center;
+    background-clip: padding-box;
 }
 
 #choiceBox button:hover {
-    color: #616161;
+    transform: scale(1.05);
+    background: linear-gradient(to right, #7d32e3, #b16bff);
 }
 
 #buttonContainer {
     position: fixed;
-    bottom: 0%;
+    bottom: 0;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
+    justify-content: center;
     gap: 10px;
+    width: 100%;
+    padding: 10px 0;
+    background: rgba(10, 5, 20, 0.6);
+    border-top: 2px solid #d4af37;
+    box-shadow: 0 -5px 20px rgba(212, 175, 55, 0.3);
     z-index: 11;
+    backdrop-filter: blur(4px);
 }
 
-button {
-    background-color: white;
-    border: 1px solid black;
-    padding: 10px;
+#buttonContainer button {
+    flex: 1;
+    max-width: 140px;
+    height: 20px;
+    background: linear-gradient(to right, #4b0082, #8a2be2);
+    color: #fff8dc;
+    border: 2px solid white;
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    border-radius: 8px;
     cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 0 6px #7b68ee;
 }
 
-button:hover {
-    background-color: #ddd;
+#buttonContainer button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 14px #b886fc;
+    background: linear-gradient(to right, #5c00a8, #a74bff);
 }
 
 #historyMenu {
