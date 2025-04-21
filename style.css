@@ -92,11 +92,11 @@ body {
     max-height: 25vh;
     overflow-y: auto;
     background: linear-gradient(to bottom right, rgba(30, 10, 40, 0.85), rgba(15, 5, 25, 0.85));
-    border: 3px solid gold;
-    box-shadow: 0 0 25px gold, 0 0 60px #000000aa;
+    border: 3px solid #a582c2;
+    box-shadow: 0 0 25px #a582c2, 0 0 60px #000000aa;
     backdrop-filter: blur(5px);
     border-radius: 20px;
-    color: #fff5cc;
+    color: #a582c2;
     padding: 25px 30px;
     font-size: 1.6rem;
     font-family: 'Cinzel', serif;
@@ -110,8 +110,8 @@ body {
     font-size: 1.9rem;
     margin: 0;
     padding: 5px 0 10px 0;
-    color: #ffd700;
-    text-shadow: 0 0 10px #ffea8a;
+    color: #a582c2;
+    text-shadow: 0 0 10px #a582c2;
 }
 
 #dialogueText {
@@ -119,7 +119,7 @@ body {
     margin: 0;
     padding: 0;
     line-height: 1.6;
-    color: #fbeec1;
+    color: #a582c2;
     white-space: normal;
     overflow-wrap: break-word;
 }
@@ -175,7 +175,7 @@ body {
     width: 100%;
     padding: 10px 0;
     background: rgba(10, 5, 20, 0.6);
-    border-top: 2px solid #d4af37;
+    border-top: 2px solid #a582c2;
     box-shadow: 0 -5px 20px rgba(212, 175, 55, 0.3);
     z-index: 11;
     backdrop-filter: blur(4px);
@@ -290,15 +290,15 @@ body {
     justify-content: center;
     align-items: center;
     backdrop-filter: blur(6px);
-    border: 4px solid #d4af37;
-    box-shadow: 0 0 40px #d4af37;
+    border: 4px solid #a582c2;
+    box-shadow: 0 0 40px #a582c2;
 }
 
 #settingsMenu h2 {
     font-size: 3rem;
     margin-bottom: 30px;
-    color: #fff5cc;
-    text-shadow: 0 0 15px #ffd700, 0 0 30px #ffa500;
+    color: #a582c2;
+    text-shadow: 0 0 15px #a582c2, 0 0 30px #a582c2;
 }
 
 .settings-option {
@@ -313,20 +313,20 @@ body {
 .settings-option label {
     font-size: 1.3rem;
     color: #fff8dc;
-    text-shadow: 0 0 5px #d4af37;
+    text-shadow: 0 0 5px #a582c2;
 }
 
 #settingsMenu input[type="range"] {
     width: 60%;
-    accent-color: #ffd700;
+    accent-color: #a582c2;
 }
 
 #settingsMenu span {
     display: block;
     margin-bottom: 15px;
     font-size: 1.2rem;
-    color: #fbeec1;
-    text-shadow: 0 0 3px #caa969;
+    color: #a582c2;
+    text-shadow: 0 0 3px #a582c2;
 }
 
 #settingsMenu button {
@@ -493,14 +493,14 @@ body {
 
 #helpBox {
     background: linear-gradient(to bottom, #1b0033, #2b0055);
-    border: 3px solid gold;
+    border: 3px solid #a582c2;
     border-radius: 25px;
-    box-shadow: 0 0 25px gold, 0 0 60px #000000aa;
+    box-shadow: 0 0 25px #a582c2, 0 0 60px #000000aa;
     padding: 40px;
     width: 600px;
     max-width: 90%;
     text-align: center;
-    color: #fbeec1;
+    color: #a582c2;
     font-family: 'Cinzel', serif;
     letter-spacing: 0.8px;
     line-height: 1.6;
@@ -511,9 +511,9 @@ body {
 
 /* Title */
 #helpBox h2 {
-    color: #fff5cc;
+    color: #a582c2;
     font-size: 2.4rem;
-    text-shadow: 0 0 15px #ffd700;
+    text-shadow: 0 0 15px #a582c2;
     margin-bottom: 25px;
 }
 
@@ -540,7 +540,7 @@ body {
     content: "★";
     position: absolute;
     left: 0;
-    color: #ffd700;
+    color: #a582c2;
     font-size: 1.1rem;
 }
 
