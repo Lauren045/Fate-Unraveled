@@ -1,8 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const bgMusic = document.getElementById("bgMusic");
+  const bgMusic = document.getElementById("bgMusic");
+  bgMusic.volume = 0;
 
-    bgMusic.volume = 0.5;
-    bgMusic.play().catch(err => console.warn("Autoplay blocked: User interaction needed."));
+  const fadeIn = setInterval(() => {
+    if (bgMusic.volume < 0.5) {
+      bgMusic.volume = Math.min(bgMusic.volume + 0.01, 0.5);
+    } else {
+      clearInterval(fadeIn);
+    }
+  }, 100);
+
+  bgMusic.play().catch(err => {
+    console.warn("Autoplay blocked:", err);
+  });
 });
 
 window.addEventListener("load", () => {
