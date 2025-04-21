@@ -126,3 +126,34 @@ function triggerFX(type) {
         overlay.classList.add("fade-out");
     }
 }
+
+document.getElementById("htp").addEventListener("click", () => {
+    const bg = document.getElementById("helpOverlayBg");
+    const overlay = document.getElementById("helpOverlay");
+
+    bg.classList.remove("hidden");
+
+    setTimeout(() => {
+        bg.classList.add("visible");
+    }, 50);
+
+    setTimeout(() => {
+        overlay.classList.remove("hidden");
+        overlay.classList.add("visible");
+    }, 600);
+});
+
+
+function closeHelp() {
+    const bg = document.getElementById("helpOverlayBg");
+    const overlay = document.getElementById("helpOverlay");
+
+    overlay.classList.remove("visible");
+
+    bg.classList.remove("visible");
+
+    setTimeout(() => {
+        overlay.classList.add("hidden");
+        bg.classList.add("hidden");
+    }, 600);
+}

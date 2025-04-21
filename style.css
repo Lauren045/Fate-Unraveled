@@ -433,3 +433,113 @@ button:hover {
     from { opacity: 0; }
     to { opacity: 1; }
 }
+
+#helpOverlayBg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(5, 0, 10, 0.9);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    z-index: 999;
+    transition: opacity 0.6s ease-in-out;
+}
+
+#helpOverlayBg.visible {
+    opacity: 1;
+}
+
+#helpOverlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#helpBox {
+    background: linear-gradient(to bottom, #1b0033, #2b0055);
+    border: 3px solid gold;
+    border-radius: 25px;
+    box-shadow: 0 0 25px gold, 0 0 60px #000000aa;
+    padding: 40px;
+    width: 600px;
+    max-width: 90%;
+    text-align: center;
+    color: #fbeec1;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.8px;
+    line-height: 1.6;
+    font-size: 1.1rem;
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+/* Title */
+#helpBox h2 {
+    color: #fff5cc;
+    font-size: 2.4rem;
+    text-shadow: 0 0 15px #ffd700;
+    margin-bottom: 25px;
+}
+
+/* Paragraphs */
+#helpBox p {
+    margin-bottom: 20px;
+}
+
+/* List styling */
+#helpBox ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 25px;
+}
+
+#helpBox ul li {
+    margin: 10px 0;
+    position: relative;
+    padding-left: 25px;
+    text-align: left;
+}
+
+#helpBox ul li::before {
+    content: "★";
+    position: absolute;
+    left: 0;
+    color: #ffd700;
+    font-size: 1.1rem;
+}
+
+/* Close button */
+#helpBox button {
+    background: linear-gradient(to right, #4b0082, #8a2be2);
+    color: white;
+    border: 2px solid #fff;
+    padding: 10px 25px;
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px #9370db;
+}
+
+#helpBox button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 18px #b886fc;
+}
+
+#helpOverlay.visible #helpBox {
+    animation: popIn 0.4s ease forwards;
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.hidden {
+    display: none !important;
+}
