@@ -67,20 +67,20 @@
     { "name": "Thug 1", "text": "Enough talk. Get him!"},
     { "name": "narrator", "text": "Turn-based Battle", "minigame": "battle", "music":"FU3.mp3"},
     { "name": "Thug 2", "text": "Damnit, run!"},
-    { "name": "Thug 1", "text": "You don't have to tell me that a second time!"},
+    { "name": "Thug 1", "text": "You don't have to tell me twice!"},
     { "name": "Kiernan", "text": "What nuisances. (Anyway, I should eat my well-deserved meal.)"},
     { "name": "narrator", "text": "*CRACK*"},
     { "name": "Kiernan", "text": "Huh? Again? Just what is that sound?"},
     { "name": "???", "text": "Ah, there you are."},
-    { "name": "Kiernan", "text": "Huh?"},
+    { "name": "Kiernan", "text": "...Huh?"},
     { "name": "???", "text": "I was looking all over for you."},
     { "name": "Kiernan", "text": "What are you talking about? Who are you? (...Is he one of the guys I stole from before?)"},
     { "text": "Hmm, I see. You want to take revenge on me for stealing from you. (I'm confident in my abilities. Besides, he's only an old man. I can take him on.)"},
     { "name": "???", "text": "Settle down. I am not here to fight nor harm you."},
     { "name": "Kiernan", "text": "Is that so? (I can't let my guard down. He's clearly here to take advantage of me.)"},
     { "text": "(But I can also use this situation to my advantage too--)"},
-    { 
-        "text": "(Make a choice before it's too late!)", 
+    {
+        "text": "(Make a choice before it's too late!)",
         "choices": [
             { "text": "Run away", "jump": "runAwayFromStranger", "alignment": "coward"},
             { "text": "Steal from the stranger", "jump": "stealFromStranger", "alignment": "evil"},
@@ -110,7 +110,7 @@
     { "next": "continueTalkingToStranger", "text": "I am Ulric, a humble teacher who teaches the art of magic."},
     { "name": "Kiernan", "text": "I see...what does a magic teacher want to do with me?"},
     { "name": "Ulric", "text": "Do not play dumb with me. I already know of your magic ability."},
-    { "text": "A highly talented mage with affinities for fire and dark. For someone who was self-taught, you are quite a capable magic user."},
+    { "text": "A highly talented mage with affinities for fire and darkness. For someone who was self-taught, you are quite a capable magic user."},
     { "name": "Kiernan", "text": "You must be confusing me with someone else, old man. I'm just an ordinary person with absolutely no magic prowess."},
     { "name": "Ulric", "text": "A pointless lie. Any mage can see the mana oozing out from you."},
     { "name": "Kiernan", "text": "...*sigh* I guess, there wasn't any point in hiding it."},
@@ -192,7 +192,7 @@
             { "text": "Behave", "jump": "behaveChurch", "alignment": "friendship"}
         ]
     },
-    { "next":  "runFromUlricChurch", "name": "Kiernan", "text": "Hah! See ya-"},
+    { "next": "runFromUlricChurch", "name": "Kiernan", "text": "Hah! See ya-"},
     { "name": "Kiernan", "text": "Huh?", "effect": "shake"},
     { "name": "Ulric", "text": "I knew you were going to do that. You are far too predictable."},
     { "name": "Kiernan", "text": "Argh! Okay, okay, fine I won't run away! Just let me down!"},
@@ -253,7 +253,7 @@
     { "name": "Ulric", "text": "I trust in my judgement."},
     { "name": "Kiernan", "text": "(Being tasked to save the world. Maybe this is my chance--my chance to find out my reason for living.)"},
     { "text": "(For all I can remember, I wandered the streets, just wanting to survive.)"},
-    { "text": "(But, it became more than a desire to survive, but to actually live--live a purposeful live.)"},
+    { "text": "(But, it became more than a desire to survive, but to actually live--live a purposeful life.)"},
     { "text": "(Maybe through this, I can finally find that purpose. Maybe through this, I can live a life I was proud of.)"},
     { "text": "(However...even though my brain is telling me that this is the greatest opportunity I could ever receive...why does my heart tell me no...?)"},
     {
