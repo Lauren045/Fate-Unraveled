@@ -65,7 +65,7 @@
     { "name": "Kiernan", "text": "It doesn't matter. You don't know who you're dealing with."},
     { "name": "Thug 2", "text": "Is that a threat?"},
     { "name": "Thug 1", "text": "Enough talk. Get him!"},
-    { "name": "narrator", "text": "Turn-based Battle", "minigame": "battle"},
+    { "name": "narrator", "text": "Turn-based Battle", "minigame": "battle", "music":"FU3.mp3"},
     { "name": "Thug 2", "text": "Damnit, run!"},
     { "name": "Thug 1", "text": "You don't have to tell me that a second time!"},
     { "name": "Kiernan", "text": "What nuisances. (Anyway, I should eat my well-deserved meal.)"},

@@ -7,11 +7,36 @@ const sceneEffect = document.getElementById("sceneEffect");
 document.addEventListener("DOMContentLoaded", () => {
     const bgMusic = document.getElementById("bgMusic");
 
-    // Autoplay audio when the page loads
-    bgMusic.volume = 0.5;  // Set volume (0.0 to 1.0)
+    // automatically plays audio track
+    bgMusic.volume = 0.5;
+    bgMusic.loop = true;
     bgMusic.play().catch(err => console.warn("Autoplay blocked: User interaction needed"));
 });
 
+// function handling song change logic
+function changeMusic(track) {
+    const bgMusic = document.getElementById("bgMusic");
+
+    // if a song is alr playing, no need to do anything
+    if (bgMusic.src.includes(track)) {
+        return;
+    }
+
+    // fades out song -- lowers volume before change
+    bgMusic.style.transition = "opacity 1s ease-out";
+    bgMusic.volume = 0;
+
+    // once song is faded, change the track to the one mentioned in the JSON
+    setTimeout(() => {
+        bgMusic.src = `assets/songs/${track}`;
+        bgMusic.load();
+        bgMusic.play();
+
+        // fades in new song -- heightens volume after change
+        bgMusic.style.transition = "opacity 1s ease-in";
+        bgMusic.volume = 0.5;
+    }, 1000);
+}
 
 function changeBackground(imageFile) {
     background.src = `assets/IMG/${imageFile}`;
@@ -108,3 +133,4 @@ function triggerShake() {
 }
 
 changeBackground("bg.jpg")
+changeMusic("FU2.mp3")

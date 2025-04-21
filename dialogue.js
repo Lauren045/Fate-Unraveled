@@ -125,7 +125,7 @@ function showScene(index) {
 	if (currentDialogue.minigame === "battle") {
             initializeBattle(1);
         }
-	
+
 	if (currentDialogue.minigame === "memory") {
 	    startMemoryGame(() => {
                 document.getElementById("characterImagesContainer").style.display = "flex";
@@ -136,6 +136,11 @@ function showScene(index) {
             });
             return;
 	}
+    }
+
+    // triggers music tracks
+    if (currentDialogue.music) {
+        changeMusic(currentDialogue.music);
     }
 
     // triggers the ending the player receives depending on choices
@@ -176,7 +181,7 @@ function selectChoice(choiceObj) {
     if (choiceObj.alignment) {
         alignment[choiceObj.alignment]++;
     }
-    
+
     // sets a flag so that the game remembers player's choices and changes the story accordingly
     if (choiceObj.setFlag) {
         flags.push(choiceObj.setFlag);
@@ -321,7 +326,7 @@ function history() {
 	      entry.innerText = dialogueHistory[i].text;
 	      historyContent.appendChild(entry);
 
-	      // change the apperance of the entry depending on their type	
+	      // change the apperance of the entry depending on their type
 	      if (dialogueHistory[i].type === "name") {
 		  entry.style.fontWeight = "bold";
 		  entry.style.color = "blue";
