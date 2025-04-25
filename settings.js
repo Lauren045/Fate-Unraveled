@@ -237,7 +237,7 @@ function spawnClickSparkles(x, y) {
     const shapes = ["✧", "✦", "✨", "★", "❖"];
     const colors = ["#a582c2", "#ffffff", "#d5a1ff", "#ffd1f9", "#c29eff"];
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 10; i++) {
         const sparkle = document.createElement("div");
         sparkle.className = "save-star";
         sparkle.textContent = shapes[Math.floor(Math.random() * shapes.length)];
