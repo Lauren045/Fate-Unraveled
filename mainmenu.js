@@ -198,3 +198,49 @@ function closeHelp() {
         bg.classList.add("hidden");
     }, 600);
 }
+
+const loadBtn = document.getElementById("loadGame");
+const loadOverlayBg = document.getElementById("loadOverlayBg");
+const loadOverlay = document.getElementById("loadOverlay");
+const loadSlotsContainer = document.getElementById("loadSlots");
+
+loadBtn.addEventListener("click", openLoad);
+
+function openLoad() {
+    loadOverlayBg.classList.add("visible");
+    loadOverlay.classList.remove("hidden");
+    loadOverlay.classList.add("visible");
+
+    renderLoadSlots();
+}
+
+function closeLoad() {
+    loadOverlayBg.classList.remove("visible");
+    loadOverlay.classList.remove("visible");
+    loadOverlay.classList.add("hidden");
+}
+
+function renderLoadSlots() {
+    loadSlotsContainer.innerHTML = "";
+    for (let i = 0; i < 6; i++) {
+        const slotData = localStorage.getItem(`saveSlot${i}`);
+        const slot = document.createElement("div");
+        slot.className = "load-slot";
+        slot.innerHTML = slotData
+            ? `<strong>${JSON.parse(slotData).name}</strong><br><small>${JSON.parse(slotData).timestamp}</small>`
+            : `<em>Empty Slot</em>`;
+
+        slot.addEventListener("click", () => {
+            if (slotData) {
+                localStorage.setItem("currentLoadSlot", i);
+                const fadeOverlay = document.getElementById("fadeOverlay");
+                fadeOverlay.classList.add("fade-out");
+                setTimeout(() => {
+                    window.location.href = "game.html";
+                }, 1000);
+            }
+        });
+
+        loadSlotsContainer.appendChild(slot);
+    }
+}

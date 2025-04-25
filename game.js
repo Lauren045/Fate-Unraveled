@@ -3,6 +3,22 @@ let lastRightChar = null;
 let lastCenterChar = null;
 const background = document.getElementById("backgroundImage");
 const sceneEffect = document.getElementById("sceneEffect");
+const loadSlot = localStorage.getItem("currentLoadSlot");
+
+if (loadSlot !== null) {
+    const data = localStorage.getItem(`saveSlot${loadSlot}`);
+    if (data) {
+        const saveData = JSON.parse(data);
+        currentDialogueIndex = saveData.dialogueIndex;
+        flags = saveData.flags || {};
+        startDialogue(currentDialogueIndex);
+        localStorage.removeItem("currentLoadSlot"); // Clear after loading once
+    } else {
+        startDialogue(0); // Start from beginning if save slot broken
+    }
+} else {
+    startDialogue(0); // Start from beginning normally
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     const bgMusic = document.getElementById("bgMusic");

@@ -1,102 +1,76 @@
-// Made 6 slots cuz seems reasonable
-const num_slots = 6;
+const SAVE_SLOT_COUNT = 6;
 
-// This will bring up the save/load window up
-function showSaveLoadWindow(isLoading = false) {
-    // This will remove the window if it's already up
-    const existingWindow = document.getElementById("saveLoadWindow");
-    if (existingWindow) {
-        existingWindow.remove();
-    }
+const saveBtn = document.getElementById("save");
+const saveOverlayBg = document.getElementById("saveOverlayBg");
+const saveOverlay = document.getElementById("saveOverlay");
+const saveSlotsContainer = document.getElementById("saveSlots");
 
-    // Pop the save/load window up
-    const saveLoadWindow = document.createElement("div");
-    saveLoadWindow.id = "saveLoadWindow";
-    saveLoadWindow.style.position = "fixed";
-    saveLoadWindow.style.top = "50%";
-    saveLoadWindow.style.left = "50%";
-    saveLoadWindow.style.transform = "translate(-50%, -50%)";
-    saveLoadWindow.style.background = "white";
-    saveLoadWindow.style.padding = "20px";
-    saveLoadWindow.style.border = "2px solid black";
-    saveLoadWindow.style.zIndex = "1000";
-    saveLoadWindow.style.textAlign = "center";
-
-    // Title
-    const title = document.createElement("h2");
-    title.innerText = isLoading ? "Load Game" : "Save Game";
-    saveLoadWindow.appendChild(title);
-
-    // Makes the slot buttons in the window and get the data ready
-    for (let i = 1; i <= num_slots; i++) {
-        let slotButton = document.createElement("button");
-        let savedData = localStorage.getItem(`saveSlot${i}`);
-        
-        if (savedData) {
-            let saveInfo = JSON.parse(savedData);
-            slotButton.innerText = `Slot ${i}: Dialogue ${saveInfo.dialogueIndex}`;
-        } else {
-            slotButton.innerText = `Slot ${i}: Empty`;
-        }
-
-        slotButton.onclick = () => {
-            if (isLoading) {
-                loadGameFromSlot(i);
-            } else {
-                saveGameToSlot(i);
-            }
-            saveLoadWindow.remove(); // Closes the window when done
-        };
-
-        saveLoadWindow.appendChild(slotButton);
-        saveLoadWindow.appendChild(document.createElement("br"));
-    }
-
-    // Close button
-    const closeButton = document.createElement("button");
-    closeButton.innerText = "Close";
-    closeButton.onclick = () => saveLoadWindow.remove();
-    saveLoadWindow.appendChild(closeButton);
-
-    // Append the window to document body
-    document.body.appendChild(saveLoadWindow);
+if (typeof currentDialogueIndex === "undefined") {
+    currentDialogueIndex = 0;
 }
 
-// This function saves game progress in a slot you clicked
-function saveGameToSlot(slotNumber) {
+if (typeof flags === "undefined") {
+    flags = {};
+}
+
+// Attach open save menu
+saveBtn.addEventListener("click", openSave);
+
+// Create and populate save slots
+function openSave() {
+    saveOverlayBg.classList.add("visible");
+    saveOverlay.classList.remove("hidden");
+    saveOverlay.classList.add("visible");
+
+    renderSaveSlots();
+}
+
+// Close save menu
+function closeSave() {
+    saveOverlayBg.classList.remove("visible");
+    saveOverlay.classList.remove("visible");
+    saveOverlay.classList.add("hidden");
+}
+
+// Save current game data to localStorage
+function saveToSlot(slot) {
     const saveData = {
-        dialogueIndex: dialogueIndex, 
-        dialogueHistory: dialogueHistory
+        dialogueIndex: currentDialogueIndex || 0,
+        flags: flags || {},
+        name: "Save Slot " + (slot + 1),
+        timestamp: new Date().toLocaleString(),
     };
-    localStorage.setItem(`saveSlot${slotNumber}`, JSON.stringify(saveData));
-    localStorage.setItem("lastUsedSlot", slotNumber); // Store last used slot
-    alert(`Game got saved in Slot ${slotNumber} dude!`);
+
+    localStorage.setItem(`saveSlot${slot}`, JSON.stringify(saveData));
+    renderSaveSlots(); // Refresh slot display
 }
 
-// Load game progress from slot you clicked
-function loadGameFromSlot(slotNumber) {
-    const saveData = localStorage.getItem(`saveSlot${slotNumber}`);
-    
-    if (saveData) {
-        const parsedData = JSON.parse(saveData);
-        dialogueIndex = parsedData.dialogueIndex;
-        dialogueHistory = parsedData.dialogueHistory || [];
-        showDialogue(dialogues[dialogueIndex].id);
-        alert(`Loaded game from Slot ${slotNumber}`);
-    } else {
-        alert(`No save slot here bro in Slot ${slotNumber}`);
+// Make each save slot visually
+function renderSaveSlots() {
+    saveSlotsContainer.innerHTML = "";
+    for (let i = 0; i < SAVE_SLOT_COUNT; i++) {
+        const slotData = localStorage.getItem(`saveSlot${i}`);
+        const slot = document.createElement("div");
+        slot.className = "save-slot";
+        slot.innerHTML = slotData
+            ? `<strong>${JSON.parse(slotData).name}</strong><br><small>${JSON.parse(slotData).timestamp}</small>`
+            : `<em>Empty Slot</em>`;
+
+        slot.addEventListener("click", () => {
+            saveToSlot(i);
+        });
+
+        saveSlotsContainer.appendChild(slot);
     }
 }
 
-// Put save button to open save window
-document.getElementById("save").addEventListener("click", () => showSaveLoadWindow(false));
+function loadFromSlot(slot) {
+    const data = localStorage.getItem(`saveSlot${slot}`);
+    if (!data) return;
 
-// Auto-load the last save when it's available
-window.onload = function() {
-    loadDialogue().then(() => {
-        const lastSlot = localStorage.getItem("lastUsedSlot");
-        if (lastSlot) {
-            loadGameFromSlot(lastSlot);
-        }
-    });
-};
+    const saveData = JSON.parse(data);
+    currentDialogueIndex = saveData.dialogueIndex;
+    flags = saveData.flags || {};
+    startDialogue(currentDialogueIndex);
+}
+
