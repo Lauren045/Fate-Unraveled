@@ -1,4 +1,4 @@
-  const symbols = ['🍎', '🍌', '🍇', '🍓', '🍒', '🍉', '🍍', '🥝'];
+  const symbols = ['✾', '➶', '❖', '❦', '⌬', '🍉', '🍍', '🥝'];
   let cards = [...symbols, ...symbols]; // Duplicate for pairs
   cards = shuffle(cards);
 
