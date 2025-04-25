@@ -297,8 +297,8 @@ body {
 #settingsMenu h2 {
     font-size: 3rem;
     margin-bottom: 30px;
-    color: #a582c2;
-    text-shadow: 0 0 15px #a582c2, 0 0 30px #a582c2;
+    color: #eedaff;
+    text-shadow: 0 0 15px #9256c4, 0 0 30px #d5a1ff;
 }
 
 .settings-option {
@@ -325,8 +325,8 @@ body {
     display: block;
     margin-bottom: 15px;
     font-size: 1.2rem;
-    color: #a582c2;
-    text-shadow: 0 0 3px #a582c2;
+    color: #f3e5ff;
+    text-shadow: 0 0 3px #f3e5ff;
 }
 
 #settingsMenu button {
@@ -574,4 +574,85 @@ body {
 
 .hidden {
     display: none !important;
+}
+
+#settingsSavedPopup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(to bottom right, #240044, #3b0066);
+    border: 3px solid #a582c2;
+    box-shadow: 0 0 25px #a582c2, 0 0 60px #000000aa;
+    border-radius: 20px;
+    padding: 30px 40px;
+    font-family: 'Cinzel', serif;
+    color: #f3e5ff;
+    font-size: 1.3rem;
+    text-align: center;
+    z-index: 3000;
+    opacity: 0;
+    animation: fadePopup 0.4s ease forwards, pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes fadePopup {
+    from { opacity: 0; transform: translate(-50%, -55%) scale(0.95); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 25px #a582c2, 0 0 60px #000000aa; }
+  50% { box-shadow: 0 0 40px #d5a1ff, 0 0 90px #a582c2; }
+}
+
+.save-star {
+    position: fixed;
+    font-size: 1.2rem;
+    font-family: 'Cinzel', serif;
+    pointer-events: none;
+    z-index: 3001;
+    opacity: 0.9;
+    animation: sparkleFloat 0.2s ease-out forwards;
+    transform: scale(0.9);
+    text-shadow: 0 0 6px currentColor;
+}
+
+@keyframes sparkleFloat {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+        filter: blur(0px);
+    }
+    60% {
+        transform: translate(var(--dx), var(--dy)) scale(1.5);
+        opacity: 0.8;
+        filter: blur(2px);
+    }
+    100% {
+        transform: translate(var(--dx), var(--dy)) scale(1.8);
+        opacity: 0;
+        filter: blur(4px);
+    }
+}
+
+#titleFadeOverlay {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 3.5rem;
+  font-family: 'Cinzel', serif;
+  color: #ffffffcc;
+  text-shadow: 0 0 10px #a582c2, 0 0 25px #ffffff;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10000;
+  animation: fadeTitle 3.5s ease forwards;
+}
+
+@keyframes fadeTitle {
+  0%   { opacity: 0; transform: translate(-50%, -10%) scale(0.95); }
+  20%  { opacity: 1; transform: translate(-50%, 0%) scale(1); }
+  70%  { opacity: 1; transform: translate(-50%, 5%) scale(1.05); }
+  100% { opacity: 0; transform: translate(-50%, 10%) scale(1.1); }
 }

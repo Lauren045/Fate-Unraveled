@@ -54,19 +54,19 @@ function showSettingsMenu() {
 
         <div class="settings-option">
             <label for="volumeSlider">Music Volume</label>
-            <input type="range" id="volumeSlider" min="0" max="200">
+	    <input type="range" id="volumeSlider" class="ui-no-sparkle" min="0" max="200">
         </div>
         <span id="volumeDisplay"></span>
 
         <div class="settings-option">
             <label for="fontSizeSlider">Font Size</label>
-            <input type="range" id="fontSizeSlider" min="12" max="60">
+            <input type="range" id="fontSizeSlider" class="ui-no-sparkle" min="12" max="60">
         </div>
         <span id="fontSizeDisplay"></span>
 
         <div class="settings-option">
             <label for="speedSlider">Typing Speed</label>
-            <input type="range" id="speedSlider" min="10" max="100">
+            <input type="range" id="speedSlider" class="ui-no-sparkle" min="10" max="100">
         </div>
         <span id="speedDisplay"></span>
 
@@ -126,11 +126,23 @@ function showSettingsMenu() {
     };
 
     document.getElementById("saveBtn").onclick = () => {
-        playUISound();
         localStorage.setItem("fontSize", fontSizeSlider.value);
         localStorage.setItem("soundVolume", volumeSlider.value);
         localStorage.setItem("typingSpeed", speedSlider.value);
-        alert("Settings saved!");
+
+	const savedPopup = document.createElement("div");
+	savedPopup.id = "settingsSavedPopup";
+	savedPopup.textContent = "Settings Saved!";
+	document.body.appendChild(savedPopup);
+
+	const sparkleSound = new Audio("assets/soundeffects/settingssaved.mp3");
+	sparkleSound.volume = 0.9;
+	sparkleSound.play();
+
+	setTimeout(() => {
+	    savedPopup.remove();
+	}, 2500);
+
     };
 
     document.getElementById("fullscreenBtn").onclick = () => {
@@ -202,4 +214,49 @@ function showSettingsMenu() {
         }, 300);
     };
  }, 400);
+}
+
+let sparkleTrailEnabled = false;
+
+document.addEventListener("mousedown", () => sparkleTrailEnabled = true);
+document.addEventListener("mouseup", () => sparkleTrailEnabled = false);
+
+document.addEventListener("click", (event) => {
+    if (!event.target.closest(".ui-no-sparkle")) {
+        spawnClickSparkles(event.clientX, event.clientY);
+    }
+});
+
+document.addEventListener("mousemove", (event) => {
+    if (sparkleTrailEnabled && !event.target.closest(".ui-no-sparkle")) {
+        spawnClickSparkles(event.clientX, event.clientY);
+    }
+});
+
+function spawnClickSparkles(x, y) {
+    const shapes = ["✧", "✦", "✨", "★", "❖"];
+    const colors = ["#a582c2", "#ffffff", "#d5a1ff", "#ffd1f9", "#c29eff"];
+
+    for (let i = 0; i < 5; i++) {
+        const sparkle = document.createElement("div");
+        sparkle.className = "save-star";
+        sparkle.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+
+        sparkle.style.left = `${x}px`;
+        sparkle.style.top = `${y}px`;
+
+        // Set random direction
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 25 + Math.random() * 15;
+        const dx = Math.cos(angle) * distance + "px";
+        const dy = Math.sin(angle) * distance + "px";
+        sparkle.style.setProperty('--dx', dx);
+        sparkle.style.setProperty('--dy', dy);
+
+        // Random color
+        sparkle.style.color = colors[Math.floor(Math.random() * colors.length)];
+
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 600);
+    }
 }

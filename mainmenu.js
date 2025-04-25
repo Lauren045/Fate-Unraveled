@@ -116,11 +116,42 @@ function fadeAndRedirect(callback) {
 }
 
 document.getElementById("newGame").addEventListener("click", () => {
-    fadeAndRedirect(() => {
-        localStorage.removeItem("lastUsedSlot"); // This clears the old save slot
-        localStorage.setItem("dialogueIndex", 0);
+    const fadeOverlay = document.getElementById("fadeOverlay");
+    const flashOverlay = document.getElementById("flashOverlay");
+    const titleOverlay = document.getElementById("titleFadeOverlay");
+
+    setTimeout(() => {
+        titleOverlay.classList.remove("hidden");
+        titleOverlay.style.animation = "none"; // reset animation
+        void titleOverlay.offsetWidth; // force reflow
+        titleOverlay.style.animation = "fadeTitle 5s ease forwards"; // slower fade
+    }, 350);
+
+    // Trigger fade and effects
+    fadeOverlay.classList.add("fade-out", "flicker");
+
+    const startSound = new Audio("assets/soundeffects/newgame.mp3");
+    startSound.volume = 0.9;
+    startSound.play();
+
+    const bgMusic = document.getElementById("bgMusic");
+    if (bgMusic) {
+        let fadeOutInterval = setInterval(() => {
+            if (bgMusic.volume > 0.05) {
+                bgMusic.volume -= 0.05;
+            } else {
+                bgMusic.volume = 0;
+                bgMusic.pause();
+                clearInterval(fadeOutInterval);
+            }
+        }, 120);
+    }
+
+
+    // Load game after fade finishes
+    setTimeout(() => {
         window.location.href = "game.html";
-    });
+    }, 3500); // wait for all effects to complete
 });
 
 function triggerFX(type) {
