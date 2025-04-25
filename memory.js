@@ -117,7 +117,7 @@ function showVictoryScreen(callback) {
 
     const victoryText = document.createElement("div");
     victoryText.className = "victory-text";
-    victoryText.textContent = "Memory Unlocked";
+    victoryText.textContent = "You completed the puzzle";
 
     victoryOverlay.appendChild(victoryText);
     document.body.appendChild(victoryOverlay);
