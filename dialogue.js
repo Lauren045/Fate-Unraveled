@@ -100,42 +100,13 @@ function showScene(index) {
     }
 
     if (currentDialogue.effect) {
-        if (currentDialogue.effect === "flash") {
-            triggerFX("flash");
-        }
-        else if (currentDialogue.effect === "fadeIn") {
-            triggerFX("fadeIn");
-        }
-        else if (currentDialogue.effect === "fadeOut") {
-            triggerFX("fadeOut");
-        }
-        else if (currentDialogue.effect === "shake") {
-            triggerShake();
-        }
-        else if (currentDialogue.effect === "speedBurst") {
-            triggerFX("speedBurst");
-        }
+        if (currentDialogue.effect === "shake") triggerShake();
+        else triggerFX(currentDialogue.effect);
     }
 
     // triggers minigames
     if (currentDialogue.minigame) {
-        document.getElementById("characterImagesContainer").style.display = "none";
-        document.getElementById("dialogueBox").style.display = "none";
-        document.getElementById("buttonContainer").style.display = "none";
-	if (currentDialogue.minigame === "battle") {
-            initializeBattle(1);
-        }
-
-	if (currentDialogue.minigame === "memory") {
-	    startMemoryGame(() => {
-                document.getElementById("characterImagesContainer").style.display = "flex";
-                document.getElementById("dialogueBox").style.display = "block";
-                document.getElementById("buttonContainer").style.display = "flex";
-                dialogueIndex++;
-                showScene(dialogueIndex);
-            });
-            return;
-	}
+        triggerMinigame(currentDialogue.minigame);
     }
 
     // triggers music tracks
@@ -185,6 +156,28 @@ function selectChoice(choiceObj) {
     // sets a flag so that the game remembers player's choices and changes the story accordingly
     if (choiceObj.setFlag) {
         flags.push(choiceObj.setFlag);
+    }
+}
+
+// trigger the appropriate minigame
+function triggerMinigame(minigame) {
+    document.getElementById("characterImagesContainer").style.display = "none";
+    document.getElementById("dialogueBox").style.display = "none";
+    document.getElementById("buttonContainer").style.display = "none";
+
+    if (minigame === "battle") {
+        initializeBattle(1);
+    }
+        
+    if (minigame === "memory") {
+        startMemoryGame(() => {
+            document.getElementById("characterImagesContainer").style.display = "flex";
+            document.getElementById("dialogueBox").style.display = "block";
+            document.getElementById("buttonContainer").style.display = "flex";
+            dialogueIndex++;
+            showScene(dialogueIndex);
+        });
+        return;
     }
 }
 

@@ -114,9 +114,12 @@ function regularAttack() {
 }
 
 function bringUpSkills() {
+    if (document.getElementById("skillsMenu")) return;
+
     const skillsMenu = document.createElement("div");
     skillsMenu.id = "skillsMenu";
     document.getElementById("battleContainer").appendChild(skillsMenu);
+    document.getElementById("actionContainer").style.display = "none";
     
     const allySkills = allies[allyIndex].skills;
     allySkills.forEach(skill => {
@@ -139,6 +142,7 @@ function bringUpSkills() {
     cancelButton.innerText = "Cancel";
     skillsMenu.appendChild(cancelButton);
     cancelButton.addEventListener("click", function() {
+	document.getElementById("actionContainer").style.display = "block";
         skillsMenu.remove();
     });
 }
@@ -151,6 +155,8 @@ function guard() {
 }
 
 function chooseTarget(damagePoints, manaPoints) {
+    if (document.getElementById("targetEnemyMenu")) return;
+
     const targetEnemyMenu = document.createElement("div");
     targetEnemyMenu.id = "targetEnemyMenu";
     document.getElementById("battleContainer").appendChild(targetEnemyMenu);
