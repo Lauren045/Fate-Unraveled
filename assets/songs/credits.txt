@@ -45,3 +45,13 @@ MIDI Arrangement: Lory Werths
 Game Adaptation: Florencia Djap
 License: Original and MIDI arrangement are Public Domain. MIDI sourced from [Lory Werths' website].
 Website: https://mandolingals.tripod.com/midi/midis.html
+
+---
+
+File: C2.mp3
+Song: Belle qui tiens ma vie
+Original Composer: Thoinot Arbeau
+MIDI Arrangement: Lory Werths
+Game Adaptation: Florencia Djap
+License: Original and MIDI arrangement are Public Domain. MIDI sourced from [Lory Werths' website].
+Website: https://mandolingals.tripod.com/midi/midis.html
