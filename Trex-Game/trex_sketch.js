@@ -13,6 +13,11 @@ var score=0;
 var gameOver, restart;
 var canJump = true;
 localStorage["HighestScore"] = 0;
+var startDelay = 5000; // 5 seconds
+var gameStarted = false;
+var startTime;
+var victoryScore = 400; // Victory when score reaches this
+var victory = false;
 
 function preload(){
   trex_running =   loadAnimation("images/trex1.png","images/trex3.png","images/trex4.png");
@@ -35,7 +40,7 @@ function preload(){
 
 function setup() {
   createCanvas(600, 200);
-  
+  startTime = millis();
   trex = createSprite(50,180,20,50);
   
   trex.addAnimation("running", trex_running);
@@ -69,66 +74,83 @@ function setup() {
 }
 
 function draw() {
-  //trex.debug = true;
   background(255);
-  text("Score: "+ score, 500,50);
-  
-  if (gameState===PLAY){
-    score = score + Math.round(getFrameRate()/60);
-    ground.velocityX = -(6 + 3*score/100);
-  
-    if(keyDown("space") && trex.y >= 130 && canJump) {
-      trex.velocityY = -13 ;  //-13 befeore
+
+  // Wait for start delay
+  if (!gameStarted && millis() - startTime < startDelay) {
+    textSize(24);
+    textAlign(CENTER);
+    fill(0);
+    text("Game starts in " + Math.ceil((startDelay - (millis() - startTime)) / 1000), width / 2, height / 2);
+    return;
+  } else {
+    gameStarted = true;
+  }
+
+  textSize(16);
+  fill(0);
+  text("Score: " + score, 500, 50);
+
+  if (gameState === PLAY && !victory) {
+    score += Math.round(getFrameRate() / 60);
+    ground.velocityX = -(6 + 3 * score / 100);
+
+    if (score >= victoryScore) {
+      victory = true;
+      gameState = END;
     }
-    if(trex.y>=150){
+
+    if (keyDown("space") && trex.y >= 130 && canJump) {
+      trex.velocityY = -13;
+      canJump = false;
+    }
+    if (trex.y >= 150) {
       canJump = true;
     }
-    
-    let gravity = 0.9;
-    if (score > 500) {
-      gravity = 1.2; // increase gravity slightly after score 500
+
+    let gravity = score > 500 ? 1.2 : 0.9;
+    trex.velocityY += gravity;
+
+    if (ground.x < 0) {
+      ground.x = ground.width / 2;
     }
-    trex.velocityY = trex.velocityY + gravity; 
-  
-    //trex.velocityY = trex.velocityY + 0.8; // 0.8 before
-  
-    if (ground.x < 0){
-      ground.x = ground.width/2;
-    }
-  
+
     trex.collide(invisibleGround);
     spawnClouds();
     spawnObstacles();
-  
-    if(obstaclesGroup.isTouching(trex)){
-        gameState = END;
+
+    if (obstaclesGroup.isTouching(trex)) {
+      gameState = END;
     }
   }
   else if (gameState === END) {
-    gameOver.visible = true;
-    restart.visible = true;
-    
-    //set velcity of each game object to 0
     ground.velocityX = 0;
     trex.velocityY = 0;
     obstaclesGroup.setVelocityXEach(0);
     cloudsGroup.setVelocityXEach(0);
-    
-    //change the trex animation
-    trex.changeAnimation("collided",trex_collided);
-    
-    //set lifetime of the game objects so that they are never destroyed
+
+    trex.changeAnimation("collided", trex_collided);
     obstaclesGroup.setLifetimeEach(-1);
     cloudsGroup.setLifetimeEach(-1);
-    
-    if(mousePressedOver(restart)) {
-      reset();
+
+    if (victory) {
+      textSize(37);
+      fill(0, 150, 0);
+      textAlign(CENTER);
+      text("You Win!", width / 2, height / 2);
+    } else {
+      gameOver.visible = true;
+      restart.visible = true;
+
+      if (mousePressedOver(restart)) {
+        reset();
+      }
     }
   }
-  
-  
+
   drawSprites();
 }
+
 
 function spawnClouds() {
   //write code here to spawn the clouds
