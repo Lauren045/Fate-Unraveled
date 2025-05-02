@@ -8,6 +8,8 @@ let dialogueIndex = localStorage.getItem("dialogueIndex")
 let alignment = {evil: 0, friendship: 0};
 let flags = [];
 
+// random comment
+
 document.addEventListener("DOMContentLoaded", function () {
     const settingsButton = document.getElementById("settings");
 
