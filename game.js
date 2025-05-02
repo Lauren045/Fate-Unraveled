@@ -138,7 +138,7 @@ function triggerFX(fxType) {
 
     setTimeout(() => {
         sceneEffect.style.animation = "";
-    }, duration);
+    }, 500);
 }
 
 function triggerShake() {
