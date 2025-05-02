@@ -195,10 +195,8 @@ function dialogueProgression() {
         return;
     }
 
-    //if there are choices or minigames, stop the function to prevent progression
-    if (currentDialogue.choices || currentDialogue.minigame) {
-        return;
-    }
+    //if the history menu is up, or if there are choices or minigames, stop the function to prevent progression
+    if (currentDialogue.choices || currentDialogue.minigame || document.getElementById("historyMenu")) return;
 
     if (currentDialogue.checkFlag) {
         if (flags.includes(currentDialogue.checkFlag)) {
@@ -307,44 +305,47 @@ function skipForward() {
 // Author: Lauren Huynh
 function history() {
     document.getElementById("history").addEventListener("click", function() {
-         const historyMenu = document.createElement("div");
-	 historyMenu.id = "historyMenu";
+	// if the history menu already exists, stop the function from executing
+	if (document.getElementById("historyMenu")) return;
+	
+        const historyMenu = document.createElement("div");
+	historyMenu.id = "historyMenu";
 
-	 const historyContent = document.createElement("div");
-	 historyContent.id = "historyContent";
-	 // loops through each entry in dialogueHistory and prints it out
-	 for (let i = 0; i < dialogueHistory.length; i++) {
-	      const entry = document.createElement("p");
-	      entry.style.marginTop = "4%";
-	      entry.innerText = dialogueHistory[i].text;
-	      historyContent.appendChild(entry);
+	const historyContent = document.createElement("div");
+	historyContent.id = "historyContent";
+	// loops through each entry in dialogueHistory and prints it out
+	for (let i = 0; i < dialogueHistory.length; i++) {
+	     const entry = document.createElement("p");
+	     entry.style.marginTop = "4%";
+	     entry.innerText = dialogueHistory[i].text;
+	     historyContent.appendChild(entry);
 
-	      // change the apperance of the entry depending on their type
-	      if (dialogueHistory[i].type === "name") {
-		  entry.style.fontWeight = "bold";
-		  entry.style.color = "blue";
-	      }
-	      else if (dialogueHistory[i].type === "narrator") {
-		  entry.style.fontStyle = "italic";
-	      }
-	      else if (dialogueHistory[i].type === "choice") {
-		  entry.style.color = "red";
-	      }
-	 }
-	 historyMenu.appendChild(historyContent);
+	     // change the apperance of the entry depending on their type
+	     if (dialogueHistory[i].type === "name") {
+		 entry.style.fontWeight = "bold";
+		 entry.style.color = "blue";
+	     }
+	     else if (dialogueHistory[i].type === "narrator") {
+		 entry.style.fontStyle = "italic";
+	     }
+	     else if (dialogueHistory[i].type === "choice") {
+		 entry.style.color = "red";
+	     }
+	}
+	historyMenu.appendChild(historyContent);
 
-	 // creates the close button
-	 const closeButton = document.createElement("button");
-	 closeButton.id = "closeButton";
-	 closeButton.innerText = "Close";
-	 closeButton.onclick = function() {
-	      document.body.removeChild(historyMenu);
-	 }
-	 historyMenu.appendChild(closeButton);
+	// creates the close button
+	const closeButton = document.createElement("button");
+	closeButton.id = "closeButton";
+	closeButton.innerText = "Close";
+	closeButton.onclick = function() {
+	     document.body.removeChild(historyMenu);
+	}
+	historyMenu.appendChild(closeButton);
 
-	 // append everything to the body of the website
-	 document.body.appendChild(historyMenu);
-    })
+	// append everything to the body of the website
+	document.body.appendChild(historyMenu);
+   })
 }
 
 loadDialogue();
