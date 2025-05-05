@@ -167,8 +167,11 @@ function triggerMinigame(minigame) {
     document.getElementById("dialogueBox").style.display = "none";
     document.getElementById("buttonContainer").style.display = "none";
 
-    if (minigame === "battle") {
+    if (minigame === "battle1") {
         initializeBattle(1);
+    }
+    if (minigame === "battle2") {
+        initializeBattle(2);
     }
         
     if (minigame === "memory") {
@@ -200,11 +203,9 @@ function dialogueProgression() {
     //if the history menu is up, or if there are choices or minigames, stop the function to prevent progression
     if (currentDialogue.choices || currentDialogue.minigame || document.getElementById("historyMenu")) return;
 
-    if (currentDialogue.checkFlag) {
-        if (flags.includes(currentDialogue.checkFlag)) {
-            dialogueIndex = dialogues.findIndex(d => d.goToFlag === currentDialogue.checkFlag);
-            showScene(dialogueIndex);
-        }
+    if (currentDialogue.checkFlag && flags.includes(currentDialogue.checkFlag)) {
+        dialogueIndex = dialogues.findIndex(d => d.goToFlag === currentDialogue.checkFlag);
+        showScene(dialogueIndex);
     }
 
     //jump to the dialogue id if the property "jump" is used
