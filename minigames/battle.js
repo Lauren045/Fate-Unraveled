@@ -32,7 +32,7 @@ function initializeBattle(battleIndex) {
             createBattle("pom.jpg");
             battleMessage.innerText = "Thug 1 and Thug 2 appeared!";
             break;
-        
+
         case 2:
             allies.push(kiernan);
             enemies.push(undead1);
@@ -52,7 +52,7 @@ function initializeBattle(battleIndex) {
     document.getElementById("battleContainer").appendChild(pressButton);
 
     pressButton.addEventListener("click", closeBattle);
-    
+
     setTimeout(allyTurn, 2000);
 }
 
@@ -66,7 +66,7 @@ function createBattle(backgroundFile) {
         let allyBox = document.createElement("div");
         let allyHealth = document.createElement("div");
         let allyMana = document.createElement("div");
-    
+
         allyBox.className = "allyBox";
         allyBox.innerHTML = ally.name;
         allyHealth.innerText = `HP: ${ally.hp}/${ally.maxHp}`;
@@ -128,7 +128,7 @@ function bringUpSkills() {
     skillsMenu.id = "skillsMenu";
     document.getElementById("battleContainer").appendChild(skillsMenu);
     document.getElementById("actionContainer").style.display = "none";
-    
+
     const allySkills = allies[allyIndex].skills;
     allySkills.forEach(skill => {
         const skillElement = document.createElement("div");
@@ -178,19 +178,41 @@ function chooseTarget(damagePoints, manaPoints) {
 
             targetEnemy.addEventListener("click", function() {
                 let damage = damagePoints;
+
+                //color will flash according to skill
+                //flash triggered when a skill is used
+                let skillUsed = allies[allyIndex].skills?.find(skill => parseInt(skill.damage) === damagePoints && allies[allyIndex].mp >= skill.mp);
+                if (manaPoints > 0 && skillUsed) {
+                    //flash color assigning function at the end
+                    let flashColor = getFlashColor(skillUsed.name);
+                    createFlashOverlay(flashColor);
+                }
+
+                //enemy shake effect (user attacks enemy)
+                enemy.spriteElement.classList.add("enemyShake");
+                setTimeout(() => {
+                    enemy.spriteElement.classList.remove("enemyShake");
+                }, 500);
+
                 enemy.hp -= damage;
+                if (enemy.hp < 0) enemy.hp = 0;
                 enemy.enemyHealthElement.innerText = enemy.hp + "/" + enemy.maxHp;
                 battleMessage.innerText = `${allies[allyIndex].name} dealt ${damage} to ${enemy.name}`;
+
                 allies[allyIndex].mp -= manaPoints;
                 allies[allyIndex].allyManaElement.innerText = `MP: ${allies[allyIndex].mp}/${allies[allyIndex].maxMp}`;
                 targetEnemyMenu.remove();
-                if (enemy.hp <= 0) enemy.spriteElement.style.display = "none";
+
+                if (enemy.hp <= 0) {
+                    enemy.spriteElement.style.display = "none";
+                }
 
                 if (enemies.every(enemy => enemy.hp <= 0)) {
                     battleMessage.innerText = "You win!";
                     setTimeout(closeBattle, 2000);
+                } else {
+                    setTimeout(nextAllyTurn, 2000);
                 }
-                else setTimeout(nextAllyTurn, 2000);
             });
         }
     });
@@ -230,6 +252,13 @@ function enemyTurn() {
     allies[targetedAlly].allyHealthElement.innerText = `${allies[targetedAlly].hp}/${allies[targetedAlly].maxHp}`;
     battleMessage.innerText = `${enemies[enemyIndex].name} dealt ${damage} to ${allies[targetedAlly].name}`;
 
+    //screen shake effect (enemy attacks user)
+    const battleCont = document.getElementById("battleContainer");
+    battleCont.classList.add("screenShake");
+    setTimeout(() => {
+        battleCont.classList.remove("screenShake");
+    }, 500);
+
     if (allies.every(ally => ally.hp <= 0)) {
         battleMessage.innerText = "All allies have fallen.";
         // put code for game over
@@ -257,4 +286,31 @@ function closeBattle() {
     document.getElementById("buttonContainer").style.display = "flex";
 	dialogueIndex++;
     showScene(dialogueIndex);
+}
+
+function createFlashOverlay(flashColor) {
+    //new div tag for flash overlay
+    const flashOverlay = document.createElement("div");
+    flashOverlay.id = "flashOverlay";
+    flashOverlay.style.backgroundColor = flashColor;
+    flashOverlay.style.opacity = "1";
+    document.body.appendChild(flashOverlay);
+
+    setTimeout(() => {
+        flashOverlay.style.opacity = "0";
+    }, 100);
+
+    setTimeout(() => {
+        flashOverlay.remove();
+    }, 500);
+}
+
+
+function getFlashColor(skillName) {
+    switch (skillName) {
+        case "Fireball":
+            return "#C64F4F";
+        case "Dark Whip":
+            return "#7D389A";
+    }
 }
