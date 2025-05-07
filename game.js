@@ -29,6 +29,22 @@ document.addEventListener("DOMContentLoaded", () => {
     bgMusic.play().catch(err => console.warn("Autoplay blocked: User interaction needed"));
 });
 
+function fadeVol(audio, volume, duration, callback) {
+    const step = 0.05;
+    const intervalTime = duration * step;
+    const fadeOut = audio.volume > volume;
+    const interval = setInterval(() => {
+        let newVol = audio.volume + (fadeOut ? -step : step);
+        newVol = Math.max(0, Math.min(1, newVol));
+        audio.volume = newVol;
+        if ((fadeOut && newVol <= volume) || (!fadeOut && newVol >= volume)) {
+            clearInterval(interval);
+            audio.volume = volume;
+            if (callback) callback();
+        }
+    }, intervalTime);
+}
+
 // function handling song change logic
 function changeMusic(track) {
     const bgMusic = document.getElementById("bgMusic");
@@ -38,20 +54,14 @@ function changeMusic(track) {
         return;
     }
 
-    // fades out song -- lowers volume before change
-    bgMusic.style.transition = "opacity 1s ease-out";
-    bgMusic.volume = 0;
-
     // once song is faded, change the track to the one mentioned in the JSON
-    setTimeout(() => {
+    fadeVol(bgMusic, 0, 1000, () => {
         bgMusic.src = `assets/songs/${track}`;
         bgMusic.load();
-        bgMusic.play();
-
-        // fades in new song -- heightens volume after change
-        bgMusic.style.transition = "opacity 1s ease-in";
-        bgMusic.volume = 0.5;
-    }, 1000);
+        bgMusic.play().then(() => {
+            fadeVol(bgMusic, 0.5, 1000);
+        });
+    });
 }
 
 function changeBackground(imageFile) {

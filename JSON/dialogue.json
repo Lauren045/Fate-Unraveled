@@ -1,5 +1,5 @@
 [
-    { "name": "Cafe Owner", "text": "Phew, what a busy hour.", "char": "chiikawa.png"},
+    { "name": "Cafe Owner", "text": "Phew, what a busy hour.", "char": "chiikawa.png", "background":"bg.jpg", "music":"FU2.mp3"},
     { "text": "All of my customers took what's left of the stock."},
     { "text": "Hmm, but I should take a break first. It's time to do my training."},
     { "text": "..."},
