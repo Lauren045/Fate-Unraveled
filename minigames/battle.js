@@ -22,6 +22,7 @@ function initializeBattle(battleIndex) {
 
     //brings up the battle screen
     document.getElementById("battleContainer").style.display = "block";
+    setFlashLayer();
 
     switch (battleIndex) {
         case 1:
@@ -103,6 +104,23 @@ function createBattle(backgroundFile) {
     });
 }
 
+function setFlashLayer() {
+    const flashDiv = document.createElement("div");
+    flashDiv.id = "screenFlash";
+    Object.assign(flashDiv.style, {
+        position: "fixed",
+        top: "0",
+        left: "0",
+        width: "100%",
+        height: "100%",
+        pointerEvents: "none",
+        display: "none",
+        zIndex: "9999",
+        opacity: "0.6"
+    });
+    document.body.appendChild(flashDiv);
+}
+
 function allyTurn() {
     if (allies[allyIndex].hp <= 0) {
         nextAllyTurn();
@@ -141,6 +159,7 @@ function bringUpSkills() {
                 battleMessage.innerText = "Not enough mana.";
                 return;
             }
+
             chooseTarget(skill.damage, skill.mp);
             skillsMenu.remove();
         });
@@ -153,6 +172,36 @@ function bringUpSkills() {
         document.getElementById("actionContainer").style.display = "block";
         skillsMenu.remove();
     });
+}
+
+function flashScreen(color) {
+    const flash = document.getElementById("screenFlash");
+    flash.style.backgroundColor = color;
+    flash.style.display = "block";
+    flash.style.opacity = "0.6";
+    flash.style.transition = "none";
+
+    setTimeout(() => {
+        flash.style.transition = "opacity 0.5s";
+        flash.style.opacity = "0";
+    }, 50);
+
+    flash.addEventListener("transitionend", () => {
+        flash.style.display = "none";
+        flash.style.transition = "none";
+        flash.style.opacity = "0.6";
+    }, { once: true });
+}
+
+// assign flash colors
+// adjust as more skills are added
+function getFlashColor(skillName) {
+    switch (skillName) {
+        case "Dark Whip":
+            return "#7D389A";
+        case "Fireball":
+            return "#C64F4F";
+    }
 }
 
 function guard() {
@@ -179,20 +228,18 @@ function chooseTarget(damagePoints, manaPoints) {
             targetEnemy.addEventListener("click", function() {
                 let damage = damagePoints;
 
-                //color will flash according to skill
-                //flash triggered when a skill is used
-                let skillUsed = allies[allyIndex].skills?.find(skill => parseInt(skill.damage) === damagePoints && allies[allyIndex].mp >= skill.mp);
-                if (manaPoints > 0 && skillUsed) {
-                    //flash color assigning function at the end
-                    let flashColor = getFlashColor(skillUsed.name);
-                    createFlashOverlay(flashColor);
-                }
-
                 //enemy shake effect (user attacks enemy)
                 enemy.spriteElement.classList.add("enemyShake");
                 setTimeout(() => {
                     enemy.spriteElement.classList.remove("enemyShake");
                 }, 500);
+
+                //flash effect after user uses skill
+                const skillUsed = allies[allyIndex].skills.find(s => s.damage == damagePoints && s.mp == manaPoints);
+                if (skillUsed) {
+                    const color = getFlashColor(skillUsed.name);
+                    flashScreen(color);
+                }
 
                 enemy.hp -= damage;
                 if (enemy.hp < 0) enemy.hp = 0;
@@ -286,31 +333,4 @@ function closeBattle() {
     document.getElementById("buttonContainer").style.display = "flex";
 	dialogueIndex++;
     showScene(dialogueIndex);
-}
-
-function createFlashOverlay(flashColor) {
-    //new div tag for flash overlay
-    const flashOverlay = document.createElement("div");
-    flashOverlay.id = "flashOverlay";
-    flashOverlay.style.backgroundColor = flashColor;
-    flashOverlay.style.opacity = "1";
-    document.body.appendChild(flashOverlay);
-
-    setTimeout(() => {
-        flashOverlay.style.opacity = "0";
-    }, 100);
-
-    setTimeout(() => {
-        flashOverlay.remove();
-    }, 500);
-}
-
-
-function getFlashColor(skillName) {
-    switch (skillName) {
-        case "Fireball":
-            return "#C64F4F";
-        case "Dark Whip":
-            return "#7D389A";
-    }
 }
